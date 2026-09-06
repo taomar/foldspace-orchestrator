@@ -15,7 +15,7 @@ capabilities or an explicit assisted/manual handoff.
 [Prompt examples](../operations/EXAMPLES.md) |
 [Run configuration](../protocol/RUN_CONFIGURATION.md)
 
-Current protocol: **2.1.3**. See the [release history](../reference/REVIEW_AND_CHANGES.md).
+Current protocol: **2.1.4**. See the [release history](../reference/REVIEW_AND_CHANGES.md).
 
 ## On this page
 
@@ -83,9 +83,15 @@ Outcome and acceptance: [one bounded result and observable criteria]
 Constraints and authority: [allowed scope, compatibility, and excluded effects]
 
 Preserve existing instructions, work, active owners, operations, and accounting.
-First acknowledge supplied intent/run mode, ask one unresolved question, and
-end the response before further investigation. On a missing-input/evidence hold,
-show the exact gap and next actor, then return; do not scan, poll or wait for jobs.
+First reconcile supplied intent/run mode and any prestaged answers.
+One question at a time means one outstanding unanswered question, not one
+answered decision per response. On an answer (including a question-tool result),
+take the next bounded read, focused question, review/final approval request or
+approved action. Do not stop at "recorded/blocked" or require another "continue".
+For pending work use known compact state/task records, not an invented backlog;
+ask the exact location/access or focused selection if needed.
+Yield only for a real wait with its gap, owner and supported event/manual action,
+following the host's actual question lifecycle. No scans, polling or full-job waits.
 For a new run, conduct the mandatory interview one question at a time:
 exact supported models/role defaults/fallbacks, per-model reasoning bounds and
 default, external-call consent, budgets/units and allocations, concurrency,
@@ -106,6 +112,9 @@ This is ordinary language, not a native command. The
 [first-use guide](GETTING_STARTED.md) explains agent-managed localization, a
 [worked example](GETTING_STARTED.md#a-bounded-worked-example), and
 [manual fallback](GETTING_STARTED.md#manual-worker-fallback).
+Optionally paste known answers using the
+[prestaging checklist and template](../protocol/RUN_CONFIGURATION.md#optional-prestaged-interview-inputs);
+unknowns are fine, and preparation is not final run approval.
 
 ## Configure every new run
 
@@ -186,7 +195,10 @@ applied and evidenced, block affected autonomous work or use a specifically
 approved, demonstrable manual path. Do not pretend unsupported automation works
 or assume a quiet job stopped. Compatibility and performance are not guaranteed.
 
-If the bootstrap itself stops responding, another prompt may only join its
+An answered question followed by a completed status-only response is a
+protocol progression failure when a permitted next step exists, not proof
+of a host hang. See the [transition examples](../operations/EXAMPLES.md#bootstrap-transition-examples).
+If the bootstrap itself cannot receive/respond, another prompt may only join its
 queue. Use [independent early-stall and automation triage](../operations/OPERATOR_GUIDE.md#early-bootstrap-with-little-or-no-worker-activity),
 not a queued recovery message. The compact entry is prevention, not a host reset.
 

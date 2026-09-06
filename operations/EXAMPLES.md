@@ -18,6 +18,7 @@ Before any new run, use the mandatory
 
 - [Start a bounded project task](#start-a-bounded-project-task)
 - [Approve or decline run controls](#approve-or-decline-run-controls)
+- [Bootstrap transition examples](#bootstrap-transition-examples)
 - [Steer work without losing prior intent](#steer-work-without-losing-prior-intent)
 - [Ask for status that distinguishes progress from activity](#ask-for-status-that-distinguishes-progress-from-activity)
 - [Triage a queued bootstrap outside its queue](#triage-a-queued-bootstrap-outside-its-queue)
@@ -45,10 +46,14 @@ Allowed scope: [components/files and compatibility constraints].
 Budget: [effort/cost/retry allowance].
 Authority: [permitted actions]. Excluded effects: [publication/deployment/etc.].
 
-Follow BOOTSTRAP.md first: acknowledge supplied intent/run mode, ask one next
-unresolved question, and end the response before further investigation.
-On a missing-input/evidence hold, report the exact gap and next actor and return;
-do not chain scans, catalogs, status polling, or a whole-worker wait.
+Follow BOOTSTRAP.md: reconcile intent/run mode and valid supplied answers.
+Keep one unanswered question outstanding. After each delivered answer, including
+a question-tool result, take the next bounded read, focused question,
+review/final approval request or approved action. No status-only "recorded"
+exit or extra "continue" between answers. For pending work use known compact
+state/task records; ask only material selection or exact location/access gaps.
+Yield only for a real wait with gap, owner and supported event/manual action,
+following actual host question lifecycle. No scans, catalogs, polling or full-job waits.
 
 Before any workers, including discovery/research, or direct external LLM calls,
 ask me to approve exact supported models/role defaults/fallbacks, each model's
@@ -77,10 +82,14 @@ Use the questionnaire rather than accepting a packet with unresolved fields.
 These are decisions for the target run, not credentials or model guarantees.
 
 ```text
-Conduct the mandatory run interview one question at a time.
-Return control after each unresolved question or evidence hold. Use supplied
-evidence or one known-short targeted local lookup for that question; do not
-enumerate every provider or pricing option before showing the next question.
+Conduct the mandatory interview with at most one unanswered question outstanding.
+Reuse valid supplied/prestaged answers. On an answer or targeted read result,
+reconcile and advance to the next missing question or review/final approval;
+do not end at acknowledgement. Use supplied evidence or one known-short read
+for a missing fact, not catalogs/research chains. If unavailable, ask the exact
+evidence/access question or advance an independently answerable field.
+Follow actual host question lifecycle; yield only for a real wait with owner
+and actual resume event/manual action, never invented self-wake.
 Show only model IDs and reasoning choices supported by evidence for this host.
 Ask my approved providers/models, role defaults/overrides and fallback list;
 per-model reasoning minimum, maximum and selected default; explicit external
@@ -113,6 +122,45 @@ call already covered by this scope.
 
 See [approved and blocked examples](../protocol/RUN_CONFIGURATION.md#dispatch-and-recovery-examples)
 for invalid bounds, unsupported settings, exhausted budgets, and uncertain charges.
+
+## Bootstrap transition examples
+
+These are finite **documentation-level input/transition cases**, not executed
+host traces or an executable evaluator. They exercise the
+[advance-or-wait contract](../protocol/FIRST_SESSION_AND_ORCHESTRATION.md#opening-turn-and-return-control-contract)
+without workers, inference calls or invented controls. The fictional task IDs
+below illustrate how recorded facts are reused, not a supplied live backlog.
+
+| Case and input | Next permitted transition | Invalid exit or shortcut |
+|---|---|---|
+| Reported trajectory: new run selected; outcome question tool returns "continue the pendings"; known compact task index exists | Consume the answer; read that index or use supplied equivalent context. Derive recorded candidates and acceptance, then ask the next missing decision. Final new-run approval still gates dispatch. | "Recorded; blocked until scope, criteria, limits and approval" with no read or actual next question |
+| Same answer; supplied index records `DOC-A` with accepted scope/criteria and no competing candidate | Reuse those facts; ask the next unresolved run decision, such as the allowed exact models. Do not ask the user to rewrite `DOC-A`. | Invent new tasks, infer permission to execute, or return only a checkpoint |
+| Same answer; index has two materially different candidates `DOC-A` and `API-B` | Ask one focused selection: "Which recorded task should this run prioritize: DOC-A or API-B?" | Select silently or demand an entirely new objective |
+| Pending record location unknown or named record inaccessible | Ask "Which task/state record or task ID identifies the pending work?" or request access to the named record; alternatively advance an independently answerable model/budget field while preserving the gap. | Broad scan, unapproved discovery worker, guessed backlog or indefinite global hold |
+| Supported question tool returns an actual model/consent/budget answer synchronously | Reconcile against current evidence and prior answers, then ask the next unresolved field or show configuration review and request final approval. | Treat the answered tool as still waiting, demand "continue", or auto-approve |
+| Operator asks to start the approval process; an exact model allowlist is then recorded; role default remains unset | Start/advance the interview and actually ask the next decision, for example "Which allowed model should be the default?" If already supplied, ask the next genuinely unresolved role override/reasoning field instead. | End with "Next is role assignment; workers remain blocked", or treat starting the approval process as final approval |
+| Question is actually unanswered or tool is suspended | Keep just that question outstanding; identify operator and actual answer/cancel control or supported delivered-answer event. Follow the host lifecycle and reconcile when input arrives. | Claim the tool completed, queue more questions behind it, poll or invent self-wake |
+| Required model-selection/accounting capability lacks evidence | Use supplied evidence or one known-short relevant metadata read; if insufficient request exact evidence/approved demonstrable assisted steps and continue independent questions. Hold affected dispatch. | Launch a discovery worker to satisfy its own approval gate, guess N/A, or research every provider |
+| Partial prestaged answers | Validate/reuse valid answers and ask the next genuinely missing/conflicting/unsupported field. | Replay resolved questions or fill unknowns with defaults |
+| Fully populated but unapproved prestaged inputs | Validate required evidence, summarize objective/scope/version/settings/limits and request final explicit approval. | Replay all sixteen questions or treat staged external consent as run approval |
+| Same-run continuation with valid approval, current ownership/evidence and reservable allowance | Reconcile steering/effects/ledger, reserve and dispatch the next eligible bounded assignment through its verified path; reuse pinned references. | Re-interview without a changed scope, reset budgets/owners or stop at "ready" |
+| Approved assignment delivered to an execution worker | Confirm identities/ownership/dependencies/settings/reservation and execute within the assigned scope; report a specific failed gate if any. | Adopt coordinator interview/one-read restrictions and acknowledge without execution |
+| Worker delivery/completion/result event reaches coordinator | Reconcile actual launch/result evidence and IDs; acknowledge delivery only as delivery. Take next eligible review/acceptance/dispatch action, without waiting for unrelated workers or duplicating effects. | Mark delivery as completion, leave a cleared wait unchanged, or replay an already applied result |
+| Hard budget/authority block with no eligible independent action | Hold affected effects; name the exact cap/reservation or missing grant, accountable approver/ledger owner, and required decision/evidence/manual action. Preserve live operations and uncertain charges. | Raise a cap, free uncertain reservations, cancel stateful work or claim indefinite automatic resumption |
+
+For the reported trajectory, the finite path is:
+`new run -> outcome answer received -> compact pending-state reconciliation ->
+focused scope/next missing run question -> validated policy summary ->
+final explicit approval -> reserved, owned dispatch`.
+If a real input/evidence gap interrupts this path, expose its exact unblocker
+and actor. A synchronous answer resumes the path in that request; a yielding
+host resumes on its actual answer event. No generic continuation prompt is
+part of the contract.
+
+The screenshot reports a completed response after an answer, not a reproduced
+host hang. These examples correct protocol behavior; they neither reproduce nor
+repair the photographed host. A separate message-delivery/wake failure requires
+independent evidence, not this same diagnosis.
 
 ## Steer work without losing prior intent
 
@@ -218,6 +266,10 @@ coordinator. Confirm the assignment identities, ownership, workspace, scope,
 dependencies, authority, budget, acceptance, and return path before effects.
 Inspect current work and surviving operations. Stop for incompatible ownership
 or unknown effects rather than assuming they ended with the previous session.
+Reuse the valid approved run policy; do not restart the coordinator interview
+or apply its preparation limits as a one-tool execution cap. Once gates pass,
+execute this assignment, not just acknowledge it. Return exact missing gates
+to the coordinator when blocked; do not broaden authority or reset allowance.
 Own your execution handles, checkpoints, and evidence. Return an identified
 candidate and result through the packet's agreed channel.
 ```

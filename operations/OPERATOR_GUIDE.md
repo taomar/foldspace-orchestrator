@@ -1,6 +1,6 @@
 # Your guide to running projects with GitHub Copilot
 
-**Revision 2.1.3 · 6 September 2026**
+**Revision 2.1.4 · 6 September 2026**
 
 This pack uses **GHCP** to mean **GitHub Copilot**. It supports projects in which research, implementation, and architecture evolve together. Apply it to the actual repository and installed Copilot environment; it does not assume your stack, deployment destination, or session controls.
 
@@ -24,9 +24,11 @@ Revision 2.0 remains the historical public baseline at commit `38e9ce28964d80383
 
 Open the intended repository. Provide the current outcome, known constraints, existing authority, and any other active work. Leave unknown facts unknown. **Before launching any orchestrated worker, including discovery/research, or making any direct external LLM API call, complete the configuration interview and explicitly approve the recorded run.** The current coordinating chat may do safe local planning and bounded capability reads to ask the questions; it is not retroactively blocked. After approval and budget reservation, the bootstrap coordinator delegates repository discovery and setup implementation to workers and uses their evidence to configure coordination.
 
-The first response should acknowledge supplied intent/run mode and ask one next unresolved question, then end. Do not wait for a repository scan, complete model catalog, setup generation, or recovery drill. Before approval, each follow-up resolves one question using supplied evidence or one named known-short local lookup. If evidence is unavailable, report the exact missing item, owner and next action and return; do not loop or silently choose a default. Valid continuation records avoid re-asking settled questions.
+The coordinator acknowledges supplied intent/run mode and reuses valid answers, including [optional prestaged inputs](../protocol/RUN_CONFIGURATION.md#optional-prestaged-interview-inputs). **One question at a time means one outstanding unanswered question**, not one answered decision per response. When an answer arrives, including a synchronous question-tool result, reconcile it and take the next bounded read, focused question, configuration review/final approval request or approved action. No extra "continue" is needed. A status-only "recorded/blocked until..." exit is invalid while such a step is available.
 
-When input or external progress is needed, end with **phase, last completed action, waiting on/owner, next action or actual trigger**. Returning control does not declare the project complete or stop surviving workers. After approval, keep unrelated eligible work moving before yielding. These are conversational instructions, not guarantees that a host will deliver queued input or preempt a stuck call.
+Use supplied evidence or one named known-short read for a missing fact, not repository scans, catalogs, setup generation or drills. If insufficient, ask the exact evidence/access question or advance an independently answerable field; missing dispatch approval is not a global interview hold. For "continue pending work", use known compact state/checkpoint/task records to derive candidates and acceptance, ask focused selection for material ambiguity, or request the exact unknown location/access. Do not demand a rewritten backlog or invent tasks.
+
+For a real wait, show **phase, last completed action, exact gap/owner, supported resume event or manual action**. Follow the actual host question lifecycle: a suspended tool is not a completed response, and an answered tool is not waiting. Keep independent eligible steps moving before yielding; do not poll, auto-continue, claim self-wake or pretend unsupported controls exist. Valid same-run approval avoids re-interview; fully staged but unapproved inputs still need validation, summary and final approval. See the [owning transition contract](../protocol/FIRST_SESSION_AND_ORCHESTRATION.md#opening-turn-and-return-control-contract).
 
 For a new project, use:
 
@@ -37,7 +39,10 @@ https://raw.githubusercontent.com/taomar/foldspace-orchestrator/main/protocol/BO
 Outcome and acceptance: [what to build and how to recognize it]
 Scope and authority: [constraints, permitted actions, or explicitly unknown]
 
-First acknowledge supplied intent, ask one unresolved question, and return.
+Reconcile intent and supplied answers; keep only one unanswered question open.
+After each answer/tool result, take the next bounded question/read/approval step,
+not a status-only exit. Yield only for a real wait with gap, actor and actual
+resume event/manual action; use the host's supported question lifecycle.
 Use the entry's full-URL source map only as needed, not a full-pack preload.
 Complete its mandatory model/reasoning, external-consent and budget interview
 and obtain final approval before any worker or direct external LLM call.
@@ -61,8 +66,14 @@ https://raw.githubusercontent.com/taomar/foldspace-orchestrator/main/protocol/BO
 Mode: [new run / same-run continuation]
 Outcome and constraints: [actual project goal and limits]
 
-Acknowledge supplied state and ask one unresolved question or state the next
-bounded action, then return. Preserve objectives, decisions, tasks/owners,
+Reconcile supplied state and answers, then take the next permitted bounded step:
+read known compact pending-task state, ask a focused missing question,
+request final approval or perform approved coordination. An answered tool is
+not waiting; no status-only exit or extra "continue" between answers.
+If the task record is unknown/unavailable, ask its exact location/access or
+advance an independently answerable field. Yield only for a real wait with
+gap, actor and supported resume event/manual action.
+Preserve objectives, decisions, tasks/owners,
 unfinished work, operations, steering, evidence, approvals and accounting.
 A new run explicitly reconfirms settings; continuation retains valid approval
 and pinned local references. Obtain missing approval before affected dispatch.
@@ -79,12 +90,12 @@ eligible work unblocked. No deployment/publication authority is implied.
 
 ### The bootstrap questionnaire
 
-Use the [complete reference and compact examples](../protocol/RUN_CONFIGURATION.md). These are exact short prompts to ask **before discovery dispatch**, one at a time where supported:
+Use the [complete reference, prestaging checklist and compact examples](../protocol/RUN_CONFIGURATION.md). Cover these decisions **before discovery dispatch**, asking only unresolved fields one at a time through the supported interaction. This is not a mandatory question replay; split unresolved compound fields, reuse valid supplied answers and request final approval separately:
 
 1. **“Is this a new run, or continuation of which approved run ID and policy version?”** Reconcile earlier records first. A new run requires explicit reconfirmation; a new session continuing the same run does not require asking again at every tool call.
 2. **“Which providers, model families, and exact supported model IDs are allowed?”** Record the explicit default, coordinator/execution/review/integration/deployment overrides as applicable, and approved fallback IDs. Family names alone are insufficient; no hardcoded versions or silent host defaults.
 3. **“For each allowed model, what minimum, maximum, and default reasoning do you approve?”** Verify that provider/model's supported categorical order before checking `minimum <= default/effective <= maximum`. Fixed/unsupported reasoning must be explicitly `N/A / not configurable` and accepted by the operator. Do not invent scales or map labels across models.
-4. **“Are direct external LLM calls disabled, or what exact scope do you approve?”** Ask even if disabled. Copilot-managed requests are separate. Direct endpoints default **DENIED** until provider/endpoint, exact model, purpose, permissible data categories, secure credential reference (never the key), and budget are approved. Unknown consent blocks affected calls, not safe local planning.
+4. **“Are direct external LLM calls disabled, or what exact scope do you approve?”** Require an explicit answer even if disabled; reuse valid supplied answers. Copilot-managed requests are separate. Direct endpoints default **DENIED** until provider/endpoint, exact model, purpose, permissible data categories, secure credential reference (never the key), and budget are approved. Unknown consent blocks affected calls, not safe local planning.
 5. **“What aggregate run cap and measurable units do you approve, and how should native/external and worker/task/provider allocations divide it?”** Use an explicit amount in currency or measurable host credits/tokens/calls. Missing is not unlimited. Deliberately uncapped scope needs explicit opt-in naming its scope and acknowledging the risk.
 6. **“What maximum concurrency, retry/replacement allowances, and stop/escalation rules do you approve?”** Record the authority needed for any increase and what uncertainty blocks new affected work.
 7. **“Do you approve this resolved run configuration, consent scope, budget and enforcement limitations?”** Present run ID/version, operator, source, timestamp and evidence references. Record the explicit answer before starting workers or direct external LLM calls.
@@ -222,6 +233,32 @@ An exit code alone does not establish every acceptance criterion. A worker sayin
 
 An idle session is a symptom. Task dependencies, runtime scheduling, a tool job, provider limits, session failure, or lost context can produce similar visible behavior. Capture evidence before attributing the cause.
 
+### Completed response versus an actual wait
+
+First distinguish a **completed acknowledgement-only response** from a request
+that is still waiting for input or cannot receive messages. In the reported
+bootstrap trajectory, "new run" was selected and the outcome answer "continue
+the pendings" had returned from the question tool. A final "recorded, execution
+blocked until scope/settings/approval" response with no next question/read
+violates the transition contract: those dispatch gates do not prohibit asking
+the next question or reading known compact task state.
+
+Use that state to derive scope/acceptance, ask focused candidate selection,
+or ask the record's exact location/access if unknown. Then advance missing run
+decisions and final approval; do not bypass them. A genuine unanswered question
+instead waits on its operator and actual answer/cancel control. A hard authority,
+capability or budget block names its exact unblocker and accountable actor;
+it does not silently reset limits or grant permission.
+
+This documentation fault is established from the old return rules; it does
+not establish or repair a host defect. Separately, a completed publication
+worker was reported not to receive later requests in its session history:
+that is a delivery/wake boundary observation, not evidence it executed this
+bootstrap and stopped. The underlying host cause remains unconfirmed.
+Use the [finite transition examples](EXAMPLES.md#bootstrap-transition-examples)
+for protocol behavior and the independent triage below for an actually blocked
+message path; do not conflate the two.
+
 ### Early bootstrap with little or no worker activity
 
 **Do not send a recovery prompt to the affected session if it will join the same blocked queue.** Its inability to consume messages is the problem, not an invitation to enqueue more. Use the operator's host UI, an independent read-only observation/control API, or an already healthy authorized observer. If no such route is available, report that limitation; a message, automation tick or instruction file is not an out-of-band control.
@@ -230,7 +267,8 @@ An idle session is a symptom. Task dependencies, runtime scheduling, a tool job,
 | --- | --- |
 | No first response and no tool shown | Request accepted/delivered state, supplied context size, selected model/reasoning and run mode, provider/host observations. Do not assume no activity or blame worker count. |
 | An active tool invocation | Actual tool/request handle, start/last observation, expected bounded output and surviving process/job. One stuck tool can hold a turn without any worker load. |
-| Phase says awaiting input/evidence | The unresolved field, operator/evidence owner, delivery evidence and whether a question tool is suspending the active request. A visible question is not proof the turn ended; use its actual answer/cancel control, not an ordinary message queued behind it. |
+| Phase says awaiting input/evidence | Check whether the answer/evidence was already delivered. If so, reconcile and advance instead of retaining a stale wait. If not, identify the exact missing item, owner and actual answer/evidence control; a suspended question is not a completed response. |
+| Completed "recorded/blocked" after an answered question | Identify the next permitted read/question/review/approved action under the transition contract. A completed response alone is not a hung host, and a stale wait label does not justify recovery/restart. |
 | A worker launch call remains open | Whether the mechanism waits for the entire job rather than returning a usable handle; preserve the existing operation before changing launch mode. |
 | Automation or repeated continuation requests | Producer identity, target, trigger, overlap behavior, active invocation and queue acknowledgements; distinguish new work from repeated wake-ups for the same unresolved step. |
 

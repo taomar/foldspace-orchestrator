@@ -1,6 +1,6 @@
 # Configure the run before dispatch
 
-**Revision: 2.1.3 - 6 September 2026**
+**Revision: 2.1.4 - 6 September 2026**
 
 This is the bootstrap questionnaire and configuration reference for FoldSpace
 Orchestrator, not an executable configuration loader. The canonical
@@ -31,20 +31,33 @@ explicit approval. A fresh session is not necessarily a new run.
 ## Bootstrap questionnaire
 
 Start the coordinator with [BOOTSTRAP.md](BOOTSTRAP.md), not a bulk load of all
-references. The first response identifies supplied intent/run mode and asks
-the next unresolved question. End the response while awaiting its answer.
-Do not complete a repository scan or enumerate every model/pricing option first.
+references. Reconcile supplied intent/run mode and valid answers first,
+including the optional inputs below. The table is a coverage checklist, not a
+requirement to replay all sixteen questions.
 
-Ask **one question at a time** where the host supports it. Replace choices with
-actual supported options and record the response; do not preselect a model or
-invent a spending cap. Unknown answers leave the affected work blocked.
+**One question at a time means at most one outstanding unanswered question.**
+Use the supported question mechanism. When an answer arrives, including a
+synchronous question-tool result, reconcile it and take the next bounded read,
+missing/conflicting/unsupported question, review/final approval request, or
+approved action. Do not end with only "recorded/blocked until..." when one of
+those steps is available. No extra "continue" is required. Complete unapproved
+answers go to validation and a resolved summary for explicit final approval;
+same-run valid approval is retained, not requested again by habit.
 
-Use supplied evidence or one known-short targeted local lookup for the current
-question, then return. If evidence remains unavailable, report
-`awaiting_evidence` or `blocked`, name the exact missing item and next actor,
-and stop that turn. Do not guess fixed N/A, approval or cost controls merely
-to proceed. Read the next relevant section when needed; this reference is not
-an instruction to finish all capability research before speaking.
+Use supplied evidence or one known-short targeted read for a missing fact;
+consume its result and advance, rather than returning solely because a lookup
+finished. If evidence is unavailable, request the exact item/location/access
+from its owner or advance an independently answerable field. "Continue pending
+work" uses supplied context or a known compact authoritative checkpoint/task
+index to derive candidates and acceptance; ask focused selection if needed,
+not a rewritten backlog. Unknown facts stay unknown and block affected dispatch,
+not all interview progress. Do not launch discovery workers to unlock approval.
+
+Follow the [canonical transition contract](FIRST_SESSION_AND_ORCHESTRATION.md#opening-turn-and-return-control-contract):
+yield for real unanswered input/evidence/capability dependencies with exact
+gap, owner and supported resume event/manual action. A suspended question is
+not a completed response; an answered question is not waiting. No broad scans,
+catalogs, chained research, polling, invented defaults/N/A or self-wake.
 
 | Order | Question to ask |
 |---|---|
@@ -65,9 +78,92 @@ an instruction to finish all capability research before speaking.
 | 15 | "At a cap, unsupported setting, or uncertain charge, what stopping and escalation policy should apply?" |
 | 16 | "Do you approve this complete versioned policy, including any explicitly uncapped or assisted limitations, before affected dispatch begins?" |
 
-Split compound follow-up fields into individual questions rather than treating
-the table as a single blanket approval prompt. Existing explicit answers can
-be summarized for reconfirmation; do not force the operator to recreate them.
+Split unresolved compound fields into individual questions. Summarize existing
+explicit answers for final new-run reconfirmation; do not force the operator
+to recreate them. Final approval must cover the resolved objective/acceptance,
+scope/authority, policy version, settings, accounting and capability limitations.
+
+## Optional prestaged interview inputs
+
+You may paste any known answers **under the bootstrap prompt** to reduce
+back-and-forth. No file, attachment, new tracker or state store is required.
+This is optional preparation, not a demand to research models, reconstruct
+tasks or manufacture unknown facts. Leave unknown/unset fields explicit.
+Keep sensitive/private answers in the authorized target conversation or
+existing private records, **not in this public documentation repository**.
+
+**Operator choices** establish desired scope, limits and consent.
+**Agent-verified evidence** establishes recorded project facts and actual host
+support; an operator's proposed setting is not proof that the host applies it.
+The agent derives/reconciles available facts from supplied context or known
+compact authoritative records and verifies only the controls needed next.
+It asks only missing, conflicting or unsupported items.
+
+| Input | When needed | Operator can prestage | Agent reconciles or verifies |
+|---|---|---|---|
+| Project and run | Required | Target; new project/new run/same-run continuation; existing run/policy reference if known | Actual run/version and approval source; a new session need not mean a new run |
+| Outcome and acceptance | Required | Desired result/criteria **or** "continue recorded pending work" plus known tracker/state/checkpoint path or task IDs | Recorded candidate tasks, acceptance and current dependencies; focused selection only for material ambiguity |
+| Scope and authority | Required for intended effects; deadlines conditional | Allowed actions/files, compatibility constraints, exclusions, relevant deadline; known authority references | Existing grants and limits; setup/preparation is not deployment/publication permission |
+| Ongoing work | Existing projects/shared resources | Known owners, jobs, operations, resources/exclusions and record references, or unknown | Current ownership/effects, pending steering and conflicts; do not orphan old work or infer it stopped |
+| Host and surface | Optional hints; required control evidence before affected execution | Host/surface/version and known limitations or evidence references | Available interaction, model/reasoning selection and observation, dispatch/return, accounting and assisted controls |
+| Models | Required for applicable roles | Providers/families/exact IDs, default model, role overrides, exact fallbacks and selection conditions | Actual support and application evidence; families or silent defaults are insufficient |
+| Reasoning per model | Required | Minimum/default/maximum, or proposed nonconfigurable N/A acceptance | Provider/model-specific supported order and in-range default; verify N/A and obtain explicit acceptance, never infer it from unknown support |
+| Direct external LLM calls | Required disabled/enabled decision; details conditional on opt-in | Disabled, or provider/endpoint/exact models/purpose/permitted data categories and **secure credential reference only** | Distinct from native Copilot; no key values, private-data probes or calls before scoped consent and final approval |
+| Budgets and allocations | Required; subcaps conditional | Explicit caps **and units**, native/external allocations, applicable task/worker/provider subcaps | Observable/boundable units, separate incomparable ledgers, price/usage evidence where needed; no invented numbers or conversions |
+| Concurrency, retries and stop | Required | Maximum concurrency, retry/replacement limits, stop/escalation rules and accountable authority | Feasibility within parent caps, uncertainty and reservation controls; no automatic budget increase |
+| Existing accounting | Existing runs/work where applicable | Known ledger reference, usage, reservations and uncertain charges, or unknown | Authoritative balances and surviving exposure before replay/reallocation; staging does not reset budgets |
+| Final run approval | Required for a new run; not granted by staging | Preparation only; final approval pending | Validate and summarize the versioned policy, evidence/limits and scope, then request explicit approval; retain valid same-run approval |
+
+Missing caps are not unlimited. A deliberately uncapped scope is exceptional:
+explicitly identify that scope, opt in and acknowledge unbounded-cost risk.
+Other scoped limits still apply. Native/external allocations with incomparable
+units stay separate; do not add them or silently convert them to money.
+
+### Copy and paste preparation template
+
+This is an **illustrative text template**, not an executable schema, live
+configuration, permission grant or approved launch packet. All bracketed values
+are placeholders; replace only what you know. Repeat the model line as needed.
+Any staged external consent is scoped input, **not overall run authorization**.
+
+```text
+Preparation only; final approval pending.
+Project/target: <known reference or unknown>
+Mode: <new project / new run / same-run continuation / unknown>
+Existing run/policy/approval reference: <known reference or unknown>
+Outcome/acceptance: <desired result and criteria OR continue recorded pending work>
+Pending tracker/state/checkpoint and task IDs: <known references or unknown>
+Scope/compatibility/allowed actions/exclusions: <choices or unset>
+Deadline if relevant: <constraint or unknown>
+Existing authority references: <known references or unknown>
+Ongoing owners/jobs/operations/resources/exclusions: <known facts/refs or unknown>
+Host/surface/version/known limits/evidence: <known hints/refs or unknown>
+Providers/families/exact model IDs: <choices or unset>
+Default model and role overrides: <coordinator/execution/review/integration/deployment choices or unset>
+Exact fallbacks and selection conditions: <choices, explicitly none, or unset>
+Per model: <exact ID>; reasoning min/default/max: <choices or unset>;
+  supported-order evidence: <reference or unknown>;
+  nonconfigurable N/A evidence and explicit acceptance: <if applicable or unset>
+Direct external calls: <disabled OR proposed conditional scope OR unset>
+If enabled: <provider/endpoint/exact models/purpose/permitted data categories>
+Secure credential REFERENCE only, never a key: <if enabled, reference or unknown>
+Aggregate native cap + units: <explicit choices or unset>
+Aggregate external cap + units: <if applicable, explicit choices or unset>
+Native/external allocations and applicable subcaps + units: <choices or unset>
+Exceptional uncapped scope + explicit risk acknowledgment: <if chosen or unset>
+Maximum concurrency: <choice or unset>
+Retry/replacement limits: <choices or unset>
+Stop/escalation policy and authority: <choices or unset>
+Existing ledger/usage/reservations/uncertain charges: <known facts/refs or unknown>
+Remaining decisions/evidence gaps: <known gaps or unknown>
+```
+
+Partial input advances to the next real missing question. Fully populated but
+unapproved input advances to verification, summary and final explicit approval,
+not automatic setup/dispatch. Reconcile changed facts against existing records;
+do not create duplicate authority or ledger totals from the pasted template.
+Same-run valid approval, owners, effects, resource exclusions and reservations
+survive. A new-run approval remains separate even if all choices were prestaged.
 
 ## Model and reasoning validation
 
@@ -80,8 +176,9 @@ universal numbers. Obtain their supported ordering from adequate host/provider
 evidence. Check `minimum <= default/effective <= maximum` in that ordering,
 not lexical order or a mapping from another model's labels.
 
-If reasoning is fixed, unavailable, or unsupported, record **not configurable /
-N/A** with the operator's acceptance. Do not fabricate a min/max range. If
+If evidence establishes that reasoning is fixed or nonconfigurable in this
+host, record **not configurable / N/A** with explicit operator acceptance.
+Unknown support is not verified N/A. Do not fabricate a min/max range; if
 ordering cannot be established, bounds are not validated.
 
 If the host cannot select or prove the actual applied model/reasoning, record
@@ -96,8 +193,9 @@ Copilot-managed session/agent requests and direct requests to external LLM
 endpoints are different consent and accounting paths. Authorization for the
 former does not imply permission for the latter.
 
-Always ask the external-call question, even if the answer is **disabled**.
-Before consent, external calls are **denied**. An enabled grant must identify
+Require an explicit external-call answer, even when **disabled**; reuse a valid
+supplied answer or same-run consent rather than asking it again. Without
+consent, external calls are **denied**. An enabled grant must identify
 provider/endpoint, allowed models, purpose, permitted data categories, secure
 credential references, and budget. Repository access is not blanket consent
 to send repository contents externally.

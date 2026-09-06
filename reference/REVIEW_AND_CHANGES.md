@@ -1,10 +1,85 @@
 # Orchestration review and revision guide
 
-**Revision:** 2.1.3 — 6 September 2026  
+**Revision:** 2.1.4 — 6 September 2026
+
 **Historical 2.0 review input:** all three Markdown documents in the uploaded archive.  
-**Scope:** preserve the 2.0 orchestration, parallelism and recovery policies while adding mandatory approved run configuration, model/reasoning and external-consent gates, aggregate budget accounting, and repository documentation relocation.
+**Scope:** preserve orchestration, parallelism, recovery, approval and accounting while correcting bootstrap transitions and adding optional prestaged interview inputs.
+
+## Revision 2.1.4 bootstrap progression and optional inputs
+
+**Established protocol fault:** revision 2.1.3 at public commit
+`89b1ea72aaa788e4d28c5d09a645524c0793c3fc` carried the 2.1.2 instruction to
+resolve one interview decision per response and return after a targeted lookup.
+The compact entry, main section 3, generated runtime core, questionnaire and
+copied prompts could therefore end after an answer even when the next
+clarification was permitted. Missing dispatch approval was conflated with a
+reason to stop interview preparation.
+
+The reported example selected a new run, answered the outcome question with
+"continue the pendings", and received only a completed acknowledgement that
+scope, criteria, limits and approval remained unresolved. The answer had
+already returned; it was not an outstanding question. That trajectory exposes
+the faulty terminal transition, not evidence of a photographed host hang.
+A second screenshot shows the same pattern after a model allowlist was
+recorded: "Next is role assignment" described but did not ask the next question.
+Requesting the approval process must advance the interview, not silently grant
+final approval or produce another acknowledgement-only stop.
+
+**Owning correction:** the main section 3
+[transition contract](../protocol/FIRST_SESSION_AND_ORCHESTRATION.md#opening-turn-and-return-control-contract)
+now requires reconciliation of delivered answers/tool results/steering/
+acknowledgements/completions and the next permitted bounded step. One question
+at a time means one outstanding unanswered question, not one answered decision
+per response. Safe reads, focused questions, policy review/final approval and
+already-authorized actions prevent a status-only unfinished-work exit.
+Real waits name the exact input/dependency, actor and supported resume event or
+manual action. Actual host question lifecycle remains authoritative; no forced
+tool completion, polling, automatic "continue" loop or invented self-wake.
+
+"Continue pending" uses supplied context or known compact authoritative
+state/checkpoint/task records to derive candidates and acceptance. Ask focused
+selection or the exact missing record/access, not a rewritten backlog or broad
+discovery. Capability evidence must not require an unapproved worker to unlock
+its own gate; safe bounded evidence and independent interview decisions remain
+possible. Approved execution workers consume their assignments rather than
+inherit coordinator-only interview/preparation limits as execution stops.
+
+The [optional checklist and placeholder template](../protocol/RUN_CONFIGURATION.md#optional-prestaged-interview-inputs)
+separate operator choices from agent-verified facts and required from
+conditional/optional fields. Paste known answers under the URL-first prompt;
+no attachment, new live store or public disclosure of private inputs is needed.
+Partial inputs lead to the next missing question. Complete unapproved inputs
+lead to validation/summary/final approval, not question replay or auto-dispatch.
+
+**Preserved boundaries:** exact models/fallbacks and per-model verified
+reasoning bounds/default or explicitly accepted verified N/A; external calls
+default denied with separate consent; explicit units/caps/allocations,
+concurrency/retries, reservations and separate incomparable ledgers; final
+new-run approval; same-run authority; existing owners, effects, resource
+exclusions, usage and uncertainty. Public reference GETs are not external
+inference. URL-first adoption, pinned safe localization, final folder layout
+and preparation-versus-release authority remain unchanged.
+
+**Compatibility and limits:** deliberately update conflicting active prompt/
+runtime copies in an approved target adaptation; do not silently replace pinned
+references or reset live records. The
+[finite transition cases](../operations/EXAMPLES.md#bootstrap-transition-examples)
+cover answered versus unanswered tools, the reported pending-work path,
+unknown records, missing capability, staged inputs, approved continuation/
+assignment/result, and hard budget/authority blocks. They are document-level
+cases, not executed host evaluations or proof of enforced controls. This
+publication does not claim to reproduce or repair the photographed host.
+
+Separately, observation of a completed publication worker found later requests
+absent from its receiving session history. That supports a delivery/wake
+boundary gap, not evidence that worker ran this bootstrap and dead-ended.
+The underlying host/application cause remains unconfirmed; no platform
+workaround, runtime, package, worker framework or supervisor is introduced.
 
 ## Revision 2.1.3 URL-first adoption
+
+This is historical context. The 2.1.4 transition contract supersedes earlier
+per-response decision/return wording; the URL-first localization contract stays.
 
 The standard onboarding now starts with one pasted prompt containing the full
 public raw Markdown bootstrap URL. The operator opens the actual target project
@@ -31,6 +106,10 @@ agent workflow specification, not a new downloader, installer, SDK or
 guarantee that every Copilot host can execute it.
 
 ## Revision 2.1.2 bootstrap responsiveness
+
+The per-response stop rules described below are historical and superseded by
+2.1.4's advance-or-real-wait contract, not active instructions to stop after an
+answered question.
 
 An early queued/silent bootstrap was reported with little worker activity.
 The affected host, session/request trace, and automation producer were not

@@ -32,6 +32,10 @@ FoldSpace checkout, or assumed instruction-entrypoint filename is required.
 
 Replace the bracketed fields and paste this **whole prompt** into the target
 project's Copilot session. It is ordinary language, not a native slash command.
+Optionally paste known interview answers underneath using the
+[prestaging checklist and copy/paste template](../protocol/RUN_CONFIGURATION.md#optional-prestaged-interview-inputs).
+Leave unknowns unknown; no attachment or extra file is needed, and these inputs
+do not grant final run approval.
 
 ```text
 Use FoldSpace Orchestrator in this target repository. Do not ask me to clone
@@ -41,13 +45,20 @@ https://raw.githubusercontent.com/taomar/foldspace-orchestrator/main/protocol/BO
 Use its source map to retrieve detailed references only when needed.
 
 Project mode: [new project / new run in this project / same-run continuation]
-Outcome: [what I want built or changed]
-Acceptance: [observable criteria]
+Outcome: [what I want built or changed, or continue recorded pending work]
+Acceptance or pending record: [criteria, known state/tracker path/IDs, or unknown]
 Scope and authority: [allowed actions/files, compatibility, excluded effects]
 Known ongoing work: [owners, changes, operations, or explicitly unknown]
 
-Acknowledge supplied intent/run mode, ask one next unresolved question, and
-end the first response before scans, setup generation or worker launch.
+Acknowledge intent/run mode and reuse valid supplied/prestaged answers.
+Keep at most one unanswered question outstanding. Reconcile each answer,
+including one returned by a question tool, then take the next bounded read,
+focused question, configuration review/final approval request or approved action.
+Do not require "continue" between answers or end with only "recorded/blocked".
+For pending work, derive candidates/acceptance from known compact records;
+ask focused selection or exact record access/location if missing, not a new backlog.
+Follow actual host question lifecycle. Yield for real waits with exact gap,
+owner and supported event/manual action, not merely because a tool answered.
 Use bounded public reference reads and safe local preparation; no private
 project/user data may be uploaded or sent to external inference for this.
 If URL access or writes are unavailable, request normal host permission or
@@ -80,11 +91,18 @@ dispatch is unavailable. Reconcile unknown effects before retrying.
 
 ### Answer the interview before dispatch
 
-Expect one unresolved question or bounded-action checkpoint, then a completed
-response, not a silent full-repository audit. Missing input/evidence should
-produce an explicit hold and next actor. A host question tool may itself suspend
-the request; use its actual answer/cancel control rather than a message queued
-behind it. No model IDs, reasoning levels, or spending caps are preselected here.
+Expect one outstanding unanswered question, not a silent full-repository audit.
+After you answer, the coordinator advances to the next useful question/read or
+configuration review; you do not need to say "continue" after each answer.
+It reuses valid prestaged answers rather than replaying the full questionnaire.
+Complete unapproved inputs still require validation, summary and final approval.
+
+A real missing input/evidence/capability has an exact unblocker and next actor.
+A host question tool may suspend the request; use its actual answer/cancel
+control rather than a message queued behind it. Once the tool returns your
+answer, that question is no longer waiting. A completed "recorded, blocked
+until..." acknowledgement without the next useful question is not correct
+progression. No model IDs, reasoning levels or spending caps are preselected.
 
 | The coordinator asks for... | You explicitly approve... |
 |---|---|
@@ -164,6 +182,11 @@ Reconcile any genuinely shared resources before conflicting effects.
 A **new run in the same project** explicitly reconfirms settings while
 preserving requirements, tasks, owners, operations, resource exclusions,
 pending steering, evidence and budget exposure. It does not stop old work.
+"Continue pending work" tells the coordinator to use supplied context or a
+known compact authoritative state/checkpoint/task index. It derives recorded
+candidates and acceptance, asks only material selection/gaps, or asks where
+the record is/access to it if unavailable. You need not rewrite recorded tasks;
+no broad scan or discovery worker starts before approval.
 
 A **same-run continuation** restores valid policy, pinned local references and
 the ledger; it does not re-interview every call or silently refresh source

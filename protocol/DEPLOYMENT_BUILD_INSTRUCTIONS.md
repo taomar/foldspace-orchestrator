@@ -1,6 +1,6 @@
 # GitHub Copilot: deployment-build session instructions
 
-**Revision:** 2.1.3 — 6 September 2026.
+**Revision:** 2.1.4 — 6 September 2026.
 
 **Audience:** the deployment coordinator and the execution sessions it assigns.  
 **Use:** a new deployment coordinator starts with [BOOTSTRAP.md](BOOTSTRAP.md) and compact state, not this full reference as opening context. Approved execution sessions load the relevant deployment sections alongside their assignment and generated protocol. Implement and validate the applicable components and leave an executable project-specific runbook. [OPERATOR_GUIDE.md](../operations/OPERATOR_GUIDE.md) explains operation and handoffs.
@@ -19,7 +19,11 @@ Follow the project's orchestration, task, evidence, and recovery rules. If the f
 
 ### Approve the run before deployment workers or external LLM calls
 
-For a standalone deployment coordinator, enter through [BOOTSTRAP.md](BOOTSTRAP.md): give the first compact checkpoint/question and return control on input or evidence holds. Do not read the full deployment reference, scan infrastructure, query model catalogs or start rehearsal before that interaction. A coordinator continuing an approved run reuses its compact state and approval instead of restarting the interview. Load detailed release sections only when the corresponding task requires them; an executor's substantive work still belongs to its bounded assignment.
+For a standalone deployment coordinator, enter through [BOOTSTRAP.md](BOOTSTRAP.md) and follow the [advance-or-wait contract](FIRST_SESSION_AND_ORCHESTRATION.md#opening-turn-and-return-control-contract). Reuse supplied/prestaged answers; one question at a time means one outstanding unanswered question. Reconcile each answer, including a synchronous question-tool result, and take the next bounded read, focused question, review/final approval request or authorized coordination action. Do not end with only "recorded/blocked" while such a step remains. Follow actual host lifecycle; yield for a real wait with exact gap, owner and supported resume event/manual action, not merely because an answer was received. No full reference preload, infrastructure scan, model catalog or rehearsal before approval.
+
+A coordinator continuing an approved run reuses compact state and approval rather than restarting the interview. "Continue pending" uses known compact release/task/checkpoint records to derive candidates and acceptance; ask only material selection or exact record location/access gaps. Missing capability evidence holds affected dispatch, not independent interview questions; do not launch an unapproved discovery worker to prove its own gate. Complete unapproved prestaged inputs need validation, summary and final explicit approval.
+
+These interview/preparation limits belong to the coordinator. An executor receiving a complete approved deployment assignment reconciles identity, ownership, scope, dependencies, applied settings and reservation, then executes that contract rather than repeating the interview or stopping after acknowledgement/one read. Return a specific failed gate to the coordinator if needed. On delivered acknowledgements/results, the coordinator reconciles evidence and takes the next eligible action; delivery alone is not completion or release authority. Load detailed release sections only when that task requires them.
 
 The entry and references may be supplied as public GitHub URLs; a documentation-pack clone is unnecessary. After approval, follow the [pinned-source localization contract](FIRST_SESSION_AND_ORCHESTRATION.md#localize-github-references-without-cloning) in a bounded setup assignment, preserving current instructions and live work. Copying the deployment reference does not grant deployment authority.
 
