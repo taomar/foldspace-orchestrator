@@ -83,6 +83,27 @@ affiliation.
 
 ## Review expectations
 
+### Issue-linked publication
+
+Use one public GitHub issue per distinct problem or change; reuse it across
+related pushes rather than opening an issue for each push. Before publishing,
+record the problem, public-safe evidence, expected behavior, root cause
+(confirmed versus hypothesis), proposed fix, affected paths/revision, acceptance
+criteria and known limits. Update it with the final fix as the work develops.
+
+Include a non-closing `Refs #N` in related commits until scoped acceptance is
+met. **Every related push requires an issue update** with before/after SHAs or
+full commit links, the concrete fix and impacted files/revision, evidence
+actually observed, and remaining blockers or unverified behavior. Include a
+follow-up pinning or guide-only push too. If a commit already exists, link it
+from the issue rather than rewriting published history. Name one publication
+owner to post updates when contributors are coordinating, avoiding duplicates.
+
+Keep the issue open until its scoped acceptance is met; close only the fixed
+scope and identify any remaining work. Published policy and document checks
+are not proof that an adopter loaded it or that a host runtime defect is fixed.
+Never include private screenshots, paths, conversations, logs or credentials.
+
 Keep a contribution focused. Its pull request should explain the reader's
 problem, changed files and source sections, any behavioral or compatibility
 implications, and how the examples and links were checked.

@@ -16,13 +16,15 @@ capabilities or an explicit assisted/manual handoff.
 [Prompt examples](../operations/EXAMPLES.md) |
 [Run configuration](../protocol/RUN_CONFIGURATION.md)
 
-Current protocol: **2.1.6**. See the [release history](../reference/REVIEW_AND_CHANGES.md).
+Current protocol: **2.1.7**. See the [release history](../reference/REVIEW_AND_CHANGES.md).
 
-This revision tightens [assignment admission and uncertain delivery](../protocol/FIRST_SESSION_AND_ORCHESTRATION.md#admit-new-assignments-not-chat-backlog):
-keep task backlog out of chat, reserve before send, and reconcile lost ACKs/jobs
-before safe replacement. Answers and controls remain deliverable through
-supported routes. READY/IDLE is not wake proof; this contains delivery failures,
-not a repair of Copilot's internal queue.
+This revision makes [coordinator role and action admission persistent](../protocol/FIRST_SESSION_AND_ORCHESTRATION.md#persistent-role-and-action-admission):
+every answer/event routes before tools or research. Coordinators answer from
+existing evidence or route to the existing owner, an eligible executor or a
+bounded sub-orchestrator; "fix it" does not make them executors. Active
+entrypoints/cores and supported tool profiles need deliberate adaptation, not
+just new reference downloads. Instructions cannot guarantee enforcement,
+short reasoning, or repair the host's queue.
 
 ## On this page
 
@@ -57,7 +59,9 @@ edit, one session and a focused check may be simpler.
 ## How it works
 
 The coordinator handles intent, dependencies, assignments, and acceptance.
-Workers own substantive execution, review, integration, and operation records.
+Workers own execution, review, integration, and operation records, even for
+quick source investigations or edits. Child coordinators retain the same
+boundary within their parent-assigned scope and budget.
 
 ```mermaid
 flowchart TD
@@ -95,12 +99,17 @@ Target: [repository; new project, new run in an existing project, or continuatio
 Outcome and acceptance: [one bounded result and observable criteria]
 Constraints and authority: [allowed scope, compatibility, and excluded effects]
 
+Stay coordinator across every message/answer/event and continuation; intent
+and approval do not change role. Before tools/skills, apply the entry's role
+gate: answer from held evidence/compact state or route to the existing owner
+first, an eligible executor or a bounded sub-orchestrator. No source/domain
+research or implementation, even a quick fix. Ask only real decisions/control gaps.
 Preserve existing instructions, work, active owners, operations, and accounting.
 First reconcile supplied intent/run mode and any prestaged answers.
 One question at a time means one outstanding unanswered question, not one
 answered decision per response. On an answer (including a question-tool result),
-take the next bounded read, focused question, review/final approval request or
-approved action. Do not stop at "recorded/blocked" or require another "continue".
+take the next admitted coordination read, question, review/final approval or
+dispatch. Do not stop at "recorded/blocked" or require another "continue".
 For pending work use known compact state/task records, not an invented backlog;
 ask the exact location/access or focused selection if needed.
 Yield only for a real wait with its gap, owner and supported event/manual action,
@@ -109,15 +118,18 @@ For a new run, conduct the mandatory interview one question at a time:
 exact supported models/role defaults/fallbacks, per-model reasoning bounds and
 default, external-call consent, budgets/units and allocations, concurrency,
 retries, and stop policy. Ask for final approval; use no silent defaults.
-Until then, use only bounded public reference reads and safe local preparation
-in this current chat. Do not upload private project data or use external inference.
+Until then, use only compact coordination/capability metadata or needed approved
+bootstrap/configuration references; no discovery worker to unlock approval.
+Do not upload private project data or use external inference.
 
 After approval, reserve budget and assign a setup worker to pin one GitHub
 commit, fetch the required linked references and license, preview conflicts,
 and save versioned reference copies without overwriting my instructions/work.
-Adapt existing project-native instructions/state, record source provenance,
-verify discovery, and continue my actual build objective. Use demonstrated
-tools or report the exact missing permission/capability; do not invent success.
+Have that worker adapt active root/child/executor entrypoints/core and supported
+role/tool profiles, preserving customizations. Verify loaded roles or label
+instructional limits. Continue my actual objective by routing, not executing.
+Use demonstrated tools or report exact missing permissions/capabilities;
+do not invent success.
 Accept candidate-specific evidence and preserve scope and release authority.
 Before depending on idle delivery, establish durable intent/results, actual
 receiver receipt/pickup and verified independent observation/recovery or an

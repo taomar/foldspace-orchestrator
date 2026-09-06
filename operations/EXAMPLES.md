@@ -18,12 +18,19 @@ To upgrade an existing FoldSpace setup, use the single
 [pinned in-place upgrade prompt](../docs/GETTING_STARTED.md#upgrade-without-resetting-live-work),
 not a new-project bootstrap. Read its queued-session warning before pasting.
 
+All coordinator prompts retain the
+[persistent role/action gate](../protocol/FIRST_SESSION_AND_ORCHESTRATION.md#persistent-role-and-action-admission):
+answer from held evidence/compact coordination state or route existing-owner-first
+before tools/skills. "Continue/fix it" changes intent, not role; child coordinators
+have the same boundary. Execution prompts authorize workers to execute.
+
 ## Contents
 
 - [Start a bounded project task](#start-a-bounded-project-task)
 - [Upgrade an existing setup](../docs/GETTING_STARTED.md#upgrade-without-resetting-live-work)
 - [Approve or decline run controls](#approve-or-decline-run-controls)
 - [Bootstrap transition examples](#bootstrap-transition-examples)
+- [Coordinator role routing cases](#coordinator-role-routing-cases)
 - [Prevent and recover missed idle delivery](#prevent-and-recover-missed-idle-delivery)
 - [Steer work without losing prior intent](#steer-work-without-losing-prior-intent)
 - [Ask for status that distinguishes progress from activity](#ask-for-status-that-distinguishes-progress-from-activity)
@@ -53,10 +60,15 @@ Allowed scope: [components/files and compatibility constraints].
 Budget: [effort/cost/retry allowance].
 Authority: [permitted actions]. Excluded effects: [publication/deployment/etc.].
 
+Stay coordinator across messages/answers/events and continuation/compaction.
+Before tools/skills, answer from held evidence/compact coordination state or
+route to the existing owner, eligible executor or bounded sub-orchestrator.
+No source/domain research or implementation, even a quick lookup/edit.
+Ask only real decisions/control gaps; approval permits dispatch, not role change.
 Follow BOOTSTRAP.md: reconcile intent/run mode and valid supplied answers.
 Keep one unanswered question outstanding. After each delivered answer, including
-a question-tool result, take the next bounded read, focused question,
-review/final approval request or approved action. No status-only "recorded"
+a question-tool result, take the next admitted coordination read, question,
+review/final approval request or dispatch. No status-only "recorded"
 exit or extra "continue" between answers. For pending work use known compact
 state/task records; ask only material selection or exact location/access gaps.
 Yield only for a real wait with gap, owner and supported event/manual action,
@@ -78,7 +90,8 @@ authorized bounded task through a demonstrated path,
 or prepare a complete operator-carried packet without claiming it has started.
 If not already localized, assign a setup worker to pin one source commit,
 copy the needed linked references and license without overwriting instructions,
-adapt authoritative project records, verify discovery, and continue the outcome.
+adapt active root/child/executor roles/core and supported tool profiles,
+verify discovery and disclose instructional limits, then route the outcome.
 Before relying on later coordinator messages, prove idle receipt/pickup and
 arm independent observation or establish an accepted operator-carried handoff.
 Publish durable intent/results before notifying; "sent" alone is not delivery.
@@ -95,8 +108,9 @@ These are decisions for the target run, not credentials or model guarantees.
 Conduct the mandatory interview with at most one unanswered question outstanding.
 Reuse valid supplied/prestaged answers. On an answer or targeted read result,
 reconcile and advance to the next missing question or review/final approval;
-do not end at acknowledgement. Use supplied evidence or one known-short read
-for a missing fact, not catalogs/research chains. If unavailable, ask the exact
+do not end at acknowledgement. Use supplied evidence or one known-short compact
+coordination/capability read or needed approved bootstrap/configuration reference,
+not source investigation or domain research. If unavailable, ask the exact
 evidence/access question or advance an independently answerable field.
 Follow actual host question lifecycle; yield only for a real wait with owner
 and actual resume event/manual action, never invented self-wake.
@@ -106,7 +120,7 @@ per-model reasoning minimum, maximum and selected default; explicit external
 LLM consent; and aggregate budget with measurable units and stop policy.
 Mark fixed reasoning N/A and ask me to accept that limitation.
 Do not launch discovery workers or probe external endpoints while approval
-is missing. Safe local planning may continue.
+is missing. Role-admitted interview preparation may continue.
 ```
 
 To decline external calls:
@@ -229,6 +243,31 @@ These are finite documentation cases, not claims of live host fault injection:
 | No independent automatic resume/control exists | Use the explicitly accepted operator-carried packet and exact observed steps; do not claim self-recovery or block independently answerable interview questions. |
 | Queued cancellation conflicts with an older apply | Reconcile captured cancellation before replay; hold affected effects across lanes, preserve live jobs and do not bulk-flush the queue. |
 
+## Coordinator role routing cases
+
+These finite cases specify **document-level expectations**, not executed host
+proof, a runtime evaluator or claims about any adopter's loaded instructions.
+Apply the [section 2 gate](../protocol/FIRST_SESSION_AND_ORCHESTRATION.md#persistent-role-and-action-admission)
+and [section 7 routes](../protocol/FIRST_SESSION_AND_ORCHESTRATION.md#7-reconcile-steering-and-run-a-continuous-dispatch-cycle)
+before tools/skills on each input. Relevant host exercises require existing
+approval and non-destructive setup scope; no mandatory broad fan-out.
+
+| Input or condition | Expected route and evidence | Invalid shortcut |
+|---|---|---|
+| User asks known status or a brief conceptual question | Short answer from held evidence/known concepts, with uncertainty; at most one truly compact coordination-state read if needed | Inspect source or start a docs-research chain to embellish the answer |
+| User clarifies an authentication/UI requirement while its worker is active | Persist requirement/steering ID, assignment version and authority; use compact owner index and actual current-task control path to the existing worker/sub-orchestrator; distinguish sent, received and applied | Root runs Context7 research, reads source, plans Dockerfile edits or edits configuration; launch a duplicate worker |
+| Question depends on source behavior or current external documentation | Route to existing responsible research/execution owner or admit a bounded research worker; consume its short evidence report | Treat one source read or one docs call as permitted "bounded coordination" |
+| "Fix it" requests a new isolated feature with no suitable owner | Record scope/acceptance; admit an eligible versioned executor with owned resources and approved remaining allowance | Root becomes executor; unrelated task is disguised as steering or put in busy chat |
+| Approved capability spans multiple dependent areas | Bound a sub-orchestrator by parent tasks/resources/allocation; it delegates real executors, inherits/tightens policy and reports concise evidence/handles; root keeps goal/status/acceptance | Child runs implementation because it is below the root; new project-wide ledger, arbitrary worker count or root whole-job wait |
+| Owner is busy; a genuine answer/correction arrives | Use demonstrated current-task control or exact assisted route; do not suppress genuine steering | Append an independent assignment as "correction" or wait for an IDLE label as a delivery guarantee |
+| Owner or dispatch is uncertain | Quarantine new assignments, retain reservations/ownership/effects, reconcile actual receiver/jobs/results before replacement or fencing | Missing ACK frees the lane or authorizes duplicate work |
+| No verified nonblocking dispatcher | Exact approved operator-carried independent-worker packet and actual opening/return steps, or specific unavailable capability; launch is not receipt/start/completion | Coordinator executes as fallback or claims a prepared packet is a running worker |
+| Interview question returns a model/reasoning/consent answer | Reconcile and ask the next missing question or request final approval; missing model evidence uses compact metadata/precise question, not an unapproved worker | Status-only "recorded", domain research, discovery before approval or approval inferred from an answer |
+| Complete approved assignment reaches an executor | Validate assignment/ownership/settings/reservation then perform assigned execution and return evidence | Import coordinator interview/one-read restrictions and stop at acknowledgement |
+| Reconnect, context compaction or "continue" reaches a coordinator | Recover role/authority from active core/packet and compact state, then apply the same gate; role change needs supported explicit handoff | Self-rename as executor while still owning coordination |
+| Setup boundary probe finds no native allowlist, or a generic shell/write tool remains exposed | Record loaded role/core/profile and actual coverage in root/child/executor; label unscoped capability instructional, not enforced; record higher-priority conflict and supported route | Invent config/tool IDs, claim Markdown overrides the host or guarantees short reasoning/no stalls |
+| Coordinator already owns a long operation | Stop new execution, preserve exact handle, effects, write owner and reservation; arrange accountable observation/recovery and supported safe worker transfer, or report exact transfer gap | Abandon the job, blindly cancel a stateful operation, restart/poll the coordinator or duplicate effects |
+
 ## Steer work without losing prior intent
 
 Use when changing priorities or requirements while workers may still be active.
@@ -238,8 +277,12 @@ Do not assume a chat message instantly updates every worker.
 Record this steering change against [objective/requirement identity]:
 [the new requirement, priority, constraint, or cancellation].
 
-Preserve the original intent and append its new disposition/version.
-Identify affected assignments, shared resources, queued work, and live effects.
+Retain coordinator role and apply action admission before tools/skills.
+Preserve original intent with stable requirement/steering ID and new version.
+Use the compact task/owner index, not source, to identify affected assignments,
+shared resources and live effects. Route to the existing owner first through
+demonstrated current-task controls, including when busy; retain uncertain
+ownership and reservations. Independent future work stays in durable backlog.
 Apply the change to future dispatch and reconcile affected owners before new
 incompatible effects. Preserve useful prior work and unaffected assignments.
 Use supported controls for cancellation or handover; a new record alone
@@ -255,6 +298,8 @@ Reference: [operator guide](OPERATOR_GUIDE.md), particularly sections 4 and
 
 ```text
 Give a short evidence-based status for [objective].
+Use held evidence or one known compact coordination-state read; be honest about
+unknowns. Delegate source-dependent investigation or detailed evidence review.
 Separate prepared, dispatched, running, result submitted, review passed,
 integrated, accepted, blocked, cancelled, and superseded work.
 
@@ -437,7 +482,8 @@ Do not infer abandonment from silence or reset ownership by editing an epoch.
 Before conflicting writes, require a supported fence/stop or confirmed handover
 from the former owner. If unavailable, limit work to safe inspection or
 isolated preparation and report the blocker.
-Continue only the next ready action within current authority.
+Continue only the next role-admitted coordination action within current authority;
+route execution to its existing responsible worker or an eligible new executor.
 ```
 
 Reference: [context recovery](OPERATOR_GUIDE.md#7-recover-context-and-coordination-without-losing-work)

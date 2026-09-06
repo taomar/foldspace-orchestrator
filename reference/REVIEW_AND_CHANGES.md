@@ -1,9 +1,82 @@
 # Orchestration review and revision guide
 
-**Revision:** 2.1.6 — 6 September 2026
+**Revision:** 2.1.7 — 6 September 2026
 
 **Historical 2.0 review input:** all three Markdown documents in the uploaded archive.  
-**Scope:** preserve orchestration, parallelism, bootstrap progression, approval and accounting while clarifying safe assignment admission and uncertain-delivery recovery.
+**Scope:** preserve orchestration, parallelism, bootstrap progression, approval and accounting while correcting persistent coordinator role and per-event action routing.
+
+## Revision 2.1.7 persistent coordinator role and routing
+
+Tracking: [issue #1](https://github.com/taomar/foldspace-orchestrator/issues/1).
+The reported interaction shows a coordinator performing repeated domain
+documentation research and planning after a user clarification. It does **not**
+establish source edits, a stalled host, the adopter's loaded revision, or its
+actual role/tool restrictions. This release does not inspect or recover that
+project or diagnose a cloud/authentication implementation.
+
+**Confirmed documentation gap:** at public main
+`4b67471fb7224ddd13255b9b681d36f3a1114c31`, section 2 and the generated runtime
+core already required coordinator-only roles, delegated execution and supported
+tool allowlists. The compact bootstrap omitted persistent identity and a
+pre-action role gate while allowing "one known-short targeted read per missing
+fact", "approved action" and "Continue the objective". Section 7 reconciled
+events without forcing a role/action decision before tools or research.
+Several copied prompts repeated the unqualified continuation. This is an
+active-text propagation/admission gap, not the absence of any role boundary.
+Whether that text caused the reported adopter behavior remains unconfirmed.
+
+**Correction at the existing boundary:** section 2 owns sticky role and action
+admission by kind/ownership, not just duration; section 7 applies it on every
+message/answer/event before tools/skills or substantive investigation. Root and
+child coordinators answer from held evidence/brief known concepts or compact
+coordination state, route genuine steering to the existing responsible owner,
+admit a bounded executor when appropriate, or delegate a parent-scoped
+multi-lane capability to a sub-orchestrator. Even one source investigation,
+domain-docs lookup or implementation edit belongs to execution. Approval
+permits dispatch, not coordinator role drift; approved workers actually execute.
+
+The compact bootstrap, runtime core, role packets, configuration interview,
+onboarding and operator/deployment prompts carry that contract. Setup workers
+must adapt active host-supported entrypoints/cores/roles and native tool
+profiles where verified, not only download reference files. Fresh target root,
+child coordinator and spawned-executor activation checks distinguish loaded
+instructions from enforced restrictions. Generic execution-capable tools remain
+instructional exposure. Higher-priority host conflicts require supported
+configuration or an explicit assisted route, not invented config/hooks/tools.
+Tool filtering cannot guarantee short model reasoning or prevent host stalls.
+
+**Compatibility and containment:** existing-owner-first routing preserves stable
+requirement/steering IDs, versioned authority, busy-owner control delivery,
+durable backlog and 2.1.6 uncertain-dispatch quarantine. No mandatory fan-out,
+competing authority/ledger or default worker count is introduced. Descendants
+inherit/tighten models/reasoning, consent, resources and remaining budgets.
+Preapproval questions still advance; no discovery worker is required to find a
+missing model choice. Detected drift stops further coordinator execution while
+preserving live handles/effects/write ownership and arranging supported safe
+observation/recovery handoff, not abandonment or blind cancellation.
+
+The [finite routing cases](../operations/EXAMPLES.md#coordinator-role-routing-cases)
+are document-level expectations, **not executed host proof**. Native document
+checks cover links/anchors, fences, versions/source map, compact entry size and
+the unchanged 14-file layout; published pinned bytes are checked separately.
+No runtime, installer, watchdog, package, CI, extension or evaluation agent is
+added. Broader host enforcement and the adopter's loaded configuration remain
+unverified, not claimed repaired by this publication.
+
+The single [Copilot-only upgrade prompt](../docs/GETTING_STARTED.md#upgrade-without-resetting-live-work)
+is pinned in a follow-up to the actual published canonical 2.1.7 commit. Until
+that follow-up it explicitly retains its prior 2.1.6 pin, not a guessed SHA.
+Migration deliberately merges active root/child roles and executor distinctions,
+retaining valid approvals/settings, owners, pending operations, usage/
+reservations, local customizations and old references. It does not start a new
+run or reapprove unchanged authorized choices. True material scope/capability
+decisions still require approval. Restoring old instructions cannot undo live
+effects or state/accounting. Do not paste migration into a blocked queue.
+
+Publication now follows the existing
+[contribution guide](../.github/CONTRIBUTING.md#issue-linked-publication):
+one issue per distinct change, reused and updated for every related push with
+commit identity, actual fix/evidence and remaining limits.
 
 ## Revision 2.1.6 safe admission and uncertain dispatch
 

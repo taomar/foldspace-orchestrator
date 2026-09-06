@@ -3,7 +3,8 @@
 **Open your target project and paste the prompt below.** You do not need to
 clone this repository, download a ZIP, attach documents, or run a copy script.
 Copilot retrieves the public references and, after your run approval, assigns
-a worker to localize them safely and continue your actual build objective.
+a worker to localize them safely, then routes your actual build objective to
+its responsible executor.
 
 FoldSpace is a documentation protocol, not an installed runtime. Fetching and
 writing depend on the tools and permissions available in your Copilot host.
@@ -55,17 +56,26 @@ Acceptance or pending record: [criteria, known state/tracker path/IDs, or unknow
 Scope and authority: [allowed actions/files, compatibility, excluded effects]
 Known ongoing work: [owners, changes, operations, or explicitly unknown]
 
+Remain coordinator across every message, synchronous answer, event, continuation,
+reconnect/compaction and approval. User intent does not change your role.
+Before tools/skills or investigation, answer from held evidence/brief known
+concepts or one compact coordination-state read, otherwise record and route
+to the existing owner first, an eligible executor or a bounded sub-orchestrator.
+No source/domain-docs research or implementation, even one quick call/edit.
+Ask only a real decision or exact supported control gap; executors execute.
 Acknowledge intent/run mode and reuse valid supplied/prestaged answers.
 Keep at most one unanswered question outstanding. Reconcile each answer,
-including one returned by a question tool, then take the next bounded read,
-focused question, configuration review/final approval request or approved action.
+including one returned by a question tool, then take the next admitted coordination
+read, question, configuration review/final approval request or dispatch.
 Do not require "continue" between answers or end with only "recorded/blocked".
 For pending work, derive candidates/acceptance from known compact records;
 ask focused selection or exact record access/location if missing, not a new backlog.
 Follow actual host question lifecycle. Yield for real waits with exact gap,
 owner and supported event/manual action, not merely because a tool answered.
-Use bounded public reference reads and safe local preparation; no private
-project/user data may be uploaded or sent to external inference for this.
+Use only compact authoritative coordination/capability metadata or needed
+approved bootstrap/configuration references, not chained investigation.
+Missing model choices mean exact questions/access gaps, not unapproved workers.
+No private project/user data may be uploaded or sent to external inference.
 If URL access or writes are unavailable, request normal host permission or
 report the exact gap; never claim a file was fetched or localized when it was not.
 
@@ -83,12 +93,16 @@ Resolve one source commit, preview local paths and conflicts, and fetch the
 required reference files and LICENSE from that same revision without cloning.
 Save versioned reference copies, preserve their layout and source provenance,
 and reuse matching existing copies rather than overwrite them.
-Adapt the existing host-supported project instructions and authoritative
-policy/capability/state records separately from the reference copies.
+Have the setup worker adapt active host-supported root/child coordinator and
+executor entrypoints, runtime core, role packets and native tool profiles only
+where supported, separately from reference copies and policy/capability/state.
+Verify loaded roles/profiles in fresh target root/child and spawned executor;
+generic execution-capable tools mean instructional, not enforced boundaries.
+Do not invent host config formats or override higher-priority instructions.
 Preserve user edits, live owners/operations, queued intent and budget exposure.
 
-Verify instruction discovery and the handoff, then continue implementing my
-actual outcome with the project's existing tooling and acceptance criteria.
+Verify discovery and the handoff, then route my actual outcome to its existing
+or eligible new owner with the project's tooling and acceptance criteria.
 Do not stop at downloading documents or expand deployment/publication authority.
 Keep the coordinator available; use an approved manual worker path if native
 dispatch is unavailable. Reconcile unknown effects before retrying.
@@ -161,14 +175,17 @@ After approval, Copilot delegates the following work to a bounded setup worker:
    license from one source revision, preserving their folder/link layout.
    A suggested target location is `docs\reference\foldspace\<commit>`.
    Verify and reuse matching copies; do not overwrite conflicting content.
-3. **Localize the operating setup.** Derive a compact project-native runtime
-   core and adapt the host-supported instruction entrypoint. Reuse existing
+3. **Localize the operating setup.** Merge persistent role/action admission into
+   the active core, host-supported entrypoint and root/child/executor role
+   packets; apply native tool profiles only where supported and verified.
+   Generic tools require an instructional-boundary disclosure. Reuse existing
    requirements, policy, capabilities, state and task tracking. Reference files
    are not live project state and must not replace local customizations.
 4. **Verify and continue.** Record source URLs/commit, document revision, local
-   paths and hashes. Establish that the intended session discovers the right
-   instructions. Return the next ready assignment and continue the actual
-   implementation/build goal under its approval and budget.
+   paths and hashes. Establish loaded roles/core/profiles in fresh target root
+   and child coordinators and a spawned executor with non-destructive checks.
+   Return the next ready assignment; the coordinator routes the build goal
+   and executors perform it under existing approval and budget.
 
 The suggested destination is inside **your target project**, not a new folder
 in this documentation repository. Full mechanics and the standard reference
@@ -210,6 +227,13 @@ Record relevant controls as **Verified automatic**, **Assisted**,
 **Unavailable**, or **Not checked**, with evidence. This includes reference
 retrieval and writes, instruction discovery, actual model/reasoning selection,
 budget accounting, nonblocking dispatch and result return.
+
+The [role/action contract](../protocol/FIRST_SESSION_AND_ORCHESTRATION.md#persistent-role-and-action-admission)
+also needs active root/child/executor discovery and tool-profile evidence.
+Unsupported allowlists or unscoped generic tools mean an instructional boundary,
+not enforced prevention. Tool filtering cannot prevent all long reasoning or
+host stalls. Record conflicting higher-priority defaults and supported assisted
+steps instead of claiming Markdown overrides the host.
 
 If required controls cannot be applied/proved, hold affected autonomous work
 or use an explicitly approved demonstrable manual path. A document describing
@@ -292,8 +316,11 @@ See [worker launch and return fields](../operations/OPERATOR_GUIDE.md#5-launch-w
 ## Fresh-session discovery and continuation
 
 Resume from compact project-native instructions/state and the explicit
-assignment, not another full remote pack load. Identify current owners,
-approval, ledger, checkpoint and next action before effects.
+assignment, not another full remote pack load. Identify persistent role, current
+owners, approval, ledger and checkpoint before admitting the next action.
+Coordinators answer from compact evidence or route existing-owner-first;
+continuation never grants source investigation or implementation. Executors
+continue their approved assignments without restarting the interview.
 
 Preserve task ownership, exclusions, attempts, charges and reservations across
 new sessions and runs. A surviving migration blocks conflicting writes, not

@@ -1,10 +1,10 @@
 # Your guide to running projects with GitHub Copilot
 
-**Revision 2.1.6 · 6 September 2026**
+**Revision 2.1.7 · 6 September 2026**
 
 This pack uses **GHCP** to mean **GitHub Copilot**. It supports projects in which research, implementation, and architecture evolve together. Apply it to the actual repository and installed Copilot environment; it does not assume your stack, deployment destination, or session controls.
 
-The main orchestrator coordinates the project. Execution belongs to assigned worker sessions. Useful independent work should run in parallel as soon as the approved run configuration, dependencies, resources, reserved budget and available capacity permit.
+The main orchestrator coordinates the project. Execution belongs to assigned worker sessions. Its role persists across every user message, synchronous answer, event, continuation/reconnect/compaction and run approval. Before tools/skills or investigation apply the [role/action gate](../protocol/FIRST_SESSION_AND_ORCHESTRATION.md#persistent-role-and-action-admission): answer from held evidence/compact coordination state or route existing-owner-first. This governs every prompt below; "continue", "act", "review" or "implement" asks the coordinator to route execution, not change role. Useful independent work should run in parallel as soon as approval, dependencies, resources, reserved budget and capacity permit.
 
 | File | Who uses it | Result it should produce |
 | --- | --- | --- |
@@ -26,7 +26,7 @@ Open the intended repository. Provide the current outcome, known constraints, ex
 
 The coordinator acknowledges supplied intent/run mode and reuses valid answers, including [optional prestaged inputs](../protocol/RUN_CONFIGURATION.md#optional-prestaged-interview-inputs). **One question at a time means one outstanding unanswered question**, not one answered decision per response. When an answer arrives, including a synchronous question-tool result, reconcile it and take the next bounded read, focused question, configuration review/final approval request or approved action. No extra "continue" is needed. A status-only "recorded/blocked until..." exit is invalid while such a step is available.
 
-Use supplied evidence or one named known-short read for a missing fact, not repository scans, catalogs, setup generation or drills. If insufficient, ask the exact evidence/access question or advance an independently answerable field; missing dispatch approval is not a global interview hold. For "continue pending work", use known compact state/checkpoint/task records to derive candidates and acceptance, ask focused selection for material ambiguity, or request the exact unknown location/access. Do not demand a rewritten backlog or invent tasks.
+Use supplied evidence or one named compact coordination/state/capability read or needed approved bootstrap/configuration reference, not source investigation, domain-docs research, catalogs, setup generation or drills. If insufficient, ask the exact evidence/access question or advance an independently answerable field; missing dispatch approval is not a global interview hold or permission to launch discovery. For "continue pending work", use known compact state/checkpoint/task records to derive candidates and acceptance, ask focused selection for material ambiguity, or request the exact unknown location/access. Do not demand a rewritten backlog or invent tasks.
 
 For a real wait, show **phase, last completed action, exact gap/owner, supported resume event or manual action**. Follow the actual host question lifecycle: a suspended tool is not a completed response, and an answered tool is not waiting. Keep independent eligible steps moving before yielding; do not poll, auto-continue, claim self-wake or pretend unsupported controls exist. Valid same-run approval avoids re-interview; fully staged but unapproved inputs still need validation, summary and final approval. See the [owning transition contract](../protocol/FIRST_SESSION_AND_ORCHESTRATION.md#opening-turn-and-return-control-contract).
 
@@ -39,6 +39,11 @@ https://raw.githubusercontent.com/taomar/foldspace-orchestrator/main/protocol/BO
 Outcome and acceptance: [what to build and how to recognize it]
 Scope and authority: [constraints, permitted actions, or explicitly unknown]
 
+Stay coordinator across messages/answers/events and continuation; approval
+changes authority, not role. Before tools/skills apply the entry's gate:
+answer from held evidence/compact coordination state or route existing-owner-first,
+then eligible executor/bounded child coordinator; ask real decisions/control gaps.
+No source/domain research or implementation, including quick calls/edits.
 Reconcile intent and supplied answers; keep only one unanswered question open.
 After each answer/tool result, take the next bounded question/read/approval step,
 not a status-only exit. Yield only for a real wait with gap, actor and actual
@@ -52,7 +57,9 @@ After approval, reserve budget and assign a setup worker to pin one source
 commit, preview conflicts, copy necessary linked references and LICENSE,
 and adapt existing project-native instructions/state without overwrites.
 Reuse POLICY/CAPABILITIES/PROJECT_STATE and the authoritative ledger.
-Verify discovery and the needed handoff, then continue the actual build task.
+Have the setup worker verify active root/child/executor roles and supported
+tool profiles; generic execution tools mean instructional limits, not enforcement.
+Verify discovery/handoff, then continue the build task by routing to its executor.
 Keep useful independent work moving and return when only waits remain.
 Before relying on later messages, establish durable intent/results and the
 idle-delivery safety contract: actual receiver receipt/pickup, demonstrated
@@ -76,6 +83,10 @@ https://raw.githubusercontent.com/taomar/foldspace-orchestrator/main/protocol/BO
 Mode: [new run / same-run continuation]
 Outcome and constraints: [actual project goal and limits]
 
+Preserve your coordinator role across answers/events and continuation.
+Before tools/skills admit only coordination: answer from held evidence/compact
+state or route to existing owner, eligible executor or bounded sub-orchestrator.
+No source/domain investigation or quick implementation; ask exact control gaps.
 Reconcile supplied state and answers, then take the next permitted bounded step:
 read known compact pending-task state, ask a focused missing question,
 request final approval or perform approved coordination. An answered tool is
@@ -93,8 +104,10 @@ revision with existing localized references and instructions, preview conflicts,
 and apply only authorized adaptations. Preserve source provenance and LICENSE.
 Reuse POLICY/CAPABILITIES/PROJECT_STATE and the current ledger; no competing store.
 Do not orphan workers, reset usage/reservations, or free unknown charges.
-Correct conflicting active rules through review, verify the affected discovery/
-handoff path, and continue the actual implementation goal with unrelated
+Have the setup worker adapt and verify active root/child/executor roles/core and
+native profiles where supported; disclose instructional limits and host conflicts.
+Correct conflicting active rules through review, verify the discovery/
+handoff path, and route the implementation goal with unrelated
 eligible work unblocked. No deployment/publication authority is implied.
 Do not rely on "sent" as receiver delivery. Preserve results outside the queue
 and establish verified idle pickup/recovery or an accepted operator-carried
@@ -140,6 +153,7 @@ Check that its answer matches the real project. If instructions exist only on an
 A useful setup demonstration establishes that:
 
 - Discovery/evaluation workers cannot bypass approval; actual model/reasoning settings and external consent match the approved scope, and supported atomic or serialized reservations prevent run-budget oversubscription.
+- Fresh target root and child coordinators load the active sticky role/action gate and route clarifications rather than invoke execution tools; a spawned executor performs its harmless approved assignment. Inspect actual native tool profiles and state-write scope non-destructively. Unsupported allowlists or generic tools mean instructional limits, not enforcement; record higher-priority conflicts and supported assisted routes.
 - A worker receives a real task and workspace, and returns discoverable evidence.
 - Concurrent dispatch actually starts independent work; queued messages or role descriptions do not count as running workers.
 - The coordinator remains available while worker execution continues, using a supported mechanism.
@@ -165,11 +179,17 @@ The coordinator owns the outcome, priorities, task dependencies, assignment owne
 | Resolve code conflicts, merge a candidate, and run combined checks | Assigned integration worker |
 | Build and execute an authorized release path | Assigned deployment execution workers |
 
-The coordinator may inspect a concise result and record acceptance. That does not make it the owner of merge commands, detailed review, test runs, or deployment execution. This boundary applies to every session coordinating other workers, including a deployment coordinator. Calling that session an executor or execution lead does not permit it to run long jobs while retaining coordination responsibilities.
+The coordinator may inspect a concise candidate-specific result and record acceptance. That does not make it the owner of source reads, domain-docs lookups, quick code/config/instruction edits, execution skills, merge commands, detailed review, tests or deployment. Action kind and ownership, not duration, define the boundary. It applies to nested and deployment coordinators; explicit supported ownership handoff is required to change role. A child gets parent tasks/scope/resources and inherited or tighter settings/authority/budget, not a competing ledger. The root retains goal/status/acceptance; child coordinators delegate to real executors without blocking the root on whole jobs.
 
 Use this correction if a coordinator starts doing execution work:
 
-> Keep the main coordinator on coordination. Preserve any operation you already started, including its actual handle and uncertain effects; do not launch a duplicate. Prepare a safe transfer to a worker if the environment supports it. Assign further investigation, implementation, verification, integration, and job monitoring to real worker sessions. Continue coordinating independent work. If asynchronous dispatch is unavailable, provide the manual launch packet and the exact session action needed.
+> Retain your coordinator role on every message/answer/event, including this correction. Stop starting execution; before tools/skills answer from held evidence or compact coordination state, otherwise record intent and route. Inspect the task/owner index, not code: send current-task steering with stable ID/version/authority to the existing responsible worker or bounded sub-orchestrator through demonstrated controls. Do not disguise unrelated tasks as steering or duplicate busy/uncertain ownership. Admit a new versioned executor only when appropriate, isolated, approved and budgeted. Preserve any running operation's exact handle, observed/uncertain effects, write ownership and reservations. Arrange accountable observation/recovery; transfer only if supported and safely reconciled, never abandon or blindly cancel a stateful job. Continue eligible coordination. If nonblocking dispatch/control is unavailable, provide the exact approved independent-worker handoff or specific gap, not local execution, polling or self-restart.
+
+Use the [single upgrade guide](../docs/GETTING_STARTED.md#upgrade-without-resetting-live-work)
+to persist this correction in active roles/core, rather than repeatedly pasting
+reminders. Prompt policy cannot guarantee short model reasoning or prevent
+host stalls; it is enforced only to the extent demonstrated native restrictions
+actually apply.
 
 A worker may run a background operation when its environment supports it and the task permits it. The worker remains accountable for the handle, logs, observation, result retrieval, and effects. A detached process with no recoverable handle or owner is not a successful handoff.
 
@@ -181,7 +201,7 @@ Give an outcome, then let dependencies and capacity determine the assignments. A
 
 For normal continuation of an approved run, use:
 
-> Continue toward [outcome] under the current project protocol and approved run_policy_ref. Reconcile actual work, pending steering, applied model/reasoning evidence, consent, usage and held reservations; preserve same-run authority without per-call asking. Reserve within the aggregate run and parent limits before dispatch. Identify the critical path, and dispatch independent ready tasks as approved supported capacity becomes available. Keep the main coordinator available for coordination. Use real workers for execution, including review and integration. Replenish ready work when a slot becomes available; do not wait for an entire batch. Respect shared resources, dependency contracts, authority, task budgets, and result-processing capacity. Report achieved evidence, active work, bottlenecks, and the next useful action.
+> Continue toward [outcome] as coordinator under the current protocol and approved run_policy_ref. Apply role/action admission before tools/skills; continuation never permits implementation or domain investigation. Use held evidence/compact task-owner state to reconcile steering, applied settings, consent, usage and reservations. Route current-task changes to the existing owner through supported controls; preserve same-run authority. Reserve within aggregate/parent limits before eligible independent dispatch; do not queue new tasks to busy/uncertain owners. Use bounded sub-orchestrators only where the scope needs them and real executors for research, code, review and integration. Handle results without a whole-batch wait and report evidence, active work, bottlenecks and next coordination action.
 
 Useful concurrency may include implementation of independent components, an experiment that resolves a design uncertainty, preparation of a deployment environment, and review of an already completed component. These can overlap when their actual dependencies allow it.
 
@@ -502,7 +522,7 @@ Deployment coordinators, executors, and external research/evaluation calls inher
 
 Use this launch prompt for a deployment coordinator:
 
-> You are the deployment coordinator for [task ID and assignment version], reporting to the main coordinator. Apply the attached `DEPLOYMENT_BUILD_INSTRUCTIONS.md` using the current architecture, protocol, task contracts, and authority. Before any discovery or execution worker dispatch, verify the approved run_policy_ref, exact effective_config and model/reasoning evidence, external consent, and budget_reservation. Obtain missing approval through the interview using safe local planning only; do not launch workers first. Inherit/tighten parent limits and reserve before parallel dispatch. Coordinate through short bounded state reads and updates, dispatch, and status checks. Assign discovery, build and release implementation, infrastructure changes, verification, integration, and recovery execution to workers. Dispatch independent ready work where verified capacity permits. Each executor owns its actual job handles, logs, progress, and effects. Delegate rehearsal in an authorized isolated environment and evaluate its evidence. Do not run long tooling, heavy investigation, or background jobs yourself. Use verified nonblocking dispatch or prepare manual worker-session packets. Distinguish prepared files, exercised automation, deployed resources, and unverified steps. My target and deployment authority are: [details, or not yet decided].
+> You are the deployment coordinator for [task ID/version], reporting to [parent] within [tasks/scope/resources/budget]. Retain coordinator role across all messages/answers/events and continuation; before tools/skills apply section 2 role/action admission. Use compact coordination state, not source or domain investigation, and route changes to existing owners first. No quick edits, execution skills or jobs; delegate discovery, implementation, review and operation observation to actual executors. Use the relevant `DEPLOYMENT_BUILD_INSTRUCTIONS.md` contracts and inherited run_policy_ref, effective_config, consent, authority and budget_reservation; tighten but never widen parent limits or create a competing ledger. Escalate genuinely missing decisions to the root/user without restarting approved interviews. Reserve before eligible dispatch through verified nonblocking controls or an approved independent-worker handoff. Return concise candidate-specific evidence/handles without blocking the parent on the whole job. Preserve ownership/effects on uncertain delivery or drift; do not duplicate/cancel blindly. Distinguish prepared, exercised, deployed and unverified outcomes. Target and deployment authority: [details, or unknown].
 
 For one bounded deployment assignment, use this separate executor prompt:
 
@@ -522,7 +542,7 @@ After a material workflow change, new Copilot surface, relevant runtime upgrade,
 
 Use this improvement prompt:
 
-> Review whether orchestration is improving delivery. Use actual assignment, job, and result records to identify avoidable idle time, undispatched ready work, queue growth, duplicate execution, stale instructions, repeated failed attempts, main-coordinator execution, integration congestion, and weak recovery. Distinguish missing observations from measured behavior. Implement small corrections tied to the evidence, preserve live project state and authority, and verify the changed mechanism with representative work.
+> Coordinate a bounded review of whether orchestration is improving delivery. Route substantive inspection to the existing responsible worker or an eligible approved review assignment. Use its concise report on actual task/job/result evidence to identify idle time, queue growth, duplicate execution, stale instructions, role drift, integration congestion and weak recovery. Distinguish unknowns from observations. Delegate evidence-backed implementation and representative verification to owned workers; preserve live state and authority. Do not perform source investigation or edits in the coordinator.
 
 Keep the current index compact and historical evidence discoverable. Store logs and large outputs outside the coordinator's working context. Use the project's normal access controls and keep secrets out of session memory files.
 

@@ -1,6 +1,6 @@
 # Configure the run before dispatch
 
-**Revision: 2.1.6 - 6 September 2026**
+**Revision: 2.1.7 - 6 September 2026**
 
 This is the bootstrap questionnaire and configuration reference for FoldSpace
 Orchestrator, not an executable configuration loader. The canonical
@@ -14,10 +14,14 @@ workers**, or makes direct external LLM API calls, explicitly ask the operator
 to approve models, reasoning, external-call consent, and budget controls.
 Reconcile any prior configuration and reconfirm it for the new run.
 
-The current bootstrap chat may continue safe local planning and read available
-capability documentation to prepare the interview. It is not retroactively
-blocked. Do not spend money or send private repository/user data to an external
-endpoint merely to discover models, reasoning options, pricing, or credentials.
+The current bootstrap coordinator may prepare coordination questions from
+held evidence or bounded compact authoritative state/capability metadata and
+needed approved bootstrap/configuration references. Apply the
+[persistent role/action gate](FIRST_SESSION_AND_ORCHESTRATION.md#persistent-role-and-action-admission)
+before tools or skills on every answer/event; approval changes authority, not
+role. No source investigation or domain research, even one quick call.
+Missing model evidence means an exact metadata/access question, not a discovery
+worker before approval. Do not send private data to discover models or pricing.
 
 A bounded read of a user-approved public FoldSpace GitHub reference is allowed;
 it is not an external LLM inference call. Bulk downloading/localization remains
@@ -39,12 +43,13 @@ requirement to replay all sixteen questions.
 Use the supported question mechanism. When an answer arrives, including a
 synchronous question-tool result, reconcile it and take the next bounded read,
 missing/conflicting/unsupported question, review/final approval request, or
-approved action. Do not end with only "recorded/blocked until..." when one of
+approved coordination/dispatch action. Do not end with only "recorded/blocked until..." when one of
 those steps is available. No extra "continue" is required. Complete unapproved
 answers go to validation and a resolved summary for explicit final approval;
 same-run valid approval is retained, not requested again by habit.
 
-Use supplied evidence or one known-short targeted read for a missing fact;
+Use supplied evidence or one known-short compact coordination/capability read
+or needed approved bootstrap/configuration reference for a missing interview fact;
 consume its result and advance, rather than returning solely because a lookup
 finished. If evidence is unavailable, request the exact item/location/access
 from its owner or advance an independently answerable field. "Continue pending
