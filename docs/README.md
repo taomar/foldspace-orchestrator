@@ -13,12 +13,12 @@ supervisor included. Automatic behavior depends on capabilities demonstrated in
 your actual host; where those capabilities are missing, use explicit
 assisted/manual handoffs.
 
-[Get started](docs/guides/GETTING_STARTED.md) |
-[Benefits and tradeoffs](docs/reference/BENEFITS.md) |
-[Prompt examples](docs/guides/EXAMPLES.md) |
-[Run configuration](docs/protocol/RUN_CONFIGURATION.md) |
-[Operator guide](docs/guides/OPERATOR_GUIDE.md) |
-[Contribute](CONTRIBUTING.md)
+[Get started](GETTING_STARTED.md) |
+[Benefits and tradeoffs](BENEFITS.md) |
+[Prompt examples](../operations/EXAMPLES.md) |
+[Run configuration](../protocol/RUN_CONFIGURATION.md) |
+[Operator guide](../operations/OPERATOR_GUIDE.md) |
+[Contribute](../.github/CONTRIBUTING.md)
 
 ## On this page
 
@@ -53,7 +53,7 @@ of treating more conversations as more progress.
 | Deployment preparation becomes accidental authorization | Separate readiness from permission to create effects | Named candidate, target, gates, and explicit authority |
 
 These are intended mechanisms and outcomes, **not measured speedups or
-guarantees**. See [benefits, fit, and measurement](docs/reference/BENEFITS.md) for the costs
+guarantees**. See [benefits, fit, and measurement](BENEFITS.md) for the costs
 and conditions that matter.
 
 ### Who it is for
@@ -104,10 +104,10 @@ separate worktrees into a transaction system.
 
 ## Quick start
 
-1. Read [Getting started](docs/guides/GETTING_STARTED.md) and open the **target
+1. Read [Getting started](GETTING_STARTED.md) and open the **target
    repository you want to work on**, not this documentation repository.
-2. Make [FIRST_SESSION_AND_ORCHESTRATION.md](docs/protocol/FIRST_SESSION_AND_ORCHESTRATION.md)
-   and [OPERATOR_GUIDE.md](docs/guides/OPERATOR_GUIDE.md) available to its Copilot session as
+2. Make [FIRST_SESSION_AND_ORCHESTRATION.md](../protocol/FIRST_SESSION_AND_ORCHESTRATION.md)
+   and [OPERATOR_GUIDE.md](../operations/OPERATOR_GUIDE.md) available to its Copilot session as
    references, using a mechanism your host actually supports. Preserve existing
    project instructions. Complete the mandatory run-configuration interview
    before launching any workers, including discovery workers.
@@ -148,9 +148,9 @@ This is a prompt, **not a built-in command**. It does not authorize publishing,
 deploying, deleting resources, or expanding scope beyond the constraints you
 provide. A prepared assignment is not evidence that a worker is running.
 
-The full guide covers [new versus existing projects](docs/guides/GETTING_STARTED.md#choose-the-project-path),
-[a bounded first task](docs/guides/GETTING_STARTED.md#a-bounded-worked-example), and
-[manual worker handoffs](docs/guides/GETTING_STARTED.md#manual-worker-fallback).
+The full guide covers [new versus existing projects](GETTING_STARTED.md#choose-the-project-path),
+[a bounded first task](GETTING_STARTED.md#a-bounded-worked-example), and
+[manual worker handoffs](GETTING_STARTED.md#manual-worker-fallback).
 
 ## Configure every new run
 
@@ -181,7 +181,7 @@ required budget bound, affected autonomous dispatch is blocked; an explicitly
 approved, demonstrable manual path may be used. Safe local planning and the
 already-running bootstrap chat are not retroactively blocked.
 
-Use the [questionnaire, configuration example, and decision cases](docs/protocol/RUN_CONFIGURATION.md).
+Use the [questionnaire, configuration example, and decision cases](../protocol/RUN_CONFIGURATION.md).
 Reconfirm for each new run; do not repeatedly ask for the same within-run
 permission on every call.
 
@@ -193,38 +193,39 @@ needs more precision.
 
 ```text
 foldspace-orchestrator/
-|-- README.md
 |-- LICENSE
-|-- CONTRIBUTING.md
 |-- .gitattributes
 |-- .gitignore
-`-- docs/
-    |-- protocol/
-    |   |-- FIRST_SESSION_AND_ORCHESTRATION.md
-    |   |-- DEPLOYMENT_BUILD_INSTRUCTIONS.md
-    |   `-- RUN_CONFIGURATION.md
-    |-- guides/
-    |   |-- GETTING_STARTED.md
-    |   |-- OPERATOR_GUIDE.md
-    |   `-- EXAMPLES.md
-    `-- reference/
-        |-- BENEFITS.md
-        `-- REVIEW_AND_CHANGES.md
+|-- .github/
+|   `-- CONTRIBUTING.md
+|-- docs/
+|   |-- README.md
+|   |-- BENEFITS.md
+|   `-- GETTING_STARTED.md
+|-- protocol/
+|   |-- FIRST_SESSION_AND_ORCHESTRATION.md
+|   |-- DEPLOYMENT_BUILD_INSTRUCTIONS.md
+|   `-- RUN_CONFIGURATION.md
+|-- operations/
+|   |-- OPERATOR_GUIDE.md
+|   `-- EXAMPLES.md
+`-- reference/
+    `-- REVIEW_AND_CHANGES.md
 ```
 
 | File | Read it for |
 |---|---|
-| [README.md](README.md) | Product boundary, overview, and navigation |
-| [docs/guides/GETTING_STARTED.md](docs/guides/GETTING_STARTED.md) | Safe adoption, capability recording, first task, and continuation |
-| [docs/reference/BENEFITS.md](docs/reference/BENEFITS.md) | Workflow comparisons, appropriate use cases, tradeoffs, and measurement |
-| [docs/guides/EXAMPLES.md](docs/guides/EXAMPLES.md) | Ordinary-language prompts for common operating situations |
-| [docs/protocol/RUN_CONFIGURATION.md](docs/protocol/RUN_CONFIGURATION.md) | Mandatory pre-run model, reasoning, external-consent, and budget interview |
-| [docs/protocol/FIRST_SESSION_AND_ORCHESTRATION.md](docs/protocol/FIRST_SESSION_AND_ORCHESTRATION.md) | Canonical bootstrap, role boundaries, assignment contracts, durable state, and recovery policy |
-| [docs/guides/OPERATOR_GUIDE.md](docs/guides/OPERATOR_GUIDE.md) | Canonical day-to-day steering, worker launch, diagnosis, recovery, and deployment handoffs |
-| [docs/protocol/DEPLOYMENT_BUILD_INSTRUCTIONS.md](docs/protocol/DEPLOYMENT_BUILD_INSTRUCTIONS.md) | Canonical setup distribution and adopter-software build/release guidance |
-| [docs/reference/REVIEW_AND_CHANGES.md](docs/reference/REVIEW_AND_CHANGES.md) | Revision history, upgrade guidance, and stated verification limits |
-| [CONTRIBUTING.md](CONTRIBUTING.md) | Documentation contribution and review expectations |
-| [LICENSE](LICENSE) | MIT terms |
+| [docs/README.md](README.md) | Product boundary, overview, and navigation |
+| [docs/GETTING_STARTED.md](GETTING_STARTED.md) | Safe adoption, capability recording, first task, and continuation |
+| [docs/BENEFITS.md](BENEFITS.md) | Workflow comparisons, appropriate use cases, tradeoffs, and measurement |
+| [operations/EXAMPLES.md](../operations/EXAMPLES.md) | Ordinary-language prompts for common operating situations |
+| [protocol/RUN_CONFIGURATION.md](../protocol/RUN_CONFIGURATION.md) | Mandatory pre-run model, reasoning, external-consent, and budget interview |
+| [protocol/FIRST_SESSION_AND_ORCHESTRATION.md](../protocol/FIRST_SESSION_AND_ORCHESTRATION.md) | Canonical bootstrap, role boundaries, assignment contracts, durable state, and recovery policy |
+| [operations/OPERATOR_GUIDE.md](../operations/OPERATOR_GUIDE.md) | Canonical day-to-day steering, worker launch, diagnosis, recovery, and deployment handoffs |
+| [protocol/DEPLOYMENT_BUILD_INSTRUCTIONS.md](../protocol/DEPLOYMENT_BUILD_INSTRUCTIONS.md) | Canonical setup distribution and adopter-software build/release guidance |
+| [reference/REVIEW_AND_CHANGES.md](../reference/REVIEW_AND_CHANGES.md) | Revision history, upgrade guidance, and stated verification limits |
+| [.github/CONTRIBUTING.md](../.github/CONTRIBUTING.md) | Documentation contribution and review expectations |
+| [LICENSE](../LICENSE) | MIT terms |
 
 The active canonical references are **revision 2.1, dated 6 September 2026**.
 They derive from the supplied revision 2.0 documents, which were preserved
@@ -271,8 +272,8 @@ Preparing a runbook, build artifact, or pipeline file does not grant permission
 to change an environment. Existing explicit authority carries forward, but
 candidate, target, effects, and required gates must still match it. A verified
 release requires observations of the actual destination, not just generated
-configuration. See the [deployment prompts](docs/guides/EXAMPLES.md#prepare-a-release-without-implying-permission)
-and [canonical deployment reference](docs/protocol/DEPLOYMENT_BUILD_INSTRUCTIONS.md).
+configuration. See the [deployment prompts](../operations/EXAMPLES.md#prepare-a-release-without-implying-permission)
+and [canonical deployment reference](../protocol/DEPLOYMENT_BUILD_INSTRUCTIONS.md).
 
 ## Capabilities and limits
 
@@ -298,7 +299,7 @@ alternative; do not label unsupported automation as working.
 
 ## License and name
 
-FoldSpace Orchestrator is available under the [MIT License](LICENSE).
+FoldSpace Orchestrator is available under the [MIT License](../LICENSE).
 
 The name is inspired by the space-folding idea in *Dune*: a metaphor for
 bridging separate agent contexts while keeping the work connected. This is an

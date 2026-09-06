@@ -6,7 +6,7 @@ bracketed fields and provide the referenced project records through a supported
 mechanism. A request to report capability evidence must not be satisfied by
 inventing that evidence.
 
-Use the [getting-started guide](GETTING_STARTED.md) for adoption. The
+Use the [getting-started guide](../docs/GETTING_STARTED.md) for adoption. The
 [canonical protocol](../protocol/FIRST_SESSION_AND_ORCHESTRATION.md) and
 [operator guide](OPERATOR_GUIDE.md) define the full contracts behind these
 short prompts. Before any new run, use the mandatory
@@ -183,7 +183,7 @@ candidate and result through the packet's agreed channel.
 
 References: [assignment contract](../protocol/FIRST_SESSION_AND_ORCHESTRATION.md#8-give-every-assignment-a-complete-versioned-contract),
 [worker launch](OPERATOR_GUIDE.md#5-launch-workers-with-an-explicit-task-and-job-handoff),
-and [manual fallback](GETTING_STARTED.md#manual-worker-fallback).
+and [manual fallback](../docs/GETTING_STARTED.md#manual-worker-fallback).
 
 ## Return a worker result
 

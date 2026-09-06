@@ -3,7 +3,7 @@
 **Revision:** 2.1 — 6 September 2026.
 
 **Audience:** the deployment coordinator and the execution sessions it assigns.  
-**Use:** attach this file in the real project alongside its generated session protocol and current state. Coordinate and implement the applicable deployment components through assigned execution sessions, validate them, and leave an executable project-specific runbook. This file supplies the build instructions; [OPERATOR_GUIDE.md](../guides/OPERATOR_GUIDE.md) explains how the user starts and operates the work.
+**Use:** attach this file in the real project alongside its generated session protocol and current state. Coordinate and implement the applicable deployment components through assigned execution sessions, validate them, and leave an executable project-specific runbook. This file supplies the build instructions; [OPERATOR_GUIDE.md](../operations/OPERATOR_GUIDE.md) explains how the user starts and operates the work.
 
 Revision 2.0 is the historical public baseline at commit `38e9ce28964d8038333a2034a6ff02087b4652f9`; its verification and archive statements do not establish 2.1 runtime guarantees. See [release notes](../reference/REVIEW_AND_CHANGES.md). These are specified policy/instructional gates, not proof that the host enforces them.
 

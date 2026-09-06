@@ -5,7 +5,7 @@
 This is the bootstrap questionnaire and configuration reference for FoldSpace
 Orchestrator, not an executable configuration loader. The canonical
 [orchestration protocol](FIRST_SESSION_AND_ORCHESTRATION.md) and
-[operator guide](../guides/OPERATOR_GUIDE.md) define the surrounding workflow.
+[operator guide](../operations/OPERATOR_GUIDE.md) define the surrounding workflow.
 
 ## Mandatory gate
 

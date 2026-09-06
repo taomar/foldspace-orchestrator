@@ -5,8 +5,8 @@ and recoverable. It does not provide a runtime that enforces those practices.
 The benefits below are **intended outcomes of following the protocol with
 adequate host support**, not published benchmark results.
 
-[Overview](../../README.md) | [Getting started](../guides/GETTING_STARTED.md) |
-[Prompt examples](../guides/EXAMPLES.md) | [Run configuration](../protocol/RUN_CONFIGURATION.md)
+[Overview](README.md) | [Getting started](GETTING_STARTED.md) |
+[Prompt examples](../operations/EXAMPLES.md) | [Run configuration](../protocol/RUN_CONFIGURATION.md)
 
 ## Before and after
 
@@ -86,7 +86,7 @@ Code rollback alone does not reverse data changes.
 
 For the underlying rules, use
 [FIRST_SESSION_AND_ORCHESTRATION.md](../protocol/FIRST_SESSION_AND_ORCHESTRATION.md),
-the day-to-day [OPERATOR_GUIDE.md](../guides/OPERATOR_GUIDE.md), and
+the day-to-day [OPERATOR_GUIDE.md](../operations/OPERATOR_GUIDE.md), and
 [DEPLOYMENT_BUILD_INSTRUCTIONS.md](../protocol/DEPLOYMENT_BUILD_INSTRUCTIONS.md).
 
 ## Where it fits
@@ -156,5 +156,5 @@ can explain differences.
 
 This repository ships no benchmark suite, telemetry collector, or measured
 performance claims. Its source revision's
-[historical verification and limits](REVIEW_AND_CHANGES.md#5-verification-and-limits)
+[historical verification and limits](../reference/REVIEW_AND_CHANGES.md#5-verification-and-limits)
 are a useful boundary for interpreting what has and has not been demonstrated.

@@ -2,7 +2,7 @@
 
 **Revision:** 2.1 — 6 September 2026  
 **Audience:** the session establishing this project's orchestration and the workers it assigns.  
-**Use:** attach this document to the first session in the actual project. Build and verify the project-specific workflow below, then continue the authorized work. Future sessions use the compact generated runtime core and their task packets; they do not reload this entire bootstrap document. [OPERATOR_GUIDE.md](../guides/OPERATOR_GUIDE.md) supports the user. [DEPLOYMENT_BUILD_INSTRUCTIONS.md](DEPLOYMENT_BUILD_INSTRUCTIONS.md) directs a separate deployment engineering session.
+**Use:** attach this document to the first session in the actual project. Build and verify the project-specific workflow below, then continue the authorized work. Future sessions use the compact generated runtime core and their task packets; they do not reload this entire bootstrap document. [OPERATOR_GUIDE.md](../operations/OPERATOR_GUIDE.md) supports the user. [DEPLOYMENT_BUILD_INSTRUCTIONS.md](DEPLOYMENT_BUILD_INSTRUCTIONS.md) directs a separate deployment engineering session.
 
 This revision specifies desired behavior and activation checks. It does not claim that these mechanisms are installed, that a Copilot defect has been diagnosed, or that instructions alone can prevent runtime stalls.
 

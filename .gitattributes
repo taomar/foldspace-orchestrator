@@ -1,5 +1,5 @@
 # Avoid text normalization of the versioned canonical documents.
-/docs/protocol/FIRST_SESSION_AND_ORCHESTRATION.md -text
-/docs/guides/OPERATOR_GUIDE.md -text
-/docs/protocol/DEPLOYMENT_BUILD_INSTRUCTIONS.md -text
-/docs/reference/REVIEW_AND_CHANGES.md -text
+/protocol/FIRST_SESSION_AND_ORCHESTRATION.md -text
+/operations/OPERATOR_GUIDE.md -text
+/protocol/DEPLOYMENT_BUILD_INSTRUCTIONS.md -text
+/reference/REVIEW_AND_CHANGES.md -text

@@ -2,7 +2,7 @@
 
 Contributions should make the protocol clearer, more consistent, and easier to
 adopt honestly. This is a documentation project, not an executable agent
-framework. See the [README](README.md) for its scope and the [MIT License](LICENSE)
+framework. See the [README](../docs/README.md) for its scope and the [MIT License](../LICENSE)
 for the terms under which it is distributed.
 
 ## Useful contributions
@@ -18,8 +18,8 @@ FoldSpace. A proposed expansion of product scope needs explicit discussion.
 
 ## Keep the references and guides consistent
 
-The four uppercase documents under `docs/protocol`, `docs/guides`, and
-`docs/reference` are the canonical detailed references. Revision 2.0 was
+The four canonical documents under `protocol`, `operations`, and
+`reference` are the detailed references. Revision 2.0 was
 published unchanged in commit `38e9ce2`; revision 2.1 reorganizes those files
 and adds mandatory run configuration. The immutable source archive remains
 historical evidence, not a claim that active files are unchanged.

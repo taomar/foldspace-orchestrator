@@ -4,8 +4,8 @@ Adopt the protocol in the repository where your work actually happens.
 FoldSpace is a documentation pack: copying its references does not install an
 agent runtime or activate a scheduler.
 
-[Overview](../../README.md) | [Benefits](../reference/BENEFITS.md) |
-[Prompt examples](EXAMPLES.md) | [Canonical operator guide](OPERATOR_GUIDE.md) |
+[Overview](README.md) | [Benefits](BENEFITS.md) |
+[Prompt examples](../operations/EXAMPLES.md) | [Canonical operator guide](../operations/OPERATOR_GUIDE.md) |
 [Run configuration](../protocol/RUN_CONFIGURATION.md)
 
 ## Contents
@@ -66,8 +66,8 @@ in the host where you intend to do the actual project work.
 
 Make these two references available to the target session:
 
-- [docs/protocol/FIRST_SESSION_AND_ORCHESTRATION.md](../protocol/FIRST_SESSION_AND_ORCHESTRATION.md)
-- [docs/guides/OPERATOR_GUIDE.md](OPERATOR_GUIDE.md)
+- [protocol/FIRST_SESSION_AND_ORCHESTRATION.md](../protocol/FIRST_SESSION_AND_ORCHESTRATION.md)
+- [operations/OPERATOR_GUIDE.md](../operations/OPERATOR_GUIDE.md)
 
 Use file attachments if your host supports them. Otherwise, copy the reference
 files to a reviewed location in the target repository and use that host's
@@ -87,11 +87,11 @@ $pack = 'C:\work\foldspace-orchestrator'
 $target = 'C:\work\your-project'
 $destination = Join-Path $target 'docs\reference\foldspace'
 $references = @(
-    'docs\protocol\FIRST_SESSION_AND_ORCHESTRATION.md'
-    'docs\guides\OPERATOR_GUIDE.md'
-    'docs\protocol\DEPLOYMENT_BUILD_INSTRUCTIONS.md'
-    'docs\reference\REVIEW_AND_CHANGES.md'
-    'docs\protocol\RUN_CONFIGURATION.md'
+    'protocol\FIRST_SESSION_AND_ORCHESTRATION.md'
+    'operations\OPERATOR_GUIDE.md'
+    'protocol\DEPLOYMENT_BUILD_INSTRUCTIONS.md'
+    'reference\REVIEW_AND_CHANGES.md'
+    'protocol\RUN_CONFIGURATION.md'
     'LICENSE'
 )
 
@@ -131,9 +131,9 @@ reference material; adoption should derive a small project-specific runtime
 core and link to details as needed.
 
 The copied bootstrap reference is at
-`docs\reference\foldspace\docs\protocol\FIRST_SESSION_AND_ORCHESTRATION.md`
+`docs\reference\foldspace\protocol\FIRST_SESSION_AND_ORCHESTRATION.md`
 relative to the sample target project. Attach the copied operator guide from
-`docs\reference\foldspace\docs\guides\OPERATOR_GUIDE.md`, or use the original
+`docs\reference\foldspace\operations\OPERATOR_GUIDE.md`, or use the original
 pack's references through a verified host mechanism.
 
 Copying files is not activation. A later fresh-session check must show that
@@ -169,7 +169,7 @@ a second coordinator policy. Do not declare live workers abandoned because
 their instructions predate adoption.
 
 For the canonical paths, see
-[operator guide section 1](OPERATOR_GUIDE.md#1-start-a-new-project-or-upgrade-an-existing-one)
+[operator guide section 1](../operations/OPERATOR_GUIDE.md#1-start-a-new-project-or-upgrade-an-existing-one)
 and [revision migration guidance](../reference/REVIEW_AND_CHANGES.md#4-apply-the-revision-without-resetting-the-project).
 
 ## Send a bootstrap prompt
@@ -268,7 +268,7 @@ blocking the coordinator; it does not establish nonblocking orchestration.
 
 These status records are observations, not a compatibility certification.
 Use [canonical runtime checks](../protocol/FIRST_SESSION_AND_ORCHESTRATION.md#4-verify-the-runtime-before-promising-orchestration)
-and [activation guidance](OPERATOR_GUIDE.md#2-confirm-activation-in-a-fresh-session)
+and [activation guidance](../operations/OPERATOR_GUIDE.md#2-confirm-activation-in-a-fresh-session)
 for the complete requirements.
 
 ## Understand the project records
@@ -444,7 +444,7 @@ confirmed surrender of ownership. A new epoch written in Markdown does not
 revoke the old coordinator's tools. Adopt valid unaffected worker assignments
 explicitly rather than discarding them.
 
-See [context recovery](OPERATOR_GUIDE.md#7-recover-context-and-coordination-without-losing-work)
+See [context recovery](../operations/OPERATOR_GUIDE.md#7-recover-context-and-coordination-without-losing-work)
 and [recoverable work and ownership](../protocol/FIRST_SESSION_AND_ORCHESTRATION.md#13-preserve-recoverable-work-and-restore-ownership-safely).
 
 ## Upgrade without resetting live work
