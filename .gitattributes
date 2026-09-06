@@ -1,5 +1,5 @@
-# Preserve the supplied canonical documents byte-for-byte.
-/FIRST_SESSION_AND_ORCHESTRATION.md -text
-/OPERATOR_GUIDE.md -text
-/DEPLOYMENT_BUILD_INSTRUCTIONS.md -text
-/REVIEW_AND_CHANGES.md -text
+# Avoid text normalization of the versioned canonical documents.
+/docs/protocol/FIRST_SESSION_AND_ORCHESTRATION.md -text
+/docs/guides/OPERATOR_GUIDE.md -text
+/docs/protocol/DEPLOYMENT_BUILD_INSTRUCTIONS.md -text
+/docs/reference/REVIEW_AND_CHANGES.md -text

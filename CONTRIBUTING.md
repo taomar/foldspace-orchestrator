@@ -18,16 +18,20 @@ FoldSpace. A proposed expansion of product scope needs explicit discussion.
 
 ## Keep the references and guides consistent
 
-The four uppercase root documents are the canonical detailed references.
-They were published unchanged from the supplied revision 2.0 archive dated
-6 September 2026. The README and `docs` guides orient readers; they should not
+The four uppercase documents under `docs/protocol`, `docs/guides`, and
+`docs/reference` are the canonical detailed references. Revision 2.0 was
+published unchanged in commit `38e9ce2`; revision 2.1 reorganizes those files
+and adds mandatory run configuration. The immutable source archive remains
+historical evidence, not a claim that active files are unchanged.
+The README and adoption guides orient readers; they should not
 silently introduce competing policy.
 
 Avoid incidental reformatting, encoding changes, or line-ending normalization
-in the originals. `.gitattributes` preserves their bytes. If a canonical
+in the canonical documents. `.gitattributes` disables text normalization. If a canonical
 correction is intentional, identify the source section, explain the change,
 and keep revision/provenance notes and affected guides consistent. Do not keep
-claiming byte-identical revision 2.0 content after an intentional source revision.
+claiming byte-identical revision 2.0 content or current runtime verification
+based on historical 2.0 review notes.
 
 Preserve relative links when moving files. Check local targets and heading
 anchors, fenced blocks, tables, and Mermaid rendering. Keep filesystem paths
@@ -50,6 +54,14 @@ Keep ownership, authority, budgets, queue preservation, candidate-specific
 evidence, and reconciliation-before-replay consistent across examples.
 Prompts cannot enforce locks, wake idle sessions, recover inaccessible intent,
 or guarantee exactly-once effects. Preparation is not release authorization.
+
+Preserve the mandatory pre-run interview across new/existing bootstrap,
+discovery workers, manual dispatch, deployment, fallback models, and recovery.
+Models and per-model reasoning bounds/defaults need explicit approval and
+supported-value evidence. External calls default denied with separately scoped
+consent. Budgets need approved units/caps or explicit uncapped opt-in;
+reservations and consumption survive retries and handoff. A missing capability
+must not become a false enforcement claim or a silent runtime default.
 
 ## Protect private information and attribution
 

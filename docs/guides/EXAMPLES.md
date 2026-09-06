@@ -7,13 +7,15 @@ mechanism. A request to report capability evidence must not be satisfied by
 inventing that evidence.
 
 Use the [getting-started guide](GETTING_STARTED.md) for adoption. The
-[canonical protocol](../FIRST_SESSION_AND_ORCHESTRATION.md) and
-[operator guide](../OPERATOR_GUIDE.md) define the full contracts behind these
-short prompts.
+[canonical protocol](../protocol/FIRST_SESSION_AND_ORCHESTRATION.md) and
+[operator guide](OPERATOR_GUIDE.md) define the full contracts behind these
+short prompts. Before any new run, use the mandatory
+[run-configuration interview](../protocol/RUN_CONFIGURATION.md).
 
 ## Contents
 
 - [Start a bounded project task](#start-a-bounded-project-task)
+- [Approve or decline run controls](#approve-or-decline-run-controls)
 - [Steer work without losing prior intent](#steer-work-without-losing-prior-intent)
 - [Ask for status that distinguishes progress from activity](#ask-for-status-that-distinguishes-progress-from-activity)
 - [Prepare a bounded worker handoff](#prepare-a-bounded-worker-handoff)
@@ -38,15 +40,63 @@ Allowed scope: [components/files and compatibility constraints].
 Budget: [effort/cost/retry allowance].
 Authority: [permitted actions]. Excluded effects: [publication/deployment/etc.].
 
+Before any workers, including discovery/research, or direct external LLM calls,
+ask me to approve exact supported models/role defaults/fallbacks, each model's
+supported reasoning minimum/default/maximum, external consent (disabled is
+valid), and run budgets/units, allocations, concurrency, retries and stop rules.
+Do not silently use runtime defaults, assume missing budget is unlimited,
+or treat Copilot authorization as direct external-call consent.
+
 Preserve the current instructions, requirements, work, owners, operations,
 pending steering, and existing authority. Reuse authoritative records.
 Identify the current coordinator and verify the host capabilities required
 for the first assignment. Record unsupported behavior honestly.
-Dispatch the next ready, authorized bounded task through a demonstrated path,
+After approval and an available budget reservation, dispatch the next ready,
+authorized bounded task through a demonstrated path,
 or prepare a complete operator-carried packet without claiming it has started.
 ```
 
-Reference: [starting or upgrading a project](../OPERATOR_GUIDE.md#1-start-a-new-project-or-upgrade-an-existing-one).
+Reference: [starting or upgrading a project](OPERATOR_GUIDE.md#1-start-a-new-project-or-upgrade-an-existing-one).
+
+## Approve or decline run controls
+
+Use the questionnaire rather than accepting a packet with unresolved fields.
+These are decisions for the target run, not credentials or model guarantees.
+
+```text
+Conduct the mandatory run interview one question at a time.
+Show only model IDs and reasoning choices supported by evidence for this host.
+Ask my approved providers/models, role defaults/overrides and fallback list;
+per-model reasoning minimum, maximum and selected default; explicit external
+LLM consent; and aggregate budget with measurable units and stop policy.
+Mark fixed reasoning N/A and ask me to accept that limitation.
+Do not launch discovery workers or probe external endpoints while approval
+is missing. Safe local planning may continue.
+```
+
+To decline external calls:
+
+```text
+Direct external LLM API calls are disabled for this run.
+This does not disable already-approved Copilot-managed sessions.
+Record denied external consent and do not send repository data to an endpoint
+to evaluate models, test credentials, or estimate costs.
+```
+
+To opt in, only after the interview has established the other run settings:
+
+```text
+I approve direct external LLM calls only to [provider and exact endpoint],
+using [approved exact model IDs], for [purpose], with [permitted data categories].
+Use credential reference [secure reference, never the key value].
+External cap and units: [approved measurable bound], within [parent allocation].
+All other endpoints, models, purposes, data, and expanded limits remain denied.
+Record approval source/time and policy version; do not ask again for every
+call already covered by this scope.
+```
+
+See [approved and blocked examples](../protocol/RUN_CONFIGURATION.md#dispatch-and-recovery-examples)
+for invalid bounds, unsupported settings, exhausted budgets, and uncertain charges.
 
 ## Steer work without losing prior intent
 
@@ -67,8 +117,8 @@ Report what was captured, delivered, acknowledged, and actually applied,
 plus any uncertainty and the accountable next action.
 ```
 
-Reference: [operator guide](../OPERATOR_GUIDE.md), particularly sections 4 and
-6, and the [canonical queued-intent policy](../FIRST_SESSION_AND_ORCHESTRATION.md#10-back-up-queued-intent-reconnect-and-apply-pending-work).
+Reference: [operator guide](OPERATOR_GUIDE.md), particularly sections 4 and
+6, and the [canonical queued-intent policy](../protocol/FIRST_SESSION_AND_ORCHESTRATION.md#10-back-up-queued-intent-reconnect-and-apply-pending-work).
 
 ## Ask for status that distinguishes progress from activity
 
@@ -89,7 +139,7 @@ for their own sake or wait for unrelated workers.
 ```
 
 These are reporting distinctions, not a replacement task-state machine.
-Reference: [idle sessions and queues](../OPERATOR_GUIDE.md#6-diagnose-idle-sessions-and-piled-up-queues).
+Reference: [idle sessions and queues](OPERATOR_GUIDE.md#6-diagnose-idle-sessions-and-piled-up-queues).
 
 ## Prepare a bounded worker handoff
 
@@ -104,6 +154,10 @@ ID, coordinator association, named owner, inputs, dependency versions and
 required states, workspace, write scope, shared resources, authority, needed
 capabilities, inherited budget, acceptance, stop conditions, deliverables,
 operation observation, checkpoint location, and explicit result return path.
+Include the approved run-policy version, effective allowed model/reasoning,
+external consent scope, and parent budget reservation. Descendants may only
+inherit or tighten limits. An unapproved fallback is blocked, not a reason to
+silently pick a different or more expensive model.
 
 Use only [allowed scope]. Do not perform [excluded effects].
 If a required fact is unknown, resolve it or mark the assignment blocked;
@@ -127,8 +181,8 @@ Own your execution handles, checkpoints, and evidence. Return an identified
 candidate and result through the packet's agreed channel.
 ```
 
-References: [assignment contract](../FIRST_SESSION_AND_ORCHESTRATION.md#8-give-every-assignment-a-complete-versioned-contract),
-[worker launch](../OPERATOR_GUIDE.md#5-launch-workers-with-an-explicit-task-and-job-handoff),
+References: [assignment contract](../protocol/FIRST_SESSION_AND_ORCHESTRATION.md#8-give-every-assignment-a-complete-versioned-contract),
+[worker launch](OPERATOR_GUIDE.md#5-launch-workers-with-an-explicit-task-and-job-handoff),
 and [manual fallback](GETTING_STARTED.md#manual-worker-fallback).
 
 ## Return a worker result
@@ -137,6 +191,8 @@ and [manual fallback](GETTING_STARTED.md#manual-worker-fallback).
 Submit the result for [task / assignment version / dispatch ID].
 Include the coordinator association, a result ID, input/contract versions,
 and the immutable candidate or accessible preserved snapshot.
+Include approved/effective policy, actual model/reasoning evidence, usage and
+reservation changes in their original native/external units, and unknown charges.
 
 Map each acceptance criterion to the actual observation and outcome.
 Identify changed artifacts, exact checks and their candidate/environment,
@@ -148,7 +204,7 @@ Do not report integration, deployment, or acceptance that did not occur.
 ```
 
 A branch label alone is not enough to identify what was checked.
-Reference: [candidate verification](../FIRST_SESSION_AND_ORCHESTRATION.md#15-verify-results-on-the-actual-candidate).
+Reference: [candidate verification](../protocol/FIRST_SESSION_AND_ORCHESTRATION.md#15-verify-results-on-the-actual-candidate).
 
 ## Recover context without reclaiming ownership blindly
 
@@ -160,6 +216,11 @@ Recover context for [objective/assignment] from authoritative records.
 Identify the intended role, coordinator/assignment identities, requirements,
 active owners, pending steering, previous attempts, remaining budget/authority,
 accepted candidates, and next action.
+Restore run configuration, external consent, consumed/reserved allowance, and
+uncertain in-flight charges. A replacement does not reset any of them.
+Block new work that would violate the cap; reconcile charges before reallocation
+and ask for approval before expanding scope or limits. Do not kill stateful jobs
+merely because accounting reached a cap.
 
 Recover actual tracked and untracked work bytes and accessible artifacts,
 not only summaries or hashes. Inspect live operations and uncertain effects.
@@ -172,8 +233,8 @@ isolated preparation and report the blocker.
 Continue only the next ready action within current authority.
 ```
 
-Reference: [context recovery](../OPERATOR_GUIDE.md#7-recover-context-and-coordination-without-losing-work)
-and [ownership restoration](../FIRST_SESSION_AND_ORCHESTRATION.md#13-preserve-recoverable-work-and-restore-ownership-safely).
+Reference: [context recovery](OPERATOR_GUIDE.md#7-recover-context-and-coordination-without-losing-work)
+and [ownership restoration](../protocol/FIRST_SESSION_AND_ORCHESTRATION.md#13-preserve-recoverable-work-and-restore-ownership-safely).
 
 ## Capture intent before a disruption
 
@@ -199,7 +260,7 @@ Do not invent provider IDs or assume a local journal creates exactly-once delive
 
 If a message cannot be recovered, ask the operator to supply the missing intent
 and label the gap. Do not synthesize a supposedly original queued message.
-Reference: [assisted backup, reconnect, and restore](../FIRST_SESSION_AND_ORCHESTRATION.md#assisted-backup-reconnect-and-restore).
+Reference: [assisted backup, reconnect, and restore](../protocol/FIRST_SESSION_AND_ORCHESTRATION.md#assisted-backup-reconnect-and-restore).
 
 ## Recover a connection and reconcile before replay
 
@@ -224,13 +285,15 @@ Replay only valid pending intent in bounded, causally correct chunks.
 Honor newer cancellations; do not blindly replay FIFO or deduplicate distinct
 legitimate intentions merely because their text is identical.
 Keep the inherited recovery allowance and stop at its limit.
+Recheck the approved effective model/reasoning and external consent for replay;
+retain reservations until usage and effects are reconciled.
 
 Report recovered work, applied intent, suppressed actions, remaining unknowns,
 and the next accountable action. Reconnect success alone does not close
 the incident or replace the coordinator's ownership.
 ```
 
-Reference: [queued-intent and connection recovery](../FIRST_SESSION_AND_ORCHESTRATION.md#10-back-up-queued-intent-reconnect-and-apply-pending-work).
+Reference: [queued-intent and connection recovery](../protocol/FIRST_SESSION_AND_ORCHESTRATION.md#10-back-up-queued-intent-reconnect-and-apply-pending-work).
 This protocol cannot repair a host/provider defect or guarantee job recovery.
 
 ## Review and integrate the actual candidate
@@ -254,7 +317,7 @@ Preserve stale useful output for revalidation, but do not auto-accept it.
 Avoid accepting duplicate reports of the same logical result twice.
 ```
 
-Reference: [candidate-specific verification](../FIRST_SESSION_AND_ORCHESTRATION.md#15-verify-results-on-the-actual-candidate).
+Reference: [candidate-specific verification](../protocol/FIRST_SESSION_AND_ORCHESTRATION.md#15-verify-results-on-the-actual-candidate).
 Required gates remain required even if a worker is unavailable.
 
 ## Prepare a release without implying permission
@@ -267,6 +330,8 @@ credential changes, or other external effects unless already explicitly
 covered by the project's recorded authority.
 
 Assign bounded execution to an owner with the relevant workspace/resources.
+Apply this run's approved model/reasoning, external-call consent, and reserved
+budget to deployment workers and any external evaluation/research calls.
 Discover the actual build, artifact, configuration, platform, and validation
 mechanisms; do not assume a cloud, container system, or pipeline product.
 Prepare the necessary files/runbook and perform only authorized checks.
@@ -281,8 +346,8 @@ A deployment coordinator remains a coordinator. A single deployment executor
 can own a bounded release assignment; if several workers are needed, return
 the decomposition to the coordinator rather than quietly combining roles.
 
-References: [deployment roles](../OPERATOR_GUIDE.md#9-assign-deployment-coordination-and-execution-explicitly)
-and [deployment/build reference](../DEPLOYMENT_BUILD_INSTRUCTIONS.md).
+References: [deployment roles](OPERATOR_GUIDE.md#9-assign-deployment-coordination-and-execution-explicitly)
+and [deployment/build reference](../protocol/DEPLOYMENT_BUILD_INSTRUCTIONS.md).
 
 ## Authorize a specific release action
 
@@ -309,5 +374,5 @@ next action. Do not claim that code rollback reverses data changes or that
 backup existence proves recovery.
 ```
 
-Reference: [release identity, authority, and state](../DEPLOYMENT_BUILD_INSTRUCTIONS.md#5-track-release-identity-authority-and-actual-state)
-and [interrupted deployment recovery](../DEPLOYMENT_BUILD_INSTRUCTIONS.md#6-recover-interrupted-deployment-work-without-duplicate-effects).
+Reference: [release identity, authority, and state](../protocol/DEPLOYMENT_BUILD_INSTRUCTIONS.md#5-track-release-identity-authority-and-actual-state)
+and [interrupted deployment recovery](../protocol/DEPLOYMENT_BUILD_INSTRUCTIONS.md#6-recover-interrupted-deployment-work-without-duplicate-effects).

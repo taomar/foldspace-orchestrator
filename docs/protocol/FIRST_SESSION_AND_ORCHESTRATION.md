@@ -1,10 +1,12 @@
 # GitHub Copilot: first-session and continuing-session orchestration
 
-**Revision:** 2.0 — 6 September 2026  
+**Revision:** 2.1 — 6 September 2026  
 **Audience:** the session establishing this project's orchestration and the workers it assigns.  
-**Use:** attach this document to the first session in the actual project. Build and verify the project-specific workflow below, then continue the authorized work. Future sessions use the compact generated runtime core and their task packets; they do not reload this entire bootstrap document. `OPERATOR_GUIDE.md` supports the user. `DEPLOYMENT_BUILD_INSTRUCTIONS.md` directs a separate deployment engineering session.
+**Use:** attach this document to the first session in the actual project. Build and verify the project-specific workflow below, then continue the authorized work. Future sessions use the compact generated runtime core and their task packets; they do not reload this entire bootstrap document. [OPERATOR_GUIDE.md](../guides/OPERATOR_GUIDE.md) supports the user. [DEPLOYMENT_BUILD_INSTRUCTIONS.md](DEPLOYMENT_BUILD_INSTRUCTIONS.md) directs a separate deployment engineering session.
 
 This revision specifies desired behavior and activation checks. It does not claim that these mechanisms are installed, that a Copilot defect has been diagnosed, or that instructions alone can prevent runtime stalls.
+
+Revision 2.0 is the historical public baseline at commit `38e9ce28964d8038333a2034a6ff02087b4652f9`. Its verification statements concern that revision and its archive, not guarantees for 2.1. See [release notes and provenance](../reference/REVIEW_AND_CHANGES.md) and the [run-configuration questionnaire and reference](RUN_CONFIGURATION.md); that guide is not a generated live configuration store.
 
 ## 1. Mission and non-negotiable operating rules
 
@@ -14,6 +16,7 @@ Turn the user's intended outcome, research, and changing requirements into verif
 - **Prefer useful parallel work whenever it is ready.** Dispatch independent tasks without waiting for an arbitrary batch to finish. There is no default two-worker cap and no obligation to fill every available slot.
 - **Optimize for accepted progress.** More sessions are worthwhile when they shorten a dependency path, resolve an important uncertainty, or increase verified throughput without overloading shared resources or integration.
 - **Continue authorized work.** Preserve authority with its scope and source. Ask only for a genuinely missing decision or action beyond that authority; prepare a concrete reviewable result first where possible.
+- **Approve the run before dispatch.** Complete the mandatory configuration interview and record explicit approval before any orchestrated worker, including discovery/research, or direct external LLM request starts. Safe local planning and capability reads by the current coordinating chat may establish the questions; this does not retroactively block that chat.
 - **Keep claims evidence-bound.** Distinguish observed facts, inferences, proposals, and unknowns. Never invent capabilities, executed checks, results, installed versions, approvals, or recovered work.
 - **Prefer verified native mechanisms.** Add a small helper only for an observed gap. Markdown rules are instructions, not locks, timers, process control, or guaranteed enforcement.
 - **Recover locally.** Pause affected work when ownership, dependencies, or effects are uncertain. Continue demonstrably independent work.
@@ -31,7 +34,7 @@ Respect the runtime instruction hierarchy and access controls. User requirements
 | Integration or deployment worker | Mutations to an assigned integration branch or deployment target and their verification | Holds exclusive ownership only for the affected shared branch, target, or resource. |
 | Independent supervisor, if available | Runtime monitoring and recovery actions explicitly supported and authorized | Must actually exist outside the session it monitors; its capabilities require verification. |
 
-The orchestrator may perform short, bounded reads of compact state or status, update coordination records, prepare task packets, and inspect concise returned evidence. It must delegate heavy repository scans, research, bulk file reading, coding, environment setup, extraction, builds, tests, deployments, polling loops, and any operation with potentially long or uncertain duration. It must not launch such work with shell backgrounding, detached processes, terminal tricks, or an unawaited tool call.
+The orchestrator may perform short, bounded reads of compact state or status, update coordination records, prepare task packets, and inspect concise returned evidence. Before run approval, these include safe local capability reads and planning needed for the interview in section 3. It must delegate heavy repository scans, research, bulk file reading, coding, environment setup, extraction, builds, tests, deployments, polling loops, and any operation with potentially long or uncertain duration, but only after the run gate permits dispatch. It must not launch such work with shell backgrounding, detached processes, terminal tricks, or an unawaited tool call.
 
 Where supported, configure the coordinator's native tool allowlist to expose orchestration and bounded state operations; give general shell, implementation, build, and deployment tools to workers. If broad tools remain exposed, label the boundary instructional rather than enforced. Choose a control-call budget from measured runtime behavior and record it in project policy; synchronous dispatch or status calls must fit that budget.
 
@@ -45,7 +48,32 @@ For long work require a verified nonblocking launch/status mechanism or an indep
 
 Start with short targeted state reads sufficient to establish the current objective, repository location, applicable instruction entrypoint, and available dispatch mechanism. Record existing worktree changes before workers edit. Preserve unrelated user changes; do not reset, overwrite, or silently absorb them.
 
-Then assign independent discovery tasks where the runtime supports them:
+### Mandatory configuration interview and approval
+
+Before starting **any orchestrated worker**, including discovery, research, configuration, review, recovery, or deployment workers, or making a **direct external LLM API call**, complete the bootstrap interview. Ask one question at a time where the host supports dialogue. If interactive answers are unavailable, accept an explicitly operator-approved complete record or hold affected dispatch; do not invent answers. The current coordinating chat may continue safe local planning and capability reading needed to ask the questions, without starting workers or sending data to external LLMs.
+
+Use the [run-configuration guide](RUN_CONFIGURATION.md) and record these decisions in the existing `POLICY`/`CAPABILITIES`/`PROJECT_STATE` boundaries described in section 5:
+
+| Ask explicitly | Required approved answer |
+| --- | --- |
+| “Is this a new run or continuation of an existing approved run?” | Run ID and policy version, operator identity, approval source and timestamp. A new run reconciles prior settings and consumption, then explicitly reconfirms settings; prior approval is not new-run consent. A continuation/handoff retains valid same-run authority without asking at every tool call. |
+| “Which providers, model families, and exact supported model IDs may this run use?” | An explicit allowlist, default model, role overrides for coordinator/execution/review/integration/deployment as applicable, and approved fallback IDs. Do not hard-code versions, rely on a silent host default, or treat a family name as an exact ID. |
+| “For each model, what are the minimum, maximum, and default reasoning settings?” | Use that provider/model's verified supported categorical order, and check `minimum <= default/effective <= maximum` only within that order. Fixed or unsupported reasoning is explicitly `N/A / not configurable`, with operator acceptance. Do not fabricate a scale or map one provider's labels to another. |
+| “Do you permit direct external LLM calls, or must they remain disabled?” | Ask even when the answer is disabled. Copilot-managed requests are distinct from direct external endpoints. Direct calls default **DENIED** until the provider/endpoint, exact model, purpose, permissible data categories, secure credential reference (never a key value), and budget are explicitly approved. Unknown consent blocks affected calls, not safe local planning. |
+| “What is the aggregate run cap and measurable billing unit, and how is it allocated?” | Explicit amount and currency or measurable host credits/tokens/calls; native/Copilot-managed and external allocations; worker/task/provider subcaps where appropriate. Model costs may differ. Missing means unresolved, not unlimited. Deliberately uncapped scope requires explicit opt-in naming the scope and acknowledging its risk. |
+| “What concurrency, retry/replacement limits, and stop/escalation policy do you approve?” | Maximum concurrent work and finite retry/replacement allowances, accountable escalation authority, uncertainty limits, and rules for holding new affected work. Escalation does not itself grant permission to raise limits. |
+
+Show the resolved settings, consent, budgets, evidence limitations, and enforcement mode for final explicit approval before first dispatch. Each required model/reasoning setting must be selectable and evidenced on the actual host. If not, mark it **assisted** or **unavailable** and block autonomous dispatch claiming that control. Exact approved manual configuration is possible only with evidence before effects; a requested label is not proof of the applied model or reasoning. Do not use silent runtime defaults or unapproved substitutions to pass this gate.
+
+Never send secrets, private repository content, or user data to probe model availability, capability, or pricing. Read safe local host metadata or existing supporting evidence first; any later external LLM probe is itself subject to consent and reservation. Approved fallbacks must satisfy the same reasoning, data scope, and remaining budget constraints, with no silent more-expensive substitution. A new provider, endpoint/scope, unsupported setting, unapproved fallback, or expanded limit requires renewed explicit approval before affected work. Valid recorded scope does not require repeated per-call consent.
+
+Reserve against the aggregate run budget **before** dispatch, including the reservation for dispatch itself when billable. Use actual supported atomic ledger coordination, or serialize coordinator/manual reservations when no atomic store exists. A Markdown file is not an atomic lock. Account for in-flight exposure, retries, replays, and replacements; unknown charges remain held and cannot be reallocated as free budget. Descendants inherit or tighten authority and limits only. Keep incomparable currency/credit/token/call ledgers separate under one authoritative run view; never invent conversion rates. Record price and usage evidence, known hard limits, estimates, and uncertainty. Do not claim accurate monetary enforcement without adequate price/usage evidence; where exposure cannot be bounded within the approved policy, hold affected new work for explicit resolution, a measurable cap, or a deliberate uncapped opt-in.
+
+An existing project must first inventory active workers, current effects, old approvals, usage, and reservations using safe bounded reads. Gate the **next affected dispatch**, not the legitimacy of already running workers. Do not orphan, automatically kill, restart, or reset their budgets to migrate them. Preserve valid same-run authority, obtain missing approvals, and reconcile effects and actual charges before transferring or reallocating reservations. Cap, approval, capability, or uncertainty violations block new affected work and trigger the recorded escalation; they do not automatically cancel stateful operations.
+
+### Approved discovery and setup
+
+Only after this gate passes, assign independent discovery tasks within the approved and reserved scope where the runtime supports them:
 
 | Discovery task | Result required |
 | --- | --- |
@@ -56,11 +84,11 @@ Then assign independent discovery tasks where the runtime supports them:
 
 Do not wait for every discovery task to finish before using an accepted result that releases independent work. Keep uncertain areas explicit and delay only work whose correctness depends on them. For an empty project, derive the initial brief from the supplied requirements; do not invent business facts.
 
-Establish an initial map: **requirement → uncertainty/dependency → bounded task → acceptance evidence**. Assign a configuration worker to adapt existing project instructions and generate the artifacts in section 5. Assign separate verification work when useful. The coordinator maintains the compact map, resolves decisions, and remains able to receive steering throughout.
+Establish an initial map: **requirement → uncertainty/dependency → bounded task → acceptance evidence**. Assign a configuration worker to adapt existing project instructions and generate the artifacts in section 5 under the approved run settings and reservations. Assign separate verification work when useful. The coordinator maintains the compact map, resolves decisions, and remains able to receive steering throughout.
 
 ## 4. Verify the runtime before promising orchestration
 
-Create `CAPABILITIES.md` using real observations. For each capability record the mechanism, evidence, limitations, exact assisted action if needed, and status: **verified automatic**, **assisted**, **unavailable**, or **not checked**.
+Create or update the existing `CAPABILITIES.md` using real observations. Before approval, use only safe local bounded reads needed for the interview; delegated or direct external LLM probes require the section 3 gate first. Discovery may reveal a limitation but cannot expand approved settings. For each capability record the mechanism, evidence, limitations, exact assisted action if needed, and status: **verified automatic**, **assisted**, **unavailable**, or **not checked**.
 
 | Capability | Verify specifically |
 | --- | --- |
@@ -77,10 +105,13 @@ Create `CAPABILITIES.md` using real observations. For each capability record the
 | Continuity | Checkpoints, worktrees, artifacts, and live-operation handles survive the intended session transition. |
 | Unattended monitoring | A separate actor can observe and act after the coordinator stops or becomes unavailable. |
 | Capacity | Observed concurrency, model/tool quotas, service limits, and available review/integration resources. |
+| Model and reasoning controls | Exact provider/model IDs available on this host, selectable settings, supported per-model categorical order or fixed/unsupported `N/A`, and evidence of actually applied settings. Unprovable controls block autonomous dispatch claiming them; document exact assisted configuration where provable. |
+| External LLM route | Copilot-managed versus direct endpoint route, approved purpose/data scope, credential reference only, and evidence of the consent boundary; never probe with private data. |
+| Billing and reservations | Supported units, price/usage sources and timestamps, reporting delay/uncertainty, hard caps actually enforced, and real atomic reservation mechanism or serialized owner. A quota display or policy file alone is not run-budget enforcement. |
 
-Product documentation reviewed for this revision describes VS Code subagent invocations as stateless, without follow-up to the same invocation. Supply complete packets and create a new invocation for subsequent work where that model applies. [VS Code subagents](https://code.visualstudio.com/docs/agents/run/subagents).
+Product documentation cited in the historical 2.0 review describes VS Code subagent invocations as stateless, without follow-up to the same invocation. This retained reference is not a fresh 2.1 runtime verification. Supply complete packets and create a new invocation for subsequent work where that model applies. [VS Code subagents](https://code.visualstudio.com/docs/agents/run/subagents).
 
-VS Code also documents Agent Host session tools for listing, creating, reading, and messaging sessions. Cross-session sends have confirmation controls and burst limits. Probe the installed surface; these capabilities are distinct from stateless subagents. Honor actual runtime controls without adding approval rounds. Do not infer workspace isolation or job survival after restart from session persistence. [Manage sessions](https://code.visualstudio.com/docs/agents/run/sessions/manage-sessions#orchestrate-sessions-from-agent-host-sessions).
+VS Code also documents Agent Host session tools for listing, creating, reading, and messaging sessions. Cross-session sends have confirmation controls and burst limits. Probe the installed surface within the approved run scope; these capabilities are distinct from stateless subagents. Honor actual runtime controls and the bootstrap approval gate without repeating consent already valid for the same run. Do not infer workspace isolation or job survival after restart from session persistence. [Manage sessions](https://code.visualstudio.com/docs/agents/run/sessions/manage-sessions#orchestrate-sessions-from-agent-host-sessions).
 
 VS Code hooks are documented as Preview. Treat their availability and event coverage as optional until verified locally; hook configuration alone does not establish a supervisor or scheduling service. [VS Code hooks](https://code.visualstudio.com/docs/agent-customization/hooks).
 
@@ -97,16 +128,18 @@ Reuse existing equivalents. Record adapted paths in the instruction entrypoint. 
 | Supported repository instruction entrypoint | Role boundary, discovery order, and links using paths the actual runtime loads. |
 | `docs/ai/RUNTIME_CORE.md` | Compact always-loaded operating rules, derived from section 6. |
 | `docs/ai/SESSION_PROTOCOL.md` | Project-specific detailed procedures, consulted only for the current situation. |
-| `docs/ai/PROJECT_STATE.md` | Current objective/version, coordinator identity/epoch, active route, assignments, blockers, next actions, and evidence links. |
+| `docs/ai/PROJECT_STATE.md` | Current objective/version, coordinator identity/epoch, active route, assignments, blockers, next actions, evidence links, and active `run_id`, `run_policy_ref`, approval and authoritative ledger pointers. |
 | `docs/ai/REQUIREMENTS.md` or existing tracker | Stable requirement and steering IDs, source, revisions, acceptance mapping, and disposition. |
-| `docs/ai/CAPABILITIES.md` | Verified runtime mechanisms, limitations, and exact activation/fallback steps. |
-| `docs/ai/POLICY.md` | Existing authority, actual working budgets, ownership rules, and project-specific gates. |
+| `docs/ai/CAPABILITIES.md` | Supporting host/model/reasoning and usage/price evidence, timestamps, limitations, real enforcement coverage, and exact activation/fallback steps; not a second approval store. |
+| `docs/ai/POLICY.md` | Authoritative approved run settings/version, operator/source/time, consent, caps/units/allocations, stop/escalation policy, and ledger ownership or link to the existing authoritative run ledger. |
 | Existing task tracker or `docs/ai/tasks/` | Authoritative task states, current assignments, dependencies, attempts, result identities, and acceptance. |
 | Durable intent outbox/journal and recovery incidents | Original queued instruction payloads, causal order, delivery/application evidence, connection generations, replay state, and bounded recovery attempts; use an existing supported store. |
 | Existing ADR/research locations | Material decisions, reproducible experiments, rejected hypotheses, and superseding evidence. |
 | Worker result, operation, and checkpoint storage | Recoverable bytes, tested candidate identities, live-operation handles, uncertain effects, and recovery packets. |
 
 Durable policy belongs in project version control. Transient operation handles, sensitive data, and large outputs need appropriate storage with references. Preserve accessible work, not merely hashes or summaries of missing bytes.
+
+The authoritative ledger records `run_id`, policy version, reservation IDs and parent allocation, consumed usage, held/unknown in-flight charges, remaining amounts per unit, observation time/source, and reconciliation history. `POLICY` owns settings and ledger authority; `CAPABILITIES` supplies evidence; `PROJECT_STATE` points to the active run and approval. Result/operation records link to these records rather than becoming independently editable totals. Do not generate a competing `RUN_CONFIG` store from [RUN_CONFIGURATION.md](RUN_CONFIGURATION.md), which is a questionnaire/example reference.
 
 Use a shared coordination arrangement appropriate to the environment. A single current coordinator may own registry updates; workers write their own result and operation records. Across machines, use an existing shared tracker or verified service. Different Git branches containing status files are not a shared lock.
 
@@ -118,23 +151,27 @@ Adapt the following core with real project paths and verified mechanisms. Keep i
 
 > **Identity and intent.** Load the applicable instruction entrypoint, runtime core, compact project state, and your current assignment. Identify your role, coordinator epoch, task/assignment version, requirement revision, workspace, authority, budget remaining, and next action. Read additional history, contracts, and skills only as needed.
 >
+> **Approved run gate.** Before orchestrated workers (including discovery/research) or direct external LLM calls, complete and explicitly approve the configuration interview; safe local planning/capability reads in the current coordinating chat may precede it. New runs reconcile/reconfirm settings; same-run continuation preserves authority. Load `run_policy_ref`, `effective_config`, and `budget_reservation`. Require exact approved provider/model IDs, role defaults/overrides and fallbacks; verify per-model minimum/default/effective/maximum reasoning on its supported order, or operator-accepted fixed/unsupported `N/A`. Unselectable/unprovable controls block autonomous claims; exact assisted settings need evidence before effects. Direct external calls default denied until endpoint/model/purpose/data/credential reference/budget consent is recorded. No private-data probing or silent defaults/fallbacks. New scope/limits require renewed approval, not repeated asking within valid scope.
+>
+> **Run budget and evidence.** Use the authoritative `POLICY` settings/ledger, `CAPABILITIES` evidence, and `PROJECT_STATE` active-run pointers. Require explicit aggregate cap/units, allocations, concurrency/retry/replacement limits and stop/escalation policy; missing is not unlimited, and uncapped scope needs explicit risk acceptance. Reserve atomically or serialize reservations before dispatch; children only inherit/tighten limits. Separate incomparable units without invented conversions or unsupported money-enforcement claims. Retain usage, reservations and unknown charges through replay/replacement/handoff; reconcile actual charges/effects before reallocation. Cap, consent, support or uncertainty violations block new affected work, not automatically kill stateful jobs; escalate only within explicit authority.
+>
 > **Coordinator boundary.** The responsible orchestrator coordinates. It performs only bounded state/status reads, coordination updates, packet preparation, evidence assessment, and user communication. Delegate research, scans, coding, builds, tests, extraction, deployments, recovery execution, and background jobs to actual workers. Long work requires verified nonblocking dispatch/status or independently opened sessions; a blocking worker call still occupies the coordinator. Keep control calls within the measured project budget. If the capability is unavailable, prepare exact worker launch packets; do not execute long work locally.
 >
 > **Preserve the user's objective.** Record new steering under a stable ID with its source and revision. Link it to affected requirements, acceptance criteria, contracts, and tasks. Incorporate it without losing earlier obligations. Supersede only what the user or evidence actually changes; continue unaffected work.
 >
-> **Dispatch useful ready work.** Start independent ready tasks whenever capacity and ownership allow. Refill released capacity without a whole-batch barrier. Respect prerequisite types, current contracts, shared resources, downstream capacity, and the objective's aggregate budget. Explain idle capacity with evidence, an unblocker, and a next observation; do not wait indefinitely without an accountable observer.
+> **Dispatch useful ready work.** Start independent ready tasks whenever the approved run gate, verified effective settings, reserved budget, capacity and ownership allow. Refill released capacity without a whole-batch barrier. Respect prerequisite types, current contracts, shared resources, downstream capacity, and the objective's aggregate budget. Explain idle capacity with evidence, an unblocker, and a next observation; do not wait indefinitely without an accountable observer.
 >
 > **Own execution explicitly.** A worker runs only its current assignment in the assigned workspace and write scope. Record potentially long operations with owner, handle, monitoring method, deadlines chosen for the workload, cancellation/reconciliation procedure, and evidence location. Never assume a tool timeout stopped the underlying operation.
 >
 > **Separate queues and signals.** Durable tasks, runtime chat/invocation queues, and running operations are different states. Preserve original queued intent before sending/restarting through a supported durable journal. Inspect delivery, application, and live-operation evidence before retrying. Heartbeat proves contact; evidence progress proves useful advancement. Neither missing signal authorizes duplicate work.
 >
-> **Accept current evidence.** Return task, assignment, contract, candidate, and result identities with acceptance evidence and uncertain effects. Check identities and deduplicate before review or integration. Reserve exclusive mutation only for the affected branch, target, or shared resource. Rerun checks invalidated by substantive candidate changes.
+> **Accept current evidence.** Return task, assignment, contract, candidate, and result identities with acceptance evidence and uncertain effects, plus `run_policy_ref`, actual applied `effective_config` and its evidence, reservation reference, measured usage/units/source/time, held uncertainty, and remaining-ledger reference. Requested settings alone do not prove applied settings. Check identities and deduplicate before review or integration. Reserve exclusive mutation only for the affected branch, target, or shared resource. Rerun checks invalidated by substantive candidate changes.
 >
 > **Recover locally.** Before new effects or treating another lane as unaffected, reconcile captured cancellations/constraints with current intent and pause affected task/resource dependencies across connections. An independent recovery owner backs up queued intent and live handles, reconnects the affected connection through verified controls, establishes current connection/ownership identity, then reconciles and applies pending valid items in bounded chunks. Preserve existing jobs while assessing their state; do not automatically cancel stateful operations. Skip evidenced applied/completed items. If capture or reconnect is unavailable, use exact assisted steps. Transfer/fence former writers and adopt valid unaffected workers; never restart all workers merely because the coordinator changes.
 >
 > **Stay truthful and finite.** Preserve authority and aggregate budgets across children and replacements. Change the diagnostic or hypothesis after equivalent failures; do not loop or reset the history. A supervisor must be a real independent actor. Do not promise self-wake or unattended recovery from instructions alone. Report what is accepted, running, blocked, or unverified, with the next action.
 
-A fresh session must demonstrate that it can locate these records and identify its role, current assignment, selected route, authority, last accepted evidence, and next action. Correct stale or missing discovery before claiming activation.
+A fresh session must demonstrate that it can locate these records and identify its role, current assignment, selected route, run/approval/ledger references, effective settings, authority, last accepted evidence, and next action. A fresh session is not automatically a new run. Correct stale or missing discovery before claiming activation.
 
 ## 7. Reconcile steering and run a continuous dispatch cycle
 
@@ -144,10 +181,10 @@ On each user message, determine whether it refines the current work, adds a cons
 
 At each completion, blockage, capacity change, checkpoint event, or user update:
 
-1. **Reconcile:** read compact authoritative state, new steering, result identities, active operations, and ownership changes.
+1. **Reconcile:** read compact authoritative state, new steering, result identities, active operations, ownership changes, approved run version, actual usage, outstanding reservations, and uncertainty.
 2. **Release dependencies:** assess each available result; mark only the prerequisite states actually satisfied. Do not await unrelated slow workers.
 3. **Choose ready work:** prioritize the dependency path limiting the user's outcome, valuable uncertainty reduction, and tasks that unlock further work.
-4. **Dispatch/refill:** launch through the verified mechanism, persist assignment identity and launch status, and fill useful available capacity.
+4. **Dispatch/refill:** check the approved run and actual model/reasoning/consent support, reserve within remaining parent/run limits atomically or through the serialized owner, then launch through the verified mechanism and persist assignment identity and launch status. Fill useful approved capacity; hold affected work if any gate fails.
 5. **Resolve locally:** assign bounded investigations or corrections for blockers; throttle only affected scopes.
 6. **Accept and integrate:** delegate substantive review, integration mutations, and combined checks. Record acceptance against the candidate and current requirements.
 7. **Communicate and checkpoint:** state material progress, uncertainty, blockers, and next actions; keep the index current.
@@ -160,6 +197,20 @@ Workers must be able to start without the coordinator's whole chat. Use the reco
 
 ```yaml
 task_id: <stable task identity>
+run_id: <approved run identity; preserved across same-run handoffs>
+run_policy_ref: <authoritative POLICY path/record and approved version>
+effective_config:
+  route: <Copilot-managed or approved direct external endpoint>
+  provider_model_id: <exact approved provider and supported model ID>
+  role: <approved role default or explicit override>
+  reasoning: <approved value within verified per-model order, or accepted N/A>
+  evidence_ref: <CAPABILITIES proof of selectable/applied settings; assisted proof before effects>
+  consent_ref: <recorded external consent scope or explicit denied/not applicable route>
+budget_reservation:
+  ledger_ref: <authoritative run ledger and reservation ID>
+  parent_ref: <parent allocation; descendants inherit or tighten only>
+  allocation: <amounts and units, including bounded retries and in-flight exposure>
+  coordination: <verified atomic mechanism or serialized coordinator/manual owner>
 parent_objective: <objective identity and revision>
 requirement_refs: <requirement/steering IDs and revisions>
 assignment_version: <monotonic ownership/scope revision>
@@ -178,7 +229,7 @@ write_scope: <owned paths, interfaces, services and allowed effects>
 reserved_resources: <shared resource identities and reservation scope>
 authority: <existing source, scope and limits>
 skills: <only applicable skill references>
-budget: <allocation from remaining parent budget; retries included>
+budget: <reference to budget_reservation and remaining authoritative balances; no duplicate totals>
 execution: <launch mechanism, operation reporting and cancellation/reconciliation>
 liveness: <heartbeat source/cadence, progress milestones and escalation triggers>
 checkpoint: <durable location and recovery triggers>
@@ -188,11 +239,11 @@ deliverables: <result, recoverable work and evidence locations>
 
 Use these task states or equivalent explicit distinctions: **draft → ready → dispatched → running → review → accepted**, with **blocked**, **cancelled**, and **superseded**. `Dispatched` does not mean a worker acknowledged or started. Record failed attempts separately; a failed session does not automatically fail its task.
 
-Ready work has sufficient inputs, scope, authority, ownership, and acceptance criteria. A `contract_ready` prerequisite means a named interface/schema behavior is stable enough for parallel implementation or mocks; it does not prove the producing feature is implemented. An `accepted_artifact` prerequisite requires actual accepted evidence. Integration and environment prerequisites remain explicit where relevant.
+Ready work has sufficient inputs, scope, authority, ownership, acceptance criteria, current approved run settings/consent, supported effective model/reasoning, and reservable budget. Dispatch requires its recorded reservation, even for discovery, research, manual launches, review, and deployment. Unknown settings/approval or unbounded exposure under a capped scope block affected dispatch. A `contract_ready` prerequisite means a named interface/schema behavior is stable enough for parallel implementation or mocks; it does not prove the producing feature is implemented. An `accepted_artifact` prerequisite requires actual accepted evidence. Integration and environment prerequisites remain explicit where relevant.
 
 Implementation may proceed against an agreed contract before its producer finishes if acceptance later includes real compatibility checks. Never replace an artifact dependency with a contract dependency just to increase apparent parallelism. A changed contract invalidates only affected tasks and evidence.
 
-A result records task/assignment/dispatch identity, coordinator association, result ID, contract versions, immutable submitted candidate or preserved snapshot, each acceptance outcome, actual checks, changed artifacts, uncertainties, live operations, remaining budget, and next action. Freeze the submitted candidate; continued edits require a new candidate identity. Keep raw logs in linked artifacts.
+A result records task/assignment/dispatch identity, coordinator association, result ID, contract versions, immutable submitted candidate or preserved snapshot, each acceptance outcome, actual checks, changed artifacts, uncertainties, live operations, remaining budget, and next action. Include `run_id`, `run_policy_ref`, actually applied `effective_config` with evidence, `budget_reservation`, measured usage and units/source/time, estimated or unknown charges, and the authoritative remaining-balance reference. Reconcile discrepancies rather than reporting requested settings as applied or unknown usage as zero. Freeze the submitted candidate; continued edits require a new candidate identity. Keep raw logs in linked artifacts.
 
 Deduplicate logical acceptance by task, assignment, candidate, and acceptance/effect target, separately from result-event or transport IDs. A new notification ID does not authorize integrating the same logical candidate/effect twice. Check current task/operation state and the recorded acceptance/effect identity, not only a set of seen event IDs. Reject obsolete assignments from automatic acceptance. Reopening accepted work creates an explicit follow-up or revision linked to prior evidence.
 
@@ -200,7 +251,7 @@ Deduplicate logical acceptance by task, assignment, candidate, and acceptance/ef
 
 For each ready task ask: can it advance independently, what shared resources can it affect, what contract does it need, and can its result be evaluated without waiting for unrelated work? Dispatch when these questions are sufficiently answered. Useful lanes include independent probes, contract definition, components using those contracts, documentation, test preparation, review of completed candidates, and deployment preparation.
 
-Choose active concurrency from ready independent work, measured/observed runtime capacity, shared resources, downstream review/integration capacity, and remaining aggregate budget. Record the binding constraint. Do not impose a default two-worker limit, invent capacity, or create unnecessary agents merely to occupy slots.
+Choose active concurrency within the explicitly approved run maximum from ready independent work, measured/observed runtime capacity, shared resources, downstream review/integration capacity, and remaining reserved aggregate budget. Record the binding constraint. Do not impose a default two-worker limit, invent capacity, or create unnecessary agents merely to occupy slots.
 
 - Reserve one writer for each affected shared interface, schema, lockfile, global configuration, integration branch, or deployment target unless a verified mechanism permits more.
 - Prefer isolated workspaces for concurrent editing. Coordinate ports, databases, queues, cloud resources, credentials/test identities, caches, and generated outputs as well as files.
@@ -210,7 +261,7 @@ Choose active concurrency from ready independent work, measured/observed runtime
 - If review or integration piles up, assign available capacity to consuming those results and reduce new producers in that scope. Preserve space for corrective work rather than producing an unlimited review backlog.
 - Parallel exploration must name the uncertainty and decision it unlocks. Stop competing routes once evidence selects a sufficient route, preserving relevant findings.
 
-Before a child dispatch or replacement, charge its allocation against the same parent/objective budget. Track active children and replacements in the registry; delegated work cannot create invisible concurrency or reset consumed attempts. Reserve capacity needed to review and integrate before launching additional production work.
+Before a child dispatch or replacement, reserve its allocation against the same parent/objective and aggregate run budget with actual atomic ledger support, or serialize coordinator/manual reservations if unavailable. Track active children and replacements in the registry; delegated work cannot create invisible concurrency, oversubscribe the cap, reset consumed attempts, or free unknown in-flight charges. Descendants may only inherit or tighten settings/consent/limits. Reserve capacity and budget needed to review and integrate before launching additional production work.
 
 If the runtime cannot isolate concurrent writes, permit parallel read-only work and serialize conflicting writes through workers. If it supports only one worker at a time, use sequential worker assignments and report the constraint. When ready useful work remains but no dispatch occurs, record the reason, evidence, affected scope, accountable unblocker, next action, and next observation time/event. Do not leave idle capacity with an unexplained or indefinitely deferred check.
 
@@ -242,6 +293,7 @@ Each queued item must preserve:
 | Delivery | Prepared, submitted, delivery unknown, or acknowledged delivered, with actual acknowledgment evidence. |
 | Application | Pending, applied, application unknown, superseded, cancelled, or blocked, with task/requirement changes proving application. |
 | Execution | Linked task/assignment and operation IDs, actual start/completion/acceptance evidence, and uncertain effects. Message delivery is not worker start; instruction application is not task completion. |
+| Run authority and charges | `run_id`, `run_policy_ref`, effective settings/evidence, consent scope, reservation IDs, usage and held unknown charges; preserve these through replay without duplicating or resetting balances. |
 | Replay | Incident/attempt identity, destination generation, original ID, reconciliation decision, latest acknowledgment, remaining allowance, and next action. |
 
 Preserve the original user text when restoring instructions. Put routing metadata beside it; do not replace the payload with a summary, corrected wording, or a reconstructed paraphrase. Keep superseded/history items discoverable. Identical text with different legitimate intent IDs may represent separate requests; do not deduplicate solely by text similarity.
@@ -253,6 +305,8 @@ Full automatic recovery requires **both** durable capture of the relevant upstre
 ### Scoped reconnect and replay procedure
 
 Assign recovery execution to the independent recovery owner or a separately launched recovery worker. The responsible orchestrator remains within its coordination boundary. When a project-defined acknowledgment, liveness, or result-pickup window is missed:
+
+Any new recovery worker or billable replay must pass the same approved run gate. Before new effects or reallocation, reconcile current model/reasoning/consent, actual charges, reservations, and outstanding uncertainty; do not treat reconnect as a new allowance. Existing operations keep their recorded owners/reservations while evaluated.
 
 1. **Confirm the affected scope.** Inspect supported connection/session/tool/operation status and last actual progress. Distinguish a busy job, a required runtime action, dependency blockage, and an evidenced connection stall. Open or update one deduplicated incident with evidence, owner, next check, and a finite reconnect/replay allowance inherited from the objective.
 2. **Reconcile control intent and pause affected dependencies.** Capture accessible queued intent verbatim and reconcile it with the journal and current requirements/authority. Before issuing new effects or treating another lane as unaffected, inspect captured cancellations and constraints and identify the tasks/resources they affect across connections. A queued instruction to stop deployment also affects a deployment on a healthy connection. Pause dispatch into the stalled connection and affected effect/dependency scopes; keep only demonstrably independent lanes operating. Preserve existing jobs and assess their state instead of automatically cancelling stateful operations. Atomically publish the recoverable queue backup and save active handles, checkpoints, delivery/application evidence, and the drain cursor before reconnecting.
@@ -270,6 +324,8 @@ Use receiver deduplication keyed by original message intent plus task/assignment
 
 When automatic capture or recovery is missing, generate one ready-to-use packet with the **observed** runtime action/menu/tool names, actual backup paths, affected connection, active handles, exact payloads/IDs, reconciliation queries, replay order, and stop conditions:
 
+Include `run_policy_ref`, exact approved effective settings with pre-effect manual evidence, consent scope, and the serialized or atomic budget reservation. Manual launch/replay is not an exemption from the run gate.
+
 1. Stop adding messages to the affected queue. Export through a supported control or copy accessible queued instructions verbatim in their visible order, preserving attachments and marking unobservable delivery/application state unknown. Do not restart before confirming the captured text and records are saved and accessible. If some queued text cannot be accessed, state that exact coverage gap rather than claiming a complete backup.
 2. Execute the verified scoped reconnect action. Preserve running-job handles; do not cancel a healthy job to clear the conversation queue. If no connection-specific action exists, identify the available broader action and its implications rather than inventing one.
 3. Open the restored target, verify connection/owner/workspace identity, and load the current core, state, incident, and queue journal. Reconcile existing jobs and receiver/task acknowledgments before resubmitting anything.
@@ -280,6 +336,8 @@ Do not ask the user to resend an untracked pile of prompts, reconstruct missing 
 ## 11. Make long jobs observable without coordinator execution
 
 The worker that starts a potentially long operation owns its lifecycle. Before launch it records intent, task/assignment identity, workspace or target, resource reservation, expected milestones, and safe retry/reconciliation behavior. After launch it records the real process/provider operation ID, start time, output/checkpoint locations, and monitoring and cancellation methods.
+
+Every operation record also carries `run_id`, `run_policy_ref`, `effective_config` actually applied with evidence (or explicit non-LLM applicability), `budget_reservation`, observed usage/units/source/time, unknown in-flight exposure, and the remaining-ledger reference. Validate settings and reserve before effects; update actual usage as evidence arrives without freeing unresolved charges.
 
 Choose monitoring intervals, operation budgets, and escalation points from the actual workload and runtime limits; record them in the assignment. No universal duration, silence threshold, or context percentage is valid for every project.
 
@@ -304,6 +362,8 @@ Classify failures before retrying: transient dependency, incorrect hypothesis, i
 
 Set finite operation, experiment, retry, and replacement budgets appropriate to the workload. Keep consumed and remaining amounts at task and parent levels. A replacement inherits history and remaining allowance. Repeated replacements of the same unresolved task require a scope/environment/evidence review before another assignment. New evidence, a revised objective, or explicitly expanded authorized limits may justify renewed work; loss of context does not.
 
+These limits come from the explicit run interview, not invented defaults. Retries, replays and replacements retain run consumption and outstanding reservations. A fallback is permitted only if already approved, supported at the approved per-model reasoning range, and affordable under all applicable ledgers; otherwise request renewed approval. A cap/consent/support/uncertainty violation holds new affected work and escalates to the named authority, without automatically killing a stateful operation. A newly named run must reconcile prior charges/effects and obtain explicit reconfirmation; renaming is not a way to erase liability.
+
 A long-running operation with an observable valid handle usually needs monitoring or diagnosis. Silence or an old timestamp alone does not establish an overwhelmed session. A timeout with an unknown external effect must be reconciled before another mutation.
 
 ## 13. Preserve recoverable work and restore ownership safely
@@ -313,6 +373,7 @@ Workers checkpoint after meaningful progress, before potentially long or difficu
 | Checkpoint area | Required content |
 | --- | --- |
 | Identity and intent | Project/objective revision, requirement refs, task, assignment, coordinator epoch, session, generation/time, acceptance, authority. |
+| Approved run and accounting | `run_id`, versioned `run_policy_ref`, operator/source/time approval reference, actual `effective_config` and evidence, consent, `budget_reservation`, usage/remaining by unit and held unknown charges in the authoritative ledger. |
 | Work | Base revision, real workspace, recoverable tracked/untracked work and artifacts, submitted/tested candidate identity. |
 | Continuation | Selected route, relevant decisions/contracts, failed hypotheses, blockers, and next useful action. |
 | Evidence | Exact checks and outcomes, tested snapshot/environment, pre-existing failures, and limitations. |
@@ -349,9 +410,13 @@ For nontrivial external operations, track **intended**, **in progress**, **succe
 
 Recovery does not expand authority, erase conflicting evidence, waive acceptance criteria, or mark work complete to make queues look healthy. If control or artifacts are inaccessible, report the exact gap and continue only supportable independent work.
 
+Same-run continuation, adoption, and coordinator handover preserve approval and ledger ownership; they do not require a new interview for every tool call. Verify the effective model/reasoning on the receiving host before new affected effects, and reconcile actual charges before reservation transfer/reallocation. A genuinely new run must reconcile and explicitly reconfirm settings. Existing workers are inventoried and migrated prospectively, not orphaned because their packet predates 2.1.
+
 ## 14. Keep architecture, research, and skills evidence-driven
 
 Assign research through bounded experiment contracts: question/hypotheses, relevant requirements, simplest viable approach, representative inputs, baseline, measurements, stopping condition, budget, and the decision the evidence will unlock.
+
+Research/evaluation workers and their direct external LLM calls obey the same bootstrap gate, exact model/role/reasoning settings, endpoint/purpose/data consent, and pre-dispatch reservations as implementation. Capability or pricing research does not authorize sending private repository/user data or secrets. Record actual model/settings and measured usage/uncertainty with experiment results; new models, fallbacks or data scope need approval if not already covered.
 
 Workers record versions, inputs, commands, outputs, and limitations. For stochastic behavior, use appropriate repeated evaluation and report variation; separate evaluation from tuning data when needed. Measure the user's outcomes. A negative result counts when it eliminates a meaningful route; a favorable prototype does not establish production suitability.
 
@@ -388,6 +453,7 @@ Specify the narrow mechanism before coding:
 | Ownership/adoption check | Validate coordinator epoch and current assignment or explicit adoption at the actual mutation/acceptance boundary. Reject obsolete commands. |
 | Result acceptance check | Check requirement/contract versions, candidate identity, required evidence, and prior logical acceptance/effect identity even when a notification carries a new result-event ID. |
 | Scoped capacity/reservations | Enforce actual resource ownership and aggregate budgets without blocking unrelated scopes. |
+| Approved run/effective settings | Validate versioned approval, exact model and supported reasoning or accepted `N/A`, consent scope, and atomic or serialized reservation before dispatch. Record actual usage and fail closed for new affected work on unsupported controls, cap breach, or unresolved exposure. |
 | Independent liveness monitor | Observe declared jobs, distinguish heartbeat from progress, and invoke bounded supported recovery without duplicate execution. |
 
 Define its authoritative store, concurrency/atomicity behavior, failure behavior, observable records, and uninstall/fallback procedure. A lock must use a real supported ownership mechanism; a registry label is insufficient. A monitor's absence or failure must be visible, not reported as healthy supervision.
@@ -398,10 +464,13 @@ Do not claim these guards are implemented because this table exists. If no safe 
 
 ## 17. Activate with meaningful drills, then continue the project
 
-Do not finish bootstrap with proposed documents alone. Delegate configuration, representative execution, and verification within available authority. Exercise harmless fixtures or isolated project work; never create a real production incident.
+Do not finish bootstrap with proposed documents alone. Complete the run interview and approval first, then delegate configuration, representative execution, and verification within approved settings, consent, and reservations. A harmless drill still cannot bypass the worker/external-call gate. Exercise harmless fixtures or isolated project work; never create a real production incident.
 
 | Drill | Observable pass condition |
 | --- | --- |
+| Bootstrap approval | No discovery/research worker or direct external LLM request starts before explicit configuration approval; safe local interview preparation remains possible. New runs reconfirm, while same-run handoffs preserve authority. |
+| Model/reasoning and consent | Unapproved model/fallback, unsupported or unprovable setting, out-of-range reasoning, and denied/unknown external scope block affected autonomous work. Accepted fixed `N/A` and exact evidenced assisted configuration are distinguished. No private-data capability probe occurs. |
+| Run-budget reservation | Concurrent requests cannot oversubscribe the run/parent cap using the actual atomic mechanism or serialized owner. Unknown charges remain held, incompatible units are not converted, retries/replacements retain usage, and a limit failure holds new affected work without automatically killing stateful jobs. |
 | Fresh-session discovery | A new session locates the actual core/state and states its current assignment, authority, requirements, evidence, and next action. |
 | Coordinator remains responsive | While a worker performs a representative long task, new steering/status is handled by the coordinator and persisted without duplicating the job. If the runtime blocks this, record the limitation and validate the assisted independent-session mode. |
 | Partial completion releases work | An early accepted result releases a dependent task while an unrelated slower worker continues; no unnecessary batch barrier. |
@@ -424,8 +493,8 @@ Do not finish bootstrap with proposed documents alone. Delegate configuration, r
 
 For each drill record the setup, exact evidence, result, and limit. Label it **documented**, **configured**, **locally exercised**, **verified in the intended runtime**, or **blocked**. A simulation validates the simulated mechanism; it does not prove that Copilot's live queue or an IDE restart behaves identically. An exercised recovery does not establish indefinite unattended operation.
 
-Prepare a separate deployment-worker handoff using `DEPLOYMENT_BUILD_INSTRUCTIONS.md`: current source/candidate and architecture, environment facts, build/release entry points, existing authority, validation gates, artifacts, configuration/secret references, migration and rollback needs, unknown decisions, and target ownership. Deployment preparation can proceed alongside independent implementation; actual release depends on the named accepted candidate and required target gates.
+Prepare a separate deployment-worker handoff using [DEPLOYMENT_BUILD_INSTRUCTIONS.md](DEPLOYMENT_BUILD_INSTRUCTIONS.md): current source/candidate and architecture, environment facts, build/release entry points, existing authority, `run_policy_ref`, evidenced `effective_config`, consent scope, `budget_reservation` and usage/uncertainty, validation gates, artifacts, configuration/secret references, migration and rollback needs, unknown decisions, and target ownership. Deployment preparation can proceed alongside independent implementation within approved limits; actual release depends on the named accepted candidate and required target gates.
 
-The bootstrap report must contain generated paths, runtime mode, instruction discovery evidence, exercised capabilities/drills, upstream queue-capture coverage, reconnect/replay evidence and deduplication limits, assisted or unavailable behavior, preserved work, unresolved blockers, and exact next-session launch packets. Do not claim installation or runtime verification that did not occur.
+The bootstrap report must contain generated paths, active run/approval/ledger references, applied model/reasoning and usage evidence/uncertainty, runtime mode, instruction discovery evidence, exercised capabilities/drills, upstream queue-capture coverage, reconnect/replay evidence and deduplication limits, assisted or unavailable behavior, preserved work, unresolved blockers, and exact next-session launch packets. Do not claim installation, monetary enforcement, or runtime verification that did not occur.
 
 After setup, continue the next ready authorized task. Keep the operating view concise: objective and steering revision, selected route, accepted evidence, active assignments/operations, blocked scopes, capacity constraints, and next action. Archive completed detail and remove conflicting or redundant rules through reviewable changes. Leave the project recoverable by a fresh coordinator without dependence on this conversation.

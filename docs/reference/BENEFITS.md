@@ -5,8 +5,8 @@ and recoverable. It does not provide a runtime that enforces those practices.
 The benefits below are **intended outcomes of following the protocol with
 adequate host support**, not published benchmark results.
 
-[Overview](../README.md) | [Getting started](GETTING_STARTED.md) |
-[Prompt examples](EXAMPLES.md)
+[Overview](../../README.md) | [Getting started](../guides/GETTING_STARTED.md) |
+[Prompt examples](../guides/EXAMPLES.md) | [Run configuration](../protocol/RUN_CONFIGURATION.md)
 
 ## Before and after
 
@@ -77,13 +77,17 @@ Code rollback alone does not reverse data changes.
 | Better continuity across sessions | Requirements, authoritative state, checkpoints, retrievable work | A fresh session can recover the next action without recreating the project history |
 | More inspectable acceptance | Evidence bound to candidate, contracts, environment, and requirements | "Accepted" has traceable checks and review, not just a completion message |
 | More controlled retries and cost | Inherited parent budgets and finite attempt history | Replacement sessions do not silently obtain a new allowance |
+| Operator control over model selection | Mandatory pre-run approval of exact supported models, role defaults, and fallback allowlists | Actual applied settings match the approved run policy |
+| Explicit reasoning bounds | Per-model supported minimum/default/maximum, or accepted N/A | No silent scale mapping or unsupported setting presented as applied |
+| Separate consent for external data transfer | Direct external LLM calls denied until endpoint, purpose, data scope, credential reference, and budget are approved | Native Copilot authorization is not reused as blanket external-call consent |
+| Less budget oversubscription | Parent reservations before concurrent dispatch; inherited usage and uncertain-charge reconciliation | New work stops at known bounds rather than treating replacements as a fresh budget |
 | Safer recovery from uncertain delivery | Preserve intent, distinguish delivery/application/effects, reconcile before replay | Unknown outcomes are investigated before potentially duplicating mutations |
 | Clearer release accountability | Separate preparation, authority, execution, verification, and recovery | Release state corresponds to actual observed effects on the named target |
 
 For the underlying rules, use
-[FIRST_SESSION_AND_ORCHESTRATION.md](../FIRST_SESSION_AND_ORCHESTRATION.md),
-the day-to-day [OPERATOR_GUIDE.md](../OPERATOR_GUIDE.md), and
-[DEPLOYMENT_BUILD_INSTRUCTIONS.md](../DEPLOYMENT_BUILD_INSTRUCTIONS.md).
+[FIRST_SESSION_AND_ORCHESTRATION.md](../protocol/FIRST_SESSION_AND_ORCHESTRATION.md),
+the day-to-day [OPERATOR_GUIDE.md](../guides/OPERATOR_GUIDE.md), and
+[DEPLOYMENT_BUILD_INSTRUCTIONS.md](../protocol/DEPLOYMENT_BUILD_INSTRUCTIONS.md).
 
 ## Where it fits
 
@@ -113,6 +117,8 @@ infrastructure when those properties are requirements.
 | Coordination overhead | Assignments, state reconciliation, checkpoints, and reviews take time; use the smallest useful records |
 | Context overhead | Repeating the entire protocol can crowd out task context; use a compact core and load details when needed |
 | Model and tool costs | More workers, retries, and repeated discovery can increase total cost even if work overlaps |
+| Configuration and accounting overhead | Every new run needs explicit model/reasoning/consent/budget confirmation; native and external costs may use incomparable units |
+| Enforcement limits | Model settings and monetary limits require actual host controls and usage/pricing evidence; unsupported autonomous dispatch must remain blocked |
 | Host capability limits | Separate contexts, nonblocking dispatch, follow-up, cancellation, queue capture, and recovery must be checked independently |
 | Review and integration capacity | Faster candidate production can create a backlog rather than faster accepted delivery |
 | Shared-resource contention | Isolated worktrees do not isolate databases, ports, identities, queues, or external environments |
@@ -150,5 +156,5 @@ can explain differences.
 
 This repository ships no benchmark suite, telemetry collector, or measured
 performance claims. Its source revision's
-[verification and limits](../REVIEW_AND_CHANGES.md#5-verification-and-limits)
+[historical verification and limits](REVIEW_AND_CHANGES.md#5-verification-and-limits)
 are a useful boundary for interpreting what has and has not been demonstrated.

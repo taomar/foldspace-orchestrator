@@ -4,8 +4,9 @@ Adopt the protocol in the repository where your work actually happens.
 FoldSpace is a documentation pack: copying its references does not install an
 agent runtime or activate a scheduler.
 
-[Overview](../README.md) | [Benefits](BENEFITS.md) |
-[Prompt examples](EXAMPLES.md) | [Canonical operator guide](../OPERATOR_GUIDE.md)
+[Overview](../../README.md) | [Benefits](../reference/BENEFITS.md) |
+[Prompt examples](EXAMPLES.md) | [Canonical operator guide](OPERATOR_GUIDE.md) |
+[Run configuration](../protocol/RUN_CONFIGURATION.md)
 
 ## Contents
 
@@ -24,10 +25,11 @@ agent runtime or activate a scheduler.
 ## Prerequisites
 
 You need a target repository or project workspace, a Copilot host you can
-actually use with it, and an outcome concrete enough to evaluate. Know the
-constraints you can state: permitted changes, compatibility needs, cost or
-effort budget, and whether any external effects are authorized. Leave unknowns
-explicit rather than inventing project facts.
+actually use with it, and an outcome concrete enough to evaluate. Every new
+run requires an explicit model/reasoning, external-call consent, and budget
+interview before workers start, including discovery workers. Unknown settings
+block affected dispatch, not safe local planning in the bootstrap chat.
+State permitted changes and compatibility needs; do not invent project facts.
 
 Identify existing instructions, task tracking, unfinished changes, other active
 workers, and any running operations before assigning overlapping work. Preserve
@@ -64,8 +66,8 @@ in the host where you intend to do the actual project work.
 
 Make these two references available to the target session:
 
-- [FIRST_SESSION_AND_ORCHESTRATION.md](../FIRST_SESSION_AND_ORCHESTRATION.md)
-- [OPERATOR_GUIDE.md](../OPERATOR_GUIDE.md)
+- [docs/protocol/FIRST_SESSION_AND_ORCHESTRATION.md](../protocol/FIRST_SESSION_AND_ORCHESTRATION.md)
+- [docs/guides/OPERATOR_GUIDE.md](OPERATOR_GUIDE.md)
 
 Use file attachments if your host supports them. Otherwise, copy the reference
 files to a reviewed location in the target repository and use that host's
@@ -73,9 +75,9 @@ supported way of including their content. Ask the session to identify the
 references it actually read. A filename mentioned in a prompt is not proof it
 was loaded.
 
-The following optional PowerShell example copies **all four canonical
-references** to a dedicated subdirectory. Keeping them together preserves their
-relative links and includes deployment and revision guidance. Replace the
+The following optional PowerShell example copies **the four canonical
+references, run-configuration guide, and license** to a dedicated subdirectory.
+It preserves the pack's folder layout and their relative links. Replace the
 sample paths first. The command refuses to use an existing destination so it
 cannot silently overwrite a previous copy or live instruction file.
 
@@ -85,10 +87,11 @@ $pack = 'C:\work\foldspace-orchestrator'
 $target = 'C:\work\your-project'
 $destination = Join-Path $target 'docs\reference\foldspace'
 $references = @(
-    'FIRST_SESSION_AND_ORCHESTRATION.md'
-    'OPERATOR_GUIDE.md'
-    'DEPLOYMENT_BUILD_INSTRUCTIONS.md'
-    'REVIEW_AND_CHANGES.md'
+    'docs\protocol\FIRST_SESSION_AND_ORCHESTRATION.md'
+    'docs\guides\OPERATOR_GUIDE.md'
+    'docs\protocol\DEPLOYMENT_BUILD_INSTRUCTIONS.md'
+    'docs\reference\REVIEW_AND_CHANGES.md'
+    'docs\protocol\RUN_CONFIGURATION.md'
     'LICENSE'
 )
 
@@ -109,6 +112,10 @@ New-Item -ItemType Directory -Path $destination | Out-Null
 foreach ($name in $references) {
     $source = Join-Path $pack $name
     $copy = Join-Path $destination $name
+    $parent = Split-Path -Parent $copy
+    if (-not (Test-Path -LiteralPath $parent -PathType Container)) {
+        New-Item -ItemType Directory -Path $parent | Out-Null
+    }
     [System.IO.File]::Copy($source, $copy, $false)
 }
 ```
@@ -123,6 +130,12 @@ Keep one authoritative version of each rule. The full references can remain
 reference material; adoption should derive a small project-specific runtime
 core and link to details as needed.
 
+The copied bootstrap reference is at
+`docs\reference\foldspace\docs\protocol\FIRST_SESSION_AND_ORCHESTRATION.md`
+relative to the sample target project. Attach the copied operator guide from
+`docs\reference\foldspace\docs\guides\OPERATOR_GUIDE.md`, or use the original
+pack's references through a verified host mechanism.
+
 Copying files is not activation. A later fresh-session check must show that
 the intended host discovers the right project instructions and state.
 
@@ -134,7 +147,10 @@ State the intended product or result, known constraints, and acceptance
 criteria. Establish the smallest useful project structure rather than
 inventing architecture, tools, or a release topology.
 
-Initial discovery should identify the project boundary, existing repository
+Complete and approve the run interview first. Safe local capability reading
+in the current bootstrap chat may prepare the questions without launching
+workers or probing external LLM endpoints. Then initial discovery should
+identify the project boundary, existing repository
 assets, supported host mechanisms, and the appropriate validation path. Under
 the protocol, substantial discovery is a bounded worker assignment; the
 coordinator organizes it and maintains the objective. Useful independent work
@@ -153,8 +169,8 @@ a second coordinator policy. Do not declare live workers abandoned because
 their instructions predate adoption.
 
 For the canonical paths, see
-[operator guide section 1](../OPERATOR_GUIDE.md#1-start-a-new-project-or-upgrade-an-existing-one)
-and [revision migration guidance](../REVIEW_AND_CHANGES.md#4-apply-the-revision-without-resetting-the-project).
+[operator guide section 1](OPERATOR_GUIDE.md#1-start-a-new-project-or-upgrade-an-existing-one)
+and [revision migration guidance](../reference/REVIEW_AND_CHANGES.md#4-apply-the-revision-without-resetting-the-project).
 
 ## Send a bootstrap prompt
 
@@ -178,6 +194,16 @@ Identify the current coordination owner and preserve existing work and policy.
 Do not create a competing tracker or assume unknown ownership is unclaimed.
 Separate short coordination work from substantial execution assignments.
 
+Before workers or direct external LLM calls, ask one question at a time for
+approved providers/families and exact supported model IDs, role defaults and
+fallbacks, per-model supported minimum/default/maximum reasoning, external-call
+consent (explicitly disabled or precisely scoped), and aggregate budget/units,
+allocations, concurrency, retries/replacements, and stopping/escalation policy.
+Record explicit acceptance of N/A reasoning where it is not configurable.
+Missing settings are not permission for runtime defaults or unlimited spend.
+External calls default denied, independently of native Copilot authorization.
+Reconfirm for a new run; carry approved scope forward on within-run handoff.
+
 Discover the instruction-loading and worker mechanisms available in this host.
 Record each relevant capability as Verified automatic, Assisted, Unavailable,
 or Not checked, with evidence and a concrete fallback where applicable.
@@ -190,13 +216,21 @@ If native nonblocking dispatch is unavailable, prepare an operator-carried
 worker packet with verified local launch steps and an explicit result path.
 
 Report the next ready assignment, its owner, any blockers, and the next action.
-Continue authorized work once its prerequisites are satisfied; do not wait for
-unrelated tasks or expand release authority.
+Dispatch only once approved settings can be applied and evidenced and parent
+budget is reserved. Continue authorized work without waiting for unrelated
+tasks or expanding authority. Keep uncertain usage reserved during recovery.
 ```
 
 If authority, ownership, or a required prerequisite remains unknown, the next
 action can be bounded discovery or clarification. It is not permission for
 conflicting writes or external effects.
+
+Use the [complete questionnaire and examples](../protocol/RUN_CONFIGURATION.md)
+to conduct the interview. Persist approved policy/version and its source/time
+in the existing `POLICY` arrangement, capability evidence in `CAPABILITIES`,
+and active run/ledger references in `PROJECT_STATE`. Do not create competing
+copies of approved settings. Subtasks, fallbacks, retries, and replacements
+inherit or tighten settings and retain usage/reservations.
 
 ## Record actual host capabilities
 
@@ -220,6 +254,8 @@ Start with the capabilities necessary for your first task:
 - What proves launch, running status, individual result return, and cancellation?
 - Which files and shared resources are isolated, and what actually enforces ownership?
 - Can a new session retrieve the checkpoint, work bytes, and operation status?
+- Can the host select and prove the actual model and per-model reasoning, and
+  observe/reserve usage in the approved units without inventing conversions?
 
 Check recovery, queue capture, reconnect, persistent follow-up, independent
 monitoring, and deployment controls before relying on them. You need not
@@ -231,8 +267,8 @@ claims. A synchronous subagent call may provide a separate context while still
 blocking the coordinator; it does not establish nonblocking orchestration.
 
 These status records are observations, not a compatibility certification.
-Use [canonical runtime checks](../FIRST_SESSION_AND_ORCHESTRATION.md#4-verify-the-runtime-before-promising-orchestration)
-and [activation guidance](../OPERATOR_GUIDE.md#2-confirm-activation-in-a-fresh-session)
+Use [canonical runtime checks](../protocol/FIRST_SESSION_AND_ORCHESTRATION.md#4-verify-the-runtime-before-promising-orchestration)
+and [activation guidance](OPERATOR_GUIDE.md#2-confirm-activation-in-a-fresh-session)
 for the complete requirements.
 
 ## Understand the project records
@@ -248,7 +284,7 @@ shipped in this repository and not empty templates to install in bulk.
 | `docs/ai/PROJECT_STATE.md` | Objective/version, coordinator, current assignments, blockers, evidence, next actions |
 | `docs/ai/REQUIREMENTS.md` or existing tracker | Stable requirement identities, revisions, and acceptance mapping |
 | `docs/ai/CAPABILITIES.md` | Demonstrated mechanisms, limits, and assisted steps |
-| `docs/ai/POLICY.md` | Authority, shared-resource rules, project gates, and budgets |
+| `docs/ai/POLICY.md` | Authoritative approved run models/reasoning, external consent, budgets/ledger ownership, authority, and project gates |
 | Existing task tracker or `docs/ai/tasks/` | Versioned assignments, dependencies, attempts, ownership, and results |
 | Suitable controlled artifact storage | Work snapshots, operation records, evidence, queue journals, and recovery checkpoints |
 
@@ -261,7 +297,7 @@ checksum or a diff summary.
 Different branches containing the same state filename do not create a shared
 lock or a shared database. Use the project's existing shared tracking or a
 demonstrated mechanism when multiple machines or sessions need common state.
-See [canonical project memory](../FIRST_SESSION_AND_ORCHESTRATION.md#5-install-small-authoritative-project-memory).
+See [canonical project memory](../protocol/FIRST_SESSION_AND_ORCHESTRATION.md#5-install-small-authoritative-project-memory).
 
 ## A bounded worked example
 
@@ -276,6 +312,7 @@ They are not installed task files or commands.
 |---|---|
 | Objective / requirement | `DOC-SETUP`: document the current option and remove stale setup guidance |
 | Assignment | `DOC-SETUP-1`, version `1`, with a recorded dispatch ID and current coordinator association |
+| Approved run policy | A current policy/version with evidenced model and reasoning settings; external calls disabled; an available parent budget reservation |
 | Owner and workspace | One named documentation worker in its assigned workspace, after inspecting existing changes |
 | Inputs | Current option definition, existing setup guide, accepted requirement revision |
 | Dependencies | Agreed option behavior; if still changing, wait for the required accepted contract/artifact |
@@ -284,7 +321,8 @@ They are not installed task files or commands.
 | Budget | One bounded edit attempt and one bounded correction pass within the parent allowance; stop if code changes are needed |
 | Return | A preserved patch or commit identifying the candidate, changed paths, evidence, limitations, and next action |
 
-1. The coordinator checks ownership, records the assignment, and chooses a
+1. After the run interview is approved, the coordinator checks ownership,
+   effective model/reasoning, and reserved budget, records the assignment, and chooses a
    demonstrated dispatch path or the manual fallback below.
 2. The worker acknowledges the exact assignment, inspects the current option
    and guide, and returns the bounded documentation candidate with evidence.
@@ -309,13 +347,19 @@ When native nonblocking worker launch is unavailable, use a real separate
 session with an operator-carried packet. Do not invent a tool or silently have
 the coordinator perform the heavy execution.
 
-1. **Prepare and register.** The coordinator records a complete versioned
+1. **Approve, prepare, and register.** Complete the run interview first.
+   The coordinator records a complete versioned
    assignment and its intended owner, result location, and observation trigger.
-   Record it as prepared; do not mark it running.
+   Include the approved policy/version, effective model/reasoning, external
+   consent scope, and parent budget reservation. Record it as prepared;
+   do not mark it running.
 2. **Give local launch instructions.** Identify the actual verified way the
    operator can open a separate session in this host and select the intended
    workspace. If that mechanism has not been checked, say so and have the
-   operator establish it before claiming a usable assisted path.
+   operator establish it before claiming a usable assisted path. Include
+   exact approved model/reasoning configuration steps and obtain evidence
+   of the applied settings before effects. Unsupported controls cannot be
+   replaced with silent host defaults.
 3. **Carry the packet.** The operator opens that session and supplies the packet
    plus the applicable project instructions, inputs, and accessible artifacts.
    Preserve its task/assignment/dispatch identities rather than regenerating
@@ -337,7 +381,7 @@ the coordinator perform the heavy execution.
    and remaining budget before review, integration, or acceptance.
 
 A packet should cover the fields in the
-[canonical assignment contract](../FIRST_SESSION_AND_ORCHESTRATION.md#8-give-every-assignment-a-complete-versioned-contract):
+[canonical assignment contract](../protocol/FIRST_SESSION_AND_ORCHESTRATION.md#8-give-every-assignment-a-complete-versioned-contract):
 task and parent objective, requirement references, assignment/dispatch/coordinator
 identities, owner, objective and acceptance, inputs and dependencies, workspace,
 write scope and resource reservations, authority and needed capabilities,
@@ -347,7 +391,9 @@ deliverables, and the return path.
 The result needs those identities plus a result ID, contract versions,
 immutable candidate or preserved snapshot, acceptance outcomes and actual
 checks, changed artifacts, uncertainty, surviving operations, remaining budget,
-and next action. Raw logs belong in suitable linked artifacts, not a claim of
+and next action. Include effective run policy/model/reasoning, actual
+usage by accounting path/unit, reservations, and uncertain in-flight charges.
+Raw logs belong in suitable linked artifacts, not a claim of
 success with no candidate.
 
 If no separate session is available at all, prepare the bounded packet and
@@ -365,6 +411,10 @@ objective and requirements, coordinator and assignment, workspace and owner,
 authority and remaining budget, relevant live operations, latest accepted
 evidence, pending steering, blockers, and exact next action.
 
+A fresh session continuing an approved run inherits its policy and ledger;
+a new run must explicitly reconfirm settings. Neither a new session nor a new
+run label erases outstanding charges or reservations from prior work.
+
 It must not assign itself ownership just because the previous conversation is
 quiet. Check the relevant branch, worktree, shared tracker, and accessible
 artifacts. If discovery fails, fix the actual loading or access path and repeat
@@ -377,6 +427,9 @@ Continue from the target project's authoritative state and checkpoint.
 Identify my requested outcome, current role and assignment, active owners,
 remaining authority and budget, pending steering, surviving operations, and
 the last accepted candidate/evidence.
+Restore the approved run policy/version, selected models/reasoning, scoped
+external consent, reservations, actual usage, and uncertain charges.
+Reconfirm settings only if this is a new run or the scope must expand.
 
 Inspect accessible tracked and untracked work before changing anything.
 Reconcile unknown external effects before replay or replacement writes.
@@ -391,8 +444,8 @@ confirmed surrender of ownership. A new epoch written in Markdown does not
 revoke the old coordinator's tools. Adopt valid unaffected worker assignments
 explicitly rather than discarding them.
 
-See [context recovery](../OPERATOR_GUIDE.md#7-recover-context-and-coordination-without-losing-work)
-and [recoverable work and ownership](../FIRST_SESSION_AND_ORCHESTRATION.md#13-preserve-recoverable-work-and-restore-ownership-safely).
+See [context recovery](OPERATOR_GUIDE.md#7-recover-context-and-coordination-without-losing-work)
+and [recoverable work and ownership](../protocol/FIRST_SESSION_AND_ORCHESTRATION.md#13-preserve-recoverable-work-and-restore-ownership-safely).
 
 ## Upgrade without resetting live work
 
@@ -404,7 +457,9 @@ Preview and review differences before replacing any reference or instruction.
 Preserve task identities and versions, owners, budgets and attempts, pending
 intent, prior authority, operation handles, evidence, and incomplete work.
 Apply assignment changes prospectively, reconcile affected workers, and pause
-incompatible operations before switching formats.
+incompatible operations before switching formats. For a 2.0-to-2.1 upgrade,
+inventory existing effects and obtain missing run approvals before new affected
+dispatch; do not kill stateful operations or reset accounting to install a cap.
 
 Do not introduce duplicate rules, replace local customization silently, reset
 a tracker, or discard historical decisions. Keep a recovery route for the
@@ -412,5 +467,5 @@ changed assets; reverting instructions must not erase project state or imply
 that external effects were undone.
 
 The canonical upgrade guidance is in
-[REVIEW_AND_CHANGES.md](../REVIEW_AND_CHANGES.md#4-apply-the-revision-without-resetting-the-project)
-and [setup distribution](../DEPLOYMENT_BUILD_INSTRUCTIONS.md#deliver-the-copilot-working-setup).
+[REVIEW_AND_CHANGES.md](../reference/REVIEW_AND_CHANGES.md#4-apply-the-revision-without-resetting-the-project)
+and [setup distribution](../protocol/DEPLOYMENT_BUILD_INSTRUCTIONS.md#deliver-the-copilot-working-setup).

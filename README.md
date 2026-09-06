@@ -13,10 +13,11 @@ supervisor included. Automatic behavior depends on capabilities demonstrated in
 your actual host; where those capabilities are missing, use explicit
 assisted/manual handoffs.
 
-[Get started](docs/GETTING_STARTED.md) |
-[Benefits and tradeoffs](docs/BENEFITS.md) |
-[Prompt examples](docs/EXAMPLES.md) |
-[Operator guide](OPERATOR_GUIDE.md) |
+[Get started](docs/guides/GETTING_STARTED.md) |
+[Benefits and tradeoffs](docs/reference/BENEFITS.md) |
+[Prompt examples](docs/guides/EXAMPLES.md) |
+[Run configuration](docs/protocol/RUN_CONFIGURATION.md) |
+[Operator guide](docs/guides/OPERATOR_GUIDE.md) |
 [Contribute](CONTRIBUTING.md)
 
 ## On this page
@@ -24,6 +25,7 @@ assisted/manual handoffs.
 - [Why FoldSpace](#why-foldspace)
 - [How it works](#how-it-works)
 - [Quick start](#quick-start)
+- [Configure every new run](#configure-every-new-run)
 - [Reading path and repository map](#reading-path-and-repository-map)
 - [What gets created in your project](#what-gets-created-in-your-project)
 - [Deployment scope](#deployment-scope)
@@ -51,7 +53,7 @@ of treating more conversations as more progress.
 | Deployment preparation becomes accidental authorization | Separate readiness from permission to create effects | Named candidate, target, gates, and explicit authority |
 
 These are intended mechanisms and outcomes, **not measured speedups or
-guarantees**. See [benefits, fit, and measurement](docs/BENEFITS.md) for the costs
+guarantees**. See [benefits, fit, and measurement](docs/reference/BENEFITS.md) for the costs
 and conditions that matter.
 
 ### Who it is for
@@ -102,12 +104,13 @@ separate worktrees into a transaction system.
 
 ## Quick start
 
-1. Read [Getting started](docs/GETTING_STARTED.md) and open the **target
+1. Read [Getting started](docs/guides/GETTING_STARTED.md) and open the **target
    repository you want to work on**, not this documentation repository.
-2. Make [FIRST_SESSION_AND_ORCHESTRATION.md](FIRST_SESSION_AND_ORCHESTRATION.md)
-   and [OPERATOR_GUIDE.md](OPERATOR_GUIDE.md) available to its Copilot session as
+2. Make [FIRST_SESSION_AND_ORCHESTRATION.md](docs/protocol/FIRST_SESSION_AND_ORCHESTRATION.md)
+   and [OPERATOR_GUIDE.md](docs/guides/OPERATOR_GUIDE.md) available to its Copilot session as
    references, using a mechanism your host actually supports. Preserve existing
-   project instructions.
+   project instructions. Complete the mandatory run-configuration interview
+   before launching any workers, including discovery workers.
 3. Replace the bracketed fields and send this ordinary-language prompt:
 
 ```text
@@ -117,6 +120,14 @@ as references for adopting FoldSpace Orchestrator in this target repository.
 Project: [new or existing; repository and current state]
 Outcome: [a concrete result and how I will recognize it]
 Constraints: [scope, compatibility, budget, and actions not authorized]
+
+Before starting workers or direct external LLM calls, ask me to approve this
+run's exact supported models and role defaults/fallbacks; per-model minimum,
+maximum, and default reasoning; external-call consent (disabled is valid);
+and aggregate budget/units, allocations, concurrency, retries, and stop policy.
+Ask one question at a time where supported. Missing approval is not unlimited
+budget or permission to use runtime defaults. External calls default denied.
+Reconfirm settings for a new run; preserve approved scope on continuation.
 
 Preserve existing instructions, requirements, decisions, uncommitted work,
 active assignments, running operations, pending steering, and prior authority.
@@ -129,17 +140,50 @@ For unavailable automation, prepare a bounded manual worker packet with an
 explicit return path instead of pretending a worker has started.
 
 Use versioned assignments and candidate-specific acceptance evidence.
-Start the next ready, authorized task within the stated budget once ownership
-and the necessary capabilities are clear.
+Start the next ready task only after the approved configuration can actually
+be applied and evidenced, ownership is clear, and budget is reserved.
 ```
 
 This is a prompt, **not a built-in command**. It does not authorize publishing,
 deploying, deleting resources, or expanding scope beyond the constraints you
 provide. A prepared assignment is not evidence that a worker is running.
 
-The full guide covers [new versus existing projects](docs/GETTING_STARTED.md#choose-the-project-path),
-[a bounded first task](docs/GETTING_STARTED.md#a-bounded-worked-example), and
-[manual worker handoffs](docs/GETTING_STARTED.md#manual-worker-fallback).
+The full guide covers [new versus existing projects](docs/guides/GETTING_STARTED.md#choose-the-project-path),
+[a bounded first task](docs/guides/GETTING_STARTED.md#a-bounded-worked-example), and
+[manual worker handoffs](docs/guides/GETTING_STARTED.md#manual-worker-fallback).
+
+## Configure every new run
+
+Revision **2.1** adds a mandatory bootstrap interview. Before an orchestrated
+run starts workers or makes direct external LLM calls, the operator approves:
+
+| Control | Required decision |
+|---|---|
+| Models | Allowed providers/families and exact supported IDs, role defaults/overrides, and approved fallback models |
+| Reasoning | Minimum, maximum, and chosen default for each model, using its verified supported ordering; explicitly accept N/A for fixed or unsupported controls |
+| External LLM calls | Explicitly disabled, or consent scoped to provider/endpoint, models, purpose, permitted data, secure credential references, and budget |
+| Budget | Aggregate cap and measurable units, native/external allocations and relevant subcaps, concurrency, retries/replacements, and stopping/escalation rules |
+
+Copilot-managed sessions and direct external API calls are distinct permission
+and accounting paths. External calls default to **denied**, even if native
+Copilot use is authorized. Missing budget is not unlimited; deliberately
+uncapped scope requires explicit opt-in. Credits, tokens, calls, and currency
+must not be silently converted into one another.
+
+The approved policy is versioned and linked from assignments, results, and
+recovery records. Descendants inherit or tighten it. Parallel dispatch reserves
+against parent limits; retries, handoffs, and replacements do not reset usage.
+Uncertain in-flight charges are reconciled before reallocation.
+
+These are **specified operating gates, not enforcement installed by Markdown**.
+If the host cannot select or prove the effective model/reasoning or support a
+required budget bound, affected autonomous dispatch is blocked; an explicitly
+approved, demonstrable manual path may be used. Safe local planning and the
+already-running bootstrap chat are not retroactively blocked.
+
+Use the [questionnaire, configuration example, and decision cases](docs/protocol/RUN_CONFIGURATION.md).
+Reconfirm for each new run; do not repeatedly ask for the same within-run
+permission on every call.
 
 ## Reading path and repository map
 
@@ -147,26 +191,51 @@ Start with the adoption guide, use the operator guide during work, and consult
 the canonical protocol when a handoff, state transition, or recovery decision
 needs more precision.
 
+```text
+foldspace-orchestrator/
+|-- README.md
+|-- LICENSE
+|-- CONTRIBUTING.md
+|-- .gitattributes
+|-- .gitignore
+`-- docs/
+    |-- protocol/
+    |   |-- FIRST_SESSION_AND_ORCHESTRATION.md
+    |   |-- DEPLOYMENT_BUILD_INSTRUCTIONS.md
+    |   `-- RUN_CONFIGURATION.md
+    |-- guides/
+    |   |-- GETTING_STARTED.md
+    |   |-- OPERATOR_GUIDE.md
+    |   `-- EXAMPLES.md
+    `-- reference/
+        |-- BENEFITS.md
+        `-- REVIEW_AND_CHANGES.md
+```
+
 | File | Read it for |
 |---|---|
 | [README.md](README.md) | Product boundary, overview, and navigation |
-| [docs/GETTING_STARTED.md](docs/GETTING_STARTED.md) | Safe adoption, capability recording, first task, and continuation |
-| [docs/BENEFITS.md](docs/BENEFITS.md) | Workflow comparisons, appropriate use cases, tradeoffs, and measurement |
-| [docs/EXAMPLES.md](docs/EXAMPLES.md) | Ordinary-language prompts for common operating situations |
-| [FIRST_SESSION_AND_ORCHESTRATION.md](FIRST_SESSION_AND_ORCHESTRATION.md) | Canonical bootstrap, role boundaries, assignment contracts, durable state, and recovery policy |
-| [OPERATOR_GUIDE.md](OPERATOR_GUIDE.md) | Canonical day-to-day steering, worker launch, diagnosis, recovery, and deployment handoffs |
-| [DEPLOYMENT_BUILD_INSTRUCTIONS.md](DEPLOYMENT_BUILD_INSTRUCTIONS.md) | Canonical setup distribution and adopter-software build/release guidance |
-| [REVIEW_AND_CHANGES.md](REVIEW_AND_CHANGES.md) | Revision rationale, upgrade guidance, and stated verification limits |
+| [docs/guides/GETTING_STARTED.md](docs/guides/GETTING_STARTED.md) | Safe adoption, capability recording, first task, and continuation |
+| [docs/reference/BENEFITS.md](docs/reference/BENEFITS.md) | Workflow comparisons, appropriate use cases, tradeoffs, and measurement |
+| [docs/guides/EXAMPLES.md](docs/guides/EXAMPLES.md) | Ordinary-language prompts for common operating situations |
+| [docs/protocol/RUN_CONFIGURATION.md](docs/protocol/RUN_CONFIGURATION.md) | Mandatory pre-run model, reasoning, external-consent, and budget interview |
+| [docs/protocol/FIRST_SESSION_AND_ORCHESTRATION.md](docs/protocol/FIRST_SESSION_AND_ORCHESTRATION.md) | Canonical bootstrap, role boundaries, assignment contracts, durable state, and recovery policy |
+| [docs/guides/OPERATOR_GUIDE.md](docs/guides/OPERATOR_GUIDE.md) | Canonical day-to-day steering, worker launch, diagnosis, recovery, and deployment handoffs |
+| [docs/protocol/DEPLOYMENT_BUILD_INSTRUCTIONS.md](docs/protocol/DEPLOYMENT_BUILD_INSTRUCTIONS.md) | Canonical setup distribution and adopter-software build/release guidance |
+| [docs/reference/REVIEW_AND_CHANGES.md](docs/reference/REVIEW_AND_CHANGES.md) | Revision history, upgrade guidance, and stated verification limits |
 | [CONTRIBUTING.md](CONTRIBUTING.md) | Documentation contribution and review expectations |
 | [LICENSE](LICENSE) | MIT terms |
 
-The four uppercase root references are the supplied **revision 2.0, dated
-6 September 2026**, preserved byte-for-byte. Their original titles remain
-unchanged. They are the detailed policy references; the new guides orient
-readers rather than create a second specification.
+The active canonical references are **revision 2.1, dated 6 September 2026**.
+They derive from the supplied revision 2.0 documents, which were preserved
+byte-for-byte in the initial publication commit
+[`38e9ce2`](https://github.com/taomar/foldspace-orchestrator/commit/38e9ce28964d8038333a2034a6ff02087b4652f9).
+Revision 2.1 organizes the references and adds the operator-approved run
+controls; active files are no longer byte-identical to the ZIP. Historical
+2.0 verification notes do not establish runtime verification of 2.1.
 
 The repository also includes `.gitattributes` to prevent Git text normalization
-of those four originals and `.gitignore` for common local artifacts. It ships no
+of the canonical documents and `.gitignore` for common local artifacts. It ships no
 generated project state, runtime implementation, installers, or CI workflows.
 
 ## What gets created in your project
@@ -202,8 +271,8 @@ Preparing a runbook, build artifact, or pipeline file does not grant permission
 to change an environment. Existing explicit authority carries forward, but
 candidate, target, effects, and required gates must still match it. A verified
 release requires observations of the actual destination, not just generated
-configuration. See the [deployment prompts](docs/EXAMPLES.md#prepare-a-release-without-implying-permission)
-and [canonical deployment reference](DEPLOYMENT_BUILD_INSTRUCTIONS.md).
+configuration. See the [deployment prompts](docs/guides/EXAMPLES.md#prepare-a-release-without-implying-permission)
+and [canonical deployment reference](docs/protocol/DEPLOYMENT_BUILD_INSTRUCTIONS.md).
 
 ## Capabilities and limits
 
