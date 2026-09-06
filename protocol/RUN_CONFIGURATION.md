@@ -1,6 +1,6 @@
 # Configure the run before dispatch
 
-**Revision: 2.1 - 6 September 2026**
+**Revision: 2.1.1 - 6 September 2026**
 
 This is the bootstrap questionnaire and configuration reference for FoldSpace
 Orchestrator, not an executable configuration loader. The canonical
@@ -204,6 +204,7 @@ with keys or infer them from a native-session grant.
 | Unknown charge after disconnect | Keep the in-flight reservation and inspect actual provider/host usage and effects before retrying or reallocating. Silence does not mean zero spend. |
 | Replacement coordinator or worker | Restore the same run policy, authority, usage, and reservations; adopt valid assignments without broadening limits. |
 | New run or 2.0 upgrade | Reconcile prior work/charges and explicitly approve or reconfirm the new run policy before affected dispatch; existing live effects are not erased or retroactively orphaned. |
+| New run while a migration survives | Retain the prior migration's owner, operation handle, resource exclusion, reservation, and uncertain charges in the authoritative project view. A conflicting migration remains blocked; an unrelated documentation task may proceed under its own approved settings and available budget. |
 
 Deployment executors, reviewers, research/evaluation workers, parallel children,
 and manual launches use the same gate. See the

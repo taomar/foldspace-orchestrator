@@ -1,8 +1,36 @@
 # Orchestration review and revision guide
 
-**Revision:** 2.1 — 6 September 2026  
+**Revision:** 2.1.1 — 6 September 2026  
 **Historical 2.0 review input:** all three Markdown documents in the uploaded archive.  
 **Scope:** preserve the 2.0 orchestration, parallelism and recovery policies while adding mandatory approved run configuration, model/reasoning and external-consent gates, aggregate budget accounting, and repository documentation relocation.
+
+## Revision 2.1.1 principles correction
+
+The review against the original 2.0 policy found one localized regression:
+operator guide section 10 had extended the instruction not to import another
+project's active owners to a new run of the **same** project. That could hide a
+surviving worker or migration just when the next run checks for conflicts.
+
+Revision 2.1.1 separates those cases. A different project does not import
+unrelated ownership; a new run in the same project reconfirms configuration
+without discarding authoritative task state, owners, assignments, operation
+handles, resource exclusions, evidence, reservations, or charges. Ownership
+changes still require the established validity and safe-handover rules.
+
+The representative case is a new run with a surviving migration and an
+unrelated ready documentation task: retain the migration's owner, handle,
+resource exclusion and budget reservation, block conflicting work until
+reconciliation, and allow the unrelated task once its own gates are satisfied.
+The operator guide, adoption guide and run-configuration examples now agree
+on that outcome.
+
+The review found no other significant semantic regression in coordinator and
+execution separation, dependency-driven parallelism, candidate-bound evidence,
+scoped recovery, inherited budgets, or preparation versus release authority.
+The mandatory model/reasoning, external-consent and budget interview remains
+the intentional enhancement. It does not replace those original principles.
+This is a document-level finding and correction, not proof of live host
+enforcement, cost control, or successful runtime recovery.
 
 ## Revision 2.1 release notes — 6 September 2026
 

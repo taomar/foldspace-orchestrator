@@ -414,6 +414,11 @@ evidence, pending steering, blockers, and exact next action.
 A fresh session continuing an approved run inherits its policy and ledger;
 a new run must explicitly reconfirm settings. Neither a new session nor a new
 run label erases outstanding charges or reservations from prior work.
+For a new run in the same project, retain authoritative task state, active
+owners, operation handles, and resource exclusions. A surviving migration
+still blocks conflicting writes, not unrelated ready work that satisfies its
+own approval and budget. Do not apply the rule against importing another
+project's unrelated ownership to a new run of this project.
 
 It must not assign itself ownership just because the previous conversation is
 quiet. Check the relevant branch, worktree, shared tracker, and accessible

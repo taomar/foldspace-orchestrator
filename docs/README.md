@@ -227,13 +227,16 @@ foldspace-orchestrator/
 | [.github/CONTRIBUTING.md](../.github/CONTRIBUTING.md) | Documentation contribution and review expectations |
 | [LICENSE](../LICENSE) | MIT terms |
 
-The active canonical references are **revision 2.1, dated 6 September 2026**.
+The active canonical references are **revision 2.1.1, dated 6 September 2026**.
 They derive from the supplied revision 2.0 documents, which were preserved
 byte-for-byte in the initial publication commit
 [`38e9ce2`](https://github.com/taomar/foldspace-orchestrator/commit/38e9ce28964d8038333a2034a6ff02087b4652f9).
-Revision 2.1 organizes the references and adds the operator-approved run
-controls; active files are no longer byte-identical to the ZIP. Historical
-2.0 verification notes do not establish runtime verification of 2.1.
+Revision 2.1 adds the operator-approved run controls. Revision 2.1.1 corrects
+new-run guidance so renewing configuration cannot discard existing project
+ownership or release resources still in use. See the
+[principles-review correction](../reference/REVIEW_AND_CHANGES.md#revision-211-principles-correction).
+Active files are no longer byte-identical to the ZIP. Historical 2.0
+verification notes do not establish runtime verification of the current revision.
 
 The repository also includes `.gitattributes` to prevent Git text normalization
 of the canonical documents and `.gitignore` for common local artifacts. It ships no

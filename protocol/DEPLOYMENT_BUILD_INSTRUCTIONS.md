@@ -1,6 +1,6 @@
 # GitHub Copilot: deployment-build session instructions
 
-**Revision:** 2.1 — 6 September 2026.
+**Revision:** 2.1.1 — 6 September 2026.
 
 **Audience:** the deployment coordinator and the execution sessions it assigns.  
 **Use:** attach this file in the real project alongside its generated session protocol and current state. Coordinate and implement the applicable deployment components through assigned execution sessions, validate them, and leave an executable project-specific runbook. This file supplies the build instructions; [OPERATOR_GUIDE.md](../operations/OPERATOR_GUIDE.md) explains how the user starts and operates the work.

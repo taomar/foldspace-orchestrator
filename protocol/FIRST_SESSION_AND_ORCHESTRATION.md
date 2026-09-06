@@ -1,6 +1,6 @@
 # GitHub Copilot: first-session and continuing-session orchestration
 
-**Revision:** 2.1 — 6 September 2026  
+**Revision:** 2.1.1 — 6 September 2026  
 **Audience:** the session establishing this project's orchestration and the workers it assigns.  
 **Use:** attach this document to the first session in the actual project. Build and verify the project-specific workflow below, then continue the authorized work. Future sessions use the compact generated runtime core and their task packets; they do not reload this entire bootstrap document. [OPERATOR_GUIDE.md](../operations/OPERATOR_GUIDE.md) supports the user. [DEPLOYMENT_BUILD_INSTRUCTIONS.md](DEPLOYMENT_BUILD_INSTRUCTIONS.md) directs a separate deployment engineering session.
 
