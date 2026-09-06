@@ -1,6 +1,6 @@
 # Configure the run before dispatch
 
-**Revision: 2.1.2 - 6 September 2026**
+**Revision: 2.1.3 - 6 September 2026**
 
 This is the bootstrap questionnaire and configuration reference for FoldSpace
 Orchestrator, not an executable configuration loader. The canonical
@@ -18,6 +18,10 @@ The current bootstrap chat may continue safe local planning and read available
 capability documentation to prepare the interview. It is not retroactively
 blocked. Do not spend money or send private repository/user data to an external
 endpoint merely to discover models, reasoning options, pricing, or credentials.
+
+A bounded read of a user-approved public FoldSpace GitHub reference is allowed;
+it is not an external LLM inference call. Bulk downloading/localization remains
+an approved setup-worker task after the interview, not a preapproval bypass.
 
 Within-run continuation, replay, or handoff carries the approved scope forward
 without asking on every tool call. New providers, expanded data/purpose scopes,

@@ -32,11 +32,13 @@ Before any new run, use the mandatory
 
 ## Start a bounded project task
 
-Use with `BOOTSTRAP.md` supplied and detailed references accessible by path.
-Do not preload the entire protocol and operator guide into the opening turn.
+Use with the public bootstrap URL below or an already available `BOOTSTRAP.md`.
+No clone is needed. Do not preload the entire protocol and operator guide.
 
 ```text
 Use FoldSpace Orchestrator for [new/existing project] in this repository.
+Read only this entry first:
+https://raw.githubusercontent.com/taomar/foldspace-orchestrator/main/protocol/BOOTSTRAP.md
 Outcome: [specific result].
 Acceptance: [observable criteria].
 Allowed scope: [components/files and compatibility constraints].
@@ -62,6 +64,9 @@ for the first assignment. Record unsupported behavior honestly.
 After approval and an available budget reservation, dispatch the next ready,
 authorized bounded task through a demonstrated path,
 or prepare a complete operator-carried packet without claiming it has started.
+If not already localized, assign a setup worker to pin one source commit,
+copy the needed linked references and license without overwriting instructions,
+adapt authoritative project records, verify discovery, and continue the outcome.
 ```
 
 Reference: [starting or upgrading a project](OPERATOR_GUIDE.md#1-start-a-new-project-or-upgrade-an-existing-one).

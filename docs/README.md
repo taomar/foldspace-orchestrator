@@ -15,7 +15,7 @@ capabilities or an explicit assisted/manual handoff.
 [Prompt examples](../operations/EXAMPLES.md) |
 [Run configuration](../protocol/RUN_CONFIGURATION.md)
 
-Current protocol: **2.1.2**. See the [release history](../reference/REVIEW_AND_CHANGES.md).
+Current protocol: **2.1.3**. See the [release history](../reference/REVIEW_AND_CHANGES.md).
 
 ## On this page
 
@@ -67,17 +67,17 @@ not a fixed worker count.
 
 ## Quick start
 
-1. [Obtain the pack](GETTING_STARTED.md#obtain-the-documentation-pack), then open
-   the **target repository** where you want to work.
-2. Supply only the compact [bootstrap entry](../protocol/BOOTSTRAP.md) and your
-   brief/current state first. Keep the detailed references accessible by path;
-   do not preload the whole pack into the opening turn.
-3. Expect one next question or bounded-action checkpoint, then a completed
-   response. Complete the interview and give final approval before any worker,
-   including discovery, or direct external LLM call starts.
+1. Open the **target repository** where you want to build, in your Copilot host.
+2. Paste the prompt below with your outcome. **No clone, ZIP, attachment or
+   manual copy step is needed** in the supported URL-first path.
+3. Answer the configuration questions and give final approval. Copilot then
+   assigns a setup worker to fetch and localize the needed references safely,
+   adapt your existing project instructions, and continue your build task.
 
 ```text
-Start with BOOTSTRAP.md; keep the detailed references available for scoped reading.
+Use FoldSpace Orchestrator in this target repository. Do not clone the pack.
+Read only this public Markdown entry first:
+https://raw.githubusercontent.com/taomar/foldspace-orchestrator/main/protocol/BOOTSTRAP.md
 Target: [repository; new project, new run in an existing project, or continuation]
 Outcome and acceptance: [one bounded result and observable criteria]
 Constraints and authority: [allowed scope, compatibility, and excluded effects]
@@ -90,15 +90,20 @@ For a new run, conduct the mandatory interview one question at a time:
 exact supported models/role defaults/fallbacks, per-model reasoning bounds and
 default, external-call consent, budgets/units and allocations, concurrency,
 retries, and stop policy. Ask for final approval; use no silent defaults.
-Until then, do only safe local preparation in this current bootstrap chat.
+Until then, use only bounded public reference reads and safe local preparation
+in this current chat. Do not upload private project data or use external inference.
 
-After approval, reserve budget and prepare the first versioned assignment.
-Use evidenced host controls or an approved manual worker packet with a return
-path. Accept only candidate-specific evidence; do not expand release authority.
+After approval, reserve budget and assign a setup worker to pin one GitHub
+commit, fetch the required linked references and license, preview conflicts,
+and save versioned reference copies without overwriting my instructions/work.
+Adapt existing project-native instructions/state, record source provenance,
+verify discovery, and continue my actual build objective. Use demonstrated
+tools or report the exact missing permission/capability; do not invent success.
+Accept candidate-specific evidence and preserve scope and release authority.
 ```
 
 This is ordinary language, not a native command. The
-[first-use guide](GETTING_STARTED.md) includes copying references, a
+[first-use guide](GETTING_STARTED.md) explains agent-managed localization, a
 [worked example](GETTING_STARTED.md#a-bounded-worked-example), and
 [manual fallback](GETTING_STARTED.md#manual-worker-fallback).
 
@@ -159,7 +164,9 @@ foldspace-orchestrator/
 Adoption reuses or creates small authoritative records for policy, capabilities,
 requirements, assignments, evidence, and current state. Suggested `docs/ai/*`
 paths are **outputs in your target project**, not preinstalled files here.
-Keep secrets and private operational material out of public commits.
+The setup worker keeps pinned reference copies separate from those live
+records and preserves existing customizations. Keep secrets and private
+operational material out of public commits.
 
 ## Deployment scope
 

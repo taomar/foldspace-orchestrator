@@ -1,8 +1,34 @@
 # Orchestration review and revision guide
 
-**Revision:** 2.1.2 — 6 September 2026  
+**Revision:** 2.1.3 — 6 September 2026  
 **Historical 2.0 review input:** all three Markdown documents in the uploaded archive.  
 **Scope:** preserve the 2.0 orchestration, parallelism and recovery policies while adding mandatory approved run configuration, model/reasoning and external-consent gates, aggregate budget accounting, and repository documentation relocation.
+
+## Revision 2.1.3 URL-first adoption
+
+The standard onboarding now starts with one pasted prompt containing the full
+public raw Markdown bootstrap URL. The operator opens the actual target project
+and supplies the outcome/decisions; no FoldSpace clone, ZIP, attachment or copy
+script is a prerequisite. The compact entry owns the companion full-URL map
+and still returns the first question/checkpoint before bulk work.
+
+Bounded reads of user-approved public reference text are distinguished from
+direct external LLM inference. They do not authorize private-data uploads,
+workers or bulk setup before approval. Model/reasoning, consent, budgets and
+the final operator approval remain mandatory.
+
+After approval, a bounded setup worker pins one source commit, previews
+destinations/conflicts, copies the required linked references and MIT license,
+records provenance, and adapts existing project-native instructions/state
+without overwriting live work. Discovery and handoff evidence precede reliance
+on the new setup; the user outcome continues beyond downloading documents.
+Same-run continuation reuses valid policy and pinned copies instead of silently
+upgrading them from moving `main`.
+
+Hosts without usable network/write/dispatch tools must report the exact gap
+and use normal permissions or an exceptional assisted transfer. This is an
+agent workflow specification, not a new downloader, installer, SDK or
+guarantee that every Copilot host can execute it.
 
 ## Revision 2.1.2 bootstrap responsiveness
 

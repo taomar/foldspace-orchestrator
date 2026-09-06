@@ -1,6 +1,6 @@
 # Your guide to running projects with GitHub Copilot
 
-**Revision 2.1.2 · 6 September 2026**
+**Revision 2.1.3 · 6 September 2026**
 
 This pack uses **GHCP** to mean **GitHub Copilot**. It supports projects in which research, implementation, and architecture evolve together. Apply it to the actual repository and installed Copilot environment; it does not assume your stack, deployment destination, or session controls.
 
@@ -16,6 +16,8 @@ These documents provide operating instructions. They do not install a running su
 
 For the coordinator's opening interaction, supply only [BOOTSTRAP.md](../protocol/BOOTSTRAP.md) and the compact project brief/state. This operator guide is for the operator and scoped follow-up reading, not another large mandatory opening attachment. Keep the full references accessible without automatically loading all of them.
 
+You can supply the public [bootstrap URL](https://raw.githubusercontent.com/taomar/foldspace-orchestrator/main/protocol/BOOTSTRAP.md) directly in the target repository's chat. No local pack or clone is required. Use the [URL-first prompt](../docs/GETTING_STARTED.md#send-a-bootstrap-prompt); after approval, an assigned setup worker pins and copies the needed references, adapts existing project instructions, verifies discovery and continues the user's build task. The [localization contract](../protocol/FIRST_SESSION_AND_ORCHESTRATION.md#localize-github-references-without-cloning) preserves existing state and prevents conflicting overwrites.
+
 Revision 2.0 remains the historical public baseline at commit `38e9ce28964d8038333a2034a6ff02087b4652f9`. Its checks and archive statements are not 2.1 guarantees; see [release notes and provenance](../reference/REVIEW_AND_CHANGES.md). The [run-configuration guide](../protocol/RUN_CONFIGURATION.md) supplies a questionnaire, compact examples and reference, not generated live settings.
 
 ## 1. Start a new project or upgrade an existing one
@@ -28,11 +30,52 @@ When input or external progress is needed, end with **phase, last completed acti
 
 For a new project, use:
 
-> Start with `BOOTSTRAP.md` for this new project; keep `FIRST_SESSION_AND_ORCHESTRATION.md` available by section instead of preloading the full pack. Act as the main coordinator. Your first response acknowledges supplied intent, asks one next unresolved question, and ends before further investigation. Conduct the mandatory interview one decision per response: allowed providers/families and exact supported model IDs, defaults and role overrides, approved fallbacks, each model's minimum/default/maximum reasoning or accepted fixed N/A, direct external LLM consent even if disabled, aggregate cap/units and allocations, concurrency/retries/replacements and stop/escalation rules. Use supplied evidence or one known-short targeted local lookup for that question; return with a precise gap if unresolved. Obtain final explicit approval before workers or direct external calls. Persist approval/settings in existing POLICY, evidence in CAPABILITIES, and active run/approval/ledger pointers in PROJECT_STATE. Then reserve budget and delegate substantive discovery, implementation and verification under those settings. Check actual launch and model/reasoning controls; unsupported controls block autonomous claims, with exact evidenced manual configuration where possible. Demonstrate the relevant handoff/recovery path within approved scope, without making every future drill a first-task barrier. Keep useful independent work moving and end the response when only waits remain. My outcome is: [outcome]. My known constraints and authority are: [details, or unknown].
+```text
+Use FoldSpace in this new target project; no pack clone or attachments.
+Read only this compact entry first:
+https://raw.githubusercontent.com/taomar/foldspace-orchestrator/main/protocol/BOOTSTRAP.md
+Outcome and acceptance: [what to build and how to recognize it]
+Scope and authority: [constraints, permitted actions, or explicitly unknown]
+
+First acknowledge supplied intent, ask one unresolved question, and return.
+Use the entry's full-URL source map only as needed, not a full-pack preload.
+Complete its mandatory model/reasoning, external-consent and budget interview
+and obtain final approval before any worker or direct external LLM call.
+Public reference GETs must not upload private data or use external inference.
+
+After approval, reserve budget and assign a setup worker to pin one source
+commit, preview conflicts, copy necessary linked references and LICENSE,
+and adapt existing project-native instructions/state without overwrites.
+Reuse POLICY/CAPABILITIES/PROJECT_STATE and the authoritative ledger.
+Verify discovery and the needed handoff, then continue the actual build task.
+Keep useful independent work moving and return when only waits remain.
+Report unsupported tools/permissions instead of inventing fetched files or controls.
+```
 
 For an existing project, use:
 
-> Enter this project's upgrade through `BOOTSTRAP.md` and compact current state, not a full-pack opening load. First acknowledge supplied intent/run mode and ask one unresolved question, or identify the next bounded action when same-run approval/state are complete; then return control. Inventory the live objective, decisions, assignments/owners, workspaces, unfinished changes, running effects, pending steering, attempts, approvals, usage, reservations and evidence through the bounded preapproval path. A new run reconciles and explicitly reconfirms settings before workers or direct external calls; continuation retains valid authority and obtains missing approvals before the next affected dispatch. Return on input/evidence holds, without chained scans or polling. Do not orphan or automatically kill workers, reset consumption, or free unknown charges. After approval reserve budget and delegate migration edits. Replace conflicting active rules, including discovery before approval, silent model/reasoning/budget defaults, main-coordinator execution, arbitrary worker counts and wait-for-everyone barriers. Reuse POLICY/CAPABILITIES/PROJECT_STATE and the authoritative ledger. Preserve history and use safe handover before changing owners. Demonstrate the affected behavior within approved scope, report limitations, and let unrelated eligible work proceed.
+```text
+Adopt or update FoldSpace in this existing target repository; no pack clone
+or attachments. Read this compact public entry first:
+https://raw.githubusercontent.com/taomar/foldspace-orchestrator/main/protocol/BOOTSTRAP.md
+Mode: [new run / same-run continuation]
+Outcome and constraints: [actual project goal and limits]
+
+Acknowledge supplied state and ask one unresolved question or state the next
+bounded action, then return. Preserve objectives, decisions, tasks/owners,
+unfinished work, operations, steering, evidence, approvals and accounting.
+A new run explicitly reconfirms settings; continuation retains valid approval
+and pinned local references. Obtain missing approval before affected dispatch.
+
+After approval, use an owned, budgeted setup worker to compare a pinned source
+revision with existing localized references and instructions, preview conflicts,
+and apply only authorized adaptations. Preserve source provenance and LICENSE.
+Reuse POLICY/CAPABILITIES/PROJECT_STATE and the current ledger; no competing store.
+Do not orphan workers, reset usage/reservations, or free unknown charges.
+Correct conflicting active rules through review, verify the affected discovery/
+handoff path, and continue the actual implementation goal with unrelated
+eligible work unblocked. No deployment/publication authority is implied.
+```
 
 ### The bootstrap questionnaire
 

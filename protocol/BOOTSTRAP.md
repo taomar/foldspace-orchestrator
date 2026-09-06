@@ -1,69 +1,71 @@
 # FoldSpace bootstrap
 
-**Revision: 2.1.2 - 6 September 2026**
+**Revision: 2.1.3 - 6 September 2026**
 
-Use this small coordinator entry first. Keep the
-[detailed protocol](FIRST_SESSION_AND_ORCHESTRATION.md),
-[questionnaire](RUN_CONFIGURATION.md), and
-[operator guide](../operations/OPERATOR_GUIDE.md) accessible by path; do not
-preload them all into the opening turn. This is an instruction, not a scheduler
-or a guarantee that the host will deliver input or finish a model/tool call.
+Use this entry in the user's target repository. No clone or attachment is
+required. Read only this entry first; the source map below is for on-demand
+retrieval, not a full-pack preload. These instructions do not install a runtime
+or guarantee that the host can fetch URLs, write files, or finish a request.
 
 ## First response
 
-After reading this entry, use supplied context to acknowledge the outcome and
-state whether this is a new run, a continuation, or unknown. Ask **one next
-unresolved question**, starting with run identity when needed, and end the
-response. Do not first scan the repository, enumerate model catalogs/prices,
-generate setup files, launch workers, or run recovery drills.
+Acknowledge supplied intent and new-run/continuation status, ask one next
+unresolved question, and end the response before scans, catalogs, setup or
+workers. With complete same-run approval/state, identify the next bounded
+action instead of repeating questions.
 
-If a complete same-run approval and compact state are already supplied, identify
-the next bounded coordination action instead of repeating the interview.
-Missing evidence is a visible hold, not permission to invent facts.
+One supported bounded GET of user-approved public reference text is bootstrap
+preparation, not external inference. Send no private repository/user data.
+If access is blocked or content incomplete, request normal host permission or
+report the exact gap; do not claim success or work around access controls.
 
 ## Advance without monopolizing the session
 
-- Handle delivered steering first. Do not claim to read inaccessible UI queues.
-- Before approval, resolve one interview decision at a time. If necessary, read
-  one named compact record or known-short local metadata result for that
-  question, then return. Do not chain searches or poll. Retain answers through
-  an existing authorized record or recoverable conversation; no second ledger.
-- If evidence or operator input is unavailable, identify the exact missing
-  item and owner/action, then end the response. Do not repeatedly ask the same
-  question, silently research every option, or keep a waiting turn alive.
-- Include a short checkpoint when the state changes: **phase, last completed
-  action, waiting on/owner, next action or actual resume trigger**. Use
-  `awaiting_input`, `awaiting_evidence`, `ready_to_dispatch`, `waiting_external`,
-  or `blocked` truthfully. Ending a response is not completing the project.
-- After approval, use the ordinary dependency-driven dispatch cycle. Do not
-  wait inside a full-job call, sleep, or poll for workers. Use demonstrated
-  nonblocking dispatch or an approved independent manual session. Continue
-  unrelated eligible work; return control when only waits remain.
+Handle delivered steering first; do not claim access to private queues.
+Resolve one interview decision per response, using supplied evidence or one
+known-short targeted read. On missing input/evidence, name the gap, owner and
+next action, then return. No polling or chained searches.
+
+Show a concise phase/last-action/waiting-owner/next-trigger checkpoint when
+state changes. A suspended question tool is not a completed response.
+After approval, use proven nonblocking workers or an approved manual path;
+continue unrelated eligible work and return when only waits remain.
 
 ## Approval is still mandatory
 
-Before any orchestrated worker, including discovery/recovery, or direct
-external LLM call, complete the [interview](RUN_CONFIGURATION.md):
-approved providers/families and exact model IDs, role defaults and fallbacks;
-each model's minimum/maximum and default within its verified supported order
-(or explicitly accepted nonconfigurable N/A); external consent; aggregate
-budget/units, allocations, concurrency, retries and stop policy; final approval.
+Before any worker, including localization/discovery/recovery, or direct
+external LLM call: approve providers/families and exact model IDs, role defaults/fallbacks;
+per-model minimum/maximum and default within verified supported order (or
+accepted nonconfigurable N/A); external consent; aggregate budget/units,
+allocations, concurrency, retries/stop policy; and final run approval.
 
-Direct external calls default denied. No silent models, reasoning, cost-unit
-conversions, unlimited budget, or approval bypass. Uncapped scope needs explicit
-opt-in. Unknown settings are not evidence of fixed N/A. If required controls
-cannot be applied/proved, hold affected work or obtain an approved demonstrable
-manual path. Do not probe external endpoints with private data.
+External calls default denied. No silent defaults, cost conversions, unlimited
+budget or guessed N/A. Uncapped scope needs explicit opt-in. Required controls
+must be evidenced or affected work held for an approved demonstrable alternative.
 
-New runs reconfirm settings without discarding existing owners, assignments,
-operations, authority records, resource exclusions, charges or reservations.
-Same-run continuation retains valid approval. Reserve parent budget before
-dispatch; descendants inherit/tighten, never reset it. Reconcile uncertain
-effects/charges before replay or reallocation. Never restart or duplicate a
-live operation merely to make bootstrap appear active.
+## Localize, then continue building
 
-For a silent or queued session, use the
-[early-stall triage](../operations/OPERATOR_GUIDE.md#early-bootstrap-with-little-or-no-worker-activity).
-Do not send this entry as a recovery message into that same blocked queue.
-Inspect any automation producer through independent host controls; do not
-claim that this entry can interrupt a stuck host, suppress triggers, or wake it.
+After approval, assign a budgeted setup worker to follow the main protocol's
+localization contract: pin one source commit, preview destinations/conflicts,
+copy needed linked references plus LICENSE without overwrites, and adapt
+existing project-native instructions/state separately from reference copies.
+Record source URLs/commit/revision/hashes and verify discovery. Then continue
+the actual build objective; copying documents is not completion.
+
+New runs reconfirm settings without erasing owners, operations, authority,
+exclusions, charges or reservations. Same-run approval survives. Reserve parent
+budget; descendants inherit/tighten. Reconcile uncertainty before replay.
+Never try to recover a stalled host by adding messages to its blocked queue.
+
+## Source map
+
+Public discovery URLs follow. Resolve one commit before localization and use
+that commit instead of `main` for all copies; reuse pinned local references on
+continuation. A series of `main` GETs is not an atomic snapshot.
+
+- [Main protocol](https://raw.githubusercontent.com/taomar/foldspace-orchestrator/main/protocol/FIRST_SESSION_AND_ORCHESTRATION.md)
+- [Run configuration](https://raw.githubusercontent.com/taomar/foldspace-orchestrator/main/protocol/RUN_CONFIGURATION.md)
+- [Operator guide and independent recovery](https://raw.githubusercontent.com/taomar/foldspace-orchestrator/main/operations/OPERATOR_GUIDE.md)
+- [Deployment](https://raw.githubusercontent.com/taomar/foldspace-orchestrator/main/protocol/DEPLOYMENT_BUILD_INSTRUCTIONS.md)
+- [Revision history](https://raw.githubusercontent.com/taomar/foldspace-orchestrator/main/reference/REVIEW_AND_CHANGES.md)
+- [MIT license](https://raw.githubusercontent.com/taomar/foldspace-orchestrator/main/LICENSE)

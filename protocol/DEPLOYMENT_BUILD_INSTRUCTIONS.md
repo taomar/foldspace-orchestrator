@@ -1,6 +1,6 @@
 # GitHub Copilot: deployment-build session instructions
 
-**Revision:** 2.1.2 — 6 September 2026.
+**Revision:** 2.1.3 — 6 September 2026.
 
 **Audience:** the deployment coordinator and the execution sessions it assigns.  
 **Use:** a new deployment coordinator starts with [BOOTSTRAP.md](BOOTSTRAP.md) and compact state, not this full reference as opening context. Approved execution sessions load the relevant deployment sections alongside their assignment and generated protocol. Implement and validate the applicable components and leave an executable project-specific runbook. [OPERATOR_GUIDE.md](../operations/OPERATOR_GUIDE.md) explains operation and handoffs.
@@ -20,6 +20,8 @@ Follow the project's orchestration, task, evidence, and recovery rules. If the f
 ### Approve the run before deployment workers or external LLM calls
 
 For a standalone deployment coordinator, enter through [BOOTSTRAP.md](BOOTSTRAP.md): give the first compact checkpoint/question and return control on input or evidence holds. Do not read the full deployment reference, scan infrastructure, query model catalogs or start rehearsal before that interaction. A coordinator continuing an approved run reuses its compact state and approval instead of restarting the interview. Load detailed release sections only when the corresponding task requires them; an executor's substantive work still belongs to its bounded assignment.
+
+The entry and references may be supplied as public GitHub URLs; a documentation-pack clone is unnecessary. After approval, follow the [pinned-source localization contract](FIRST_SESSION_AND_ORCHESTRATION.md#localize-github-references-without-cloning) in a bounded setup assignment, preserving current instructions and live work. Copying the deployment reference does not grant deployment authority.
 
 Apply the mandatory interview in [FIRST_SESSION_AND_ORCHESTRATION.md, section 3](FIRST_SESSION_AND_ORCHESTRATION.md#3-bootstrap-in-stages-without-occupying-the-coordinator) using the [run-configuration questionnaire and reference](RUN_CONFIGURATION.md). Before **any** orchestrated worker starts, including deployment discovery, research, evaluation, review, recovery, or a manually opened executor, and before direct external LLM API calls, obtain explicit recorded configuration approval. Ask one question at a time where supported. The current coordinating chat may do safe local planning/capability reads to formulate questions; this is not retroactive blocking of that chat.
 
