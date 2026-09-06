@@ -310,7 +310,9 @@ only through a responsive, authorized route.
 Open your **existing target project** in a responsive Copilot session. This is
 an in-place instruction migration, not a new project or an automatic new run.
 No FoldSpace clone, Git commands, ZIP, manual copy, attachments or new project
-are needed in the supported URL-first path.
+are needed in the supported URL-first path. This is a **Copilot upgrade prompt
+only**, not an executable updater; no PowerShell/Bash script or runtime service
+is supplied or required.
 
 **If the current session only queues messages, do not paste this prompt into
 that queue.** Preserve accessible pending text and attachments first. Use the
@@ -322,19 +324,21 @@ restart, kill jobs or clear queues. See the
 [independent recovery procedure](../operations/OPERATOR_GUIDE.md#prevent-stranded-work-and-recover-missed-delivery).
 
 Paste the **whole prompt** below into that responsive session. It targets
-**revision 2.1.5 at commit `7f55dd046f7421706b4e99722b3f31123940aba9`**,
+**revision 2.1.6 at commit `7fedb7129e9692b115daf2c4593456ed6abb1bbe`**,
 not an evergreen "latest" release. The pinned bootstrap's source map contains
 `/main/` URLs; every companion retrieval must use the same commit instead.
 
 ```text
-Upgrade this project's existing FoldSpace setup in place to revision 2.1.5.
+Upgrade this project's existing FoldSpace setup in place to revision 2.1.6.
 Read only this pinned compact public Markdown entry first:
-https://raw.githubusercontent.com/taomar/foldspace-orchestrator/7f55dd046f7421706b4e99722b3f31123940aba9/protocol/BOOTSTRAP.md
+https://raw.githubusercontent.com/taomar/foldspace-orchestrator/7fedb7129e9692b115daf2c4593456ed6abb1bbe/protocol/BOOTSTRAP.md
 Use its source map on demand, replacing /main/ with
-/7f55dd046f7421706b4e99722b3f31123940aba9/ for EVERY companion download,
+/7fedb7129e9692b115daf2c4593456ed6abb1bbe/ for EVERY companion download,
 including linked references and LICENSE. Keep all source reads at that commit;
 do not mix moving main content or preload the entire pack. No clone, Git
 commands, ZIP, manual copy, attachments or new project are required.
+Use this Copilot-only instruction migration; do not add an executable updater,
+scripts, runtime enforcement, watchdogs, dependencies, CI or agent frameworks.
 
 Treat this as instruction migration within the current run, not automatic
 new-run approval. Begin with bounded public reads and safe known-state
@@ -378,7 +382,46 @@ rules do not override the upgrade. Preserve project conventions/customizations;
 hold affected conflicting writes for resolution. Updating references alone
 is not activation.
 
-Carry forward the 2.1.4/2.1.5 behavior into those active instructions:
+Apply the 2.1.6 rules at the existing policy boundaries. Supersede conflicting
+old active rules, not merely append another policy or download new references:
+Keep backlog in the durable authoritative task ledger under one current
+coordinator or actual serialized writer; workers own operation/result records.
+For NEW assignments, default one active assignment and at most one outstanding
+unacknowledged assignment dispatch per worker, zero pending task backlog in chat.
+Busy, dispatching, recovering, uncertain or resource-unavailable lanes receive
+no additional task. Additional workers need independent ready work, isolation,
+verified capacity and remaining approved aggregate budget, not unbounded spawning.
+Answers, steering, cancellations/changed constraints, status/results and recovery
+controls use demonstrated priority/control routes or exact assisted fallback.
+Host tools may still queue internally; stopping chat does not prove jobs stopped.
+READY_CHECK/READY are optional application markers, not built-in commands or
+readiness guarantees. READY then IDLE is no proof of next receipt/wake, workspace
+exclusivity or applied settings. A supported creation request may carry one
+complete approved bounded assignment without a second readiness roundtrip.
+Reconcile after reconnect/reload before new assignments; do not probe in loops.
+
+Reuse task_id/assignment_version, coordinator_epoch, unique dispatch_id and
+candidate/result identities. Reserve task/receiver/resources/budget and persist
+the packet BEFORE send; worker validates current authority/workspace/settings
+and records exact acceptance before effects. ACK receipt is observation, not
+fencing. Keep task readiness, delivery and execution/results separate; accept
+valid out-of-order start/result evidence without waiting for a missing ACK.
+Missing ACK, errors or unexplained idle quarantine NEW assignments to the lane,
+not task ownership/outcome. No automatic STALE/revoke, budget release, stateful
+job cancellation, global freeze or redispatch once. Preserve original payloads,
+attachments, work/checkpoints, receipts, handles, current controls and charges.
+Inspect receiver events, actual jobs/effects/results and authoritative ownership.
+Observe/adopt running work or consume completed results instead of duplicating.
+Retry/replacement requires proven nonexecution with obsolete late start excluded,
+or safe stop/surrender/fencing at the actual conflicting write boundary and
+reconciled effects/charges. Ledger-only revocation is not fencing. Otherwise hold
+that scope with its exact unresolved constraint; allow safe independent work.
+Keep the logical task, recovered work, version/attempt history and consumed/held
+reservations within approved remaining limits. Late obsolete ACK/start cannot
+regain ownership; duplicate logical candidates/results/effects cannot integrate
+twice under new notification IDs. No universal exactly-once claim.
+
+Preserve the 2.1.4/2.1.5 progression and idle-pickup behavior:
 After a received answer, including a question-tool result, reconcile it and
 take the next permitted bounded read, focused question, approval request or
 approved action; no status-only acknowledgement or extra "continue" is needed.
@@ -391,6 +434,10 @@ delivery, require evidenced idle pickup and armed independent observation with
 finite recovery authority/allowance and an alternate alert/control route, or
 an explicitly accepted operator-carried handoff. Reconcile before replay;
 do not append upgrade/recovery prompts to a stuck queue.
+Apply pickup coverage to parent and workers. The observer must actually exist
+outside the blocked path, or the operator must accept the exact handoff. Set
+finite receipt/pickup windows from host/workload evidence and approved allowance,
+not invented constants; genuine answers/new controls are not duplicate nudges.
 Markdown does not install a watchdog or repair a host queue. Record incomplete
 or unprovable controls and exact supported alternatives; no silent defaults,
 permission bypass or global freeze of unrelated eligible work.
