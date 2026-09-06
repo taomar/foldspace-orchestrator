@@ -15,7 +15,7 @@ capabilities or an explicit assisted/manual handoff.
 [Prompt examples](../operations/EXAMPLES.md) |
 [Run configuration](../protocol/RUN_CONFIGURATION.md)
 
-Current protocol: **2.1.1**. See the [release history](../reference/REVIEW_AND_CHANGES.md).
+Current protocol: **2.1.2**. See the [release history](../reference/REVIEW_AND_CHANGES.md).
 
 ## On this page
 
@@ -69,20 +69,23 @@ not a fixed worker count.
 
 1. [Obtain the pack](GETTING_STARTED.md#obtain-the-documentation-pack), then open
    the **target repository** where you want to work.
-2. Supply the [bootstrap protocol](../protocol/FIRST_SESSION_AND_ORCHESTRATION.md),
-   [operator guide](../operations/OPERATOR_GUIDE.md), and
-   [run-configuration reference](../protocol/RUN_CONFIGURATION.md) through your
-   host's supported attachment or file-loading mechanism.
-3. Replace the fields below. Complete the interview and give final approval
-   before any worker, including discovery, or direct external LLM call starts.
+2. Supply only the compact [bootstrap entry](../protocol/BOOTSTRAP.md) and your
+   brief/current state first. Keep the detailed references accessible by path;
+   do not preload the whole pack into the opening turn.
+3. Expect one next question or bounded-action checkpoint, then a completed
+   response. Complete the interview and give final approval before any worker,
+   including discovery, or direct external LLM call starts.
 
 ```text
-Use the supplied FoldSpace protocol, operator guide, and RUN_CONFIGURATION.md.
+Start with BOOTSTRAP.md; keep the detailed references available for scoped reading.
 Target: [repository; new project, new run in an existing project, or continuation]
 Outcome and acceptance: [one bounded result and observable criteria]
 Constraints and authority: [allowed scope, compatibility, and excluded effects]
 
 Preserve existing instructions, work, active owners, operations, and accounting.
+First acknowledge supplied intent/run mode, ask one unresolved question, and
+end the response before further investigation. On a missing-input/evidence hold,
+show the exact gap and next actor, then return; do not scan, poll or wait for jobs.
 For a new run, conduct the mandatory interview one question at a time:
 exact supported models/role defaults/fallbacks, per-model reasoning bounds and
 default, external-call consent, budgets/units and allocations, concurrency,
@@ -131,6 +134,7 @@ foldspace-orchestrator/
 |   |-- BENEFITS.md
 |   `-- GETTING_STARTED.md
 |-- protocol/
+|   |-- BOOTSTRAP.md
 |   |-- FIRST_SESSION_AND_ORCHESTRATION.md
 |   |-- DEPLOYMENT_BUILD_INSTRUCTIONS.md
 |   `-- RUN_CONFIGURATION.md
@@ -143,7 +147,7 @@ foldspace-orchestrator/
 
 | Your next question | Read |
 |---|---|
-| How do I try it? | [Getting started](GETTING_STARTED.md) |
+| How do I try it? | [Getting started](GETTING_STARTED.md) and [compact bootstrap entry](../protocol/BOOTSTRAP.md) |
 | What must I approve? | [Run configuration](../protocol/RUN_CONFIGURATION.md) |
 | How do I operate it? | [Operator guide](../operations/OPERATOR_GUIDE.md) and [prompt examples](../operations/EXAMPLES.md) |
 | What are the detailed rules? | [Canonical protocol](../protocol/FIRST_SESSION_AND_ORCHESTRATION.md) |
@@ -174,6 +178,10 @@ Record what the actual host demonstrates. If required controls cannot be
 applied and evidenced, block affected autonomous work or use a specifically
 approved, demonstrable manual path. Do not pretend unsupported automation works
 or assume a quiet job stopped. Compatibility and performance are not guaranteed.
+
+If the bootstrap itself stops responding, another prompt may only join its
+queue. Use [independent early-stall and automation triage](../operations/OPERATOR_GUIDE.md#early-bootstrap-with-little-or-no-worker-activity),
+not a queued recovery message. The compact entry is prevention, not a host reset.
 
 ## License and name
 

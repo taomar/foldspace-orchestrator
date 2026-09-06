@@ -1,6 +1,6 @@
 # Configure the run before dispatch
 
-**Revision: 2.1.1 - 6 September 2026**
+**Revision: 2.1.2 - 6 September 2026**
 
 This is the bootstrap questionnaire and configuration reference for FoldSpace
 Orchestrator, not an executable configuration loader. The canonical
@@ -26,9 +26,21 @@ explicit approval. A fresh session is not necessarily a new run.
 
 ## Bootstrap questionnaire
 
+Start the coordinator with [BOOTSTRAP.md](BOOTSTRAP.md), not a bulk load of all
+references. The first response identifies supplied intent/run mode and asks
+the next unresolved question. End the response while awaiting its answer.
+Do not complete a repository scan or enumerate every model/pricing option first.
+
 Ask **one question at a time** where the host supports it. Replace choices with
 actual supported options and record the response; do not preselect a model or
 invent a spending cap. Unknown answers leave the affected work blocked.
+
+Use supplied evidence or one known-short targeted local lookup for the current
+question, then return. If evidence remains unavailable, report
+`awaiting_evidence` or `blocked`, name the exact missing item and next actor,
+and stop that turn. Do not guess fixed N/A, approval or cost controls merely
+to proceed. Read the next relevant section when needed; this reference is not
+an instruction to finish all capability research before speaking.
 
 | Order | Question to ask |
 |---|---|

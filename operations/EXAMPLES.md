@@ -9,7 +9,9 @@ inventing that evidence.
 Use the [getting-started guide](../docs/GETTING_STARTED.md) for adoption. The
 [canonical protocol](../protocol/FIRST_SESSION_AND_ORCHESTRATION.md) and
 [operator guide](OPERATOR_GUIDE.md) define the full contracts behind these
-short prompts. Before any new run, use the mandatory
+short prompts. Start the coordinator with the compact
+[bootstrap entry](../protocol/BOOTSTRAP.md), not the entire reference pack.
+Before any new run, use the mandatory
 [run-configuration interview](../protocol/RUN_CONFIGURATION.md).
 
 ## Contents
@@ -18,6 +20,7 @@ short prompts. Before any new run, use the mandatory
 - [Approve or decline run controls](#approve-or-decline-run-controls)
 - [Steer work without losing prior intent](#steer-work-without-losing-prior-intent)
 - [Ask for status that distinguishes progress from activity](#ask-for-status-that-distinguishes-progress-from-activity)
+- [Triage a queued bootstrap outside its queue](#triage-a-queued-bootstrap-outside-its-queue)
 - [Prepare a bounded worker handoff](#prepare-a-bounded-worker-handoff)
 - [Return a worker result](#return-a-worker-result)
 - [Recover context without reclaiming ownership blindly](#recover-context-without-reclaiming-ownership-blindly)
@@ -29,8 +32,8 @@ short prompts. Before any new run, use the mandatory
 
 ## Start a bounded project task
 
-Use after making the two bootstrap references available and identifying whether
-this is a new or existing project.
+Use with `BOOTSTRAP.md` supplied and detailed references accessible by path.
+Do not preload the entire protocol and operator guide into the opening turn.
 
 ```text
 Use FoldSpace Orchestrator for [new/existing project] in this repository.
@@ -39,6 +42,11 @@ Acceptance: [observable criteria].
 Allowed scope: [components/files and compatibility constraints].
 Budget: [effort/cost/retry allowance].
 Authority: [permitted actions]. Excluded effects: [publication/deployment/etc.].
+
+Follow BOOTSTRAP.md first: acknowledge supplied intent/run mode, ask one next
+unresolved question, and end the response before further investigation.
+On a missing-input/evidence hold, report the exact gap and next actor and return;
+do not chain scans, catalogs, status polling, or a whole-worker wait.
 
 Before any workers, including discovery/research, or direct external LLM calls,
 ask me to approve exact supported models/role defaults/fallbacks, each model's
@@ -65,6 +73,9 @@ These are decisions for the target run, not credentials or model guarantees.
 
 ```text
 Conduct the mandatory run interview one question at a time.
+Return control after each unresolved question or evidence hold. Use supplied
+evidence or one known-short targeted local lookup for that question; do not
+enumerate every provider or pricing option before showing the next question.
 Show only model IDs and reasoning choices supported by evidence for this host.
 Ask my approved providers/models, role defaults/overrides and fallback list;
 per-model reasoning minimum, maximum and selected default; explicit external
@@ -140,6 +151,31 @@ for their own sake or wait for unrelated workers.
 
 These are reporting distinctions, not a replacement task-state machine.
 Reference: [idle sessions and queues](OPERATOR_GUIDE.md#6-diagnose-idle-sessions-and-piled-up-queues).
+
+## Triage a queued bootstrap outside its queue
+
+Do **not** send this to the stalled session. Use it only with an already
+responsive, appropriately authorized observer, or follow the steps manually
+through verified host controls. A new observer does not acquire project ownership.
+
+```text
+Inspect [affected session/request] without posting messages into its queue.
+Use only available independent read-only host controls. Identify accepted/
+delivered input, current invocation/tool, last observation, surviving jobs,
+and the producer/target of any schedule, timer, auto-continue mode, or hook.
+If a route is inaccessible, say so rather than claiming the session is idle.
+
+Preserve accessible queued intent, owners, handles, approvals and reservations.
+Do not restart, cancel, clear messages, pause automation, or spend on diagnostic
+workers/external calls without authority for that specific action.
+Distinguish pausing future automated submissions from stopping live operations.
+Return evidence, the narrowest supported next action and its required authority,
+then end the response; do not poll or append another recovery prompt.
+```
+
+See [early-stall and automation triage](OPERATOR_GUIDE.md#early-bootstrap-with-little-or-no-worker-activity).
+The bootstrap entry is prevention for a new interaction, not a command that can
+interrupt an already blocked host.
 
 ## Prepare a bounded worker handoff
 

@@ -4,6 +4,9 @@
 receive a result you can review and continue from. FoldSpace is a documentation
 pack, not an installed agent runtime.
 
+The first visible step should be a short acknowledgement and one unresolved
+question, not a silent repository audit. Waiting for input must end the response.
+
 [Overview](README.md) | [Benefits](BENEFITS.md) |
 [Operator guide](../operations/OPERATOR_GUIDE.md) | [Prompt examples](../operations/EXAMPLES.md)
 
@@ -39,15 +42,18 @@ revision you use. Open your **target repository** in the intended Copilot host.
 
 ## Make references available without overwriting instructions
 
-Attach or otherwise load these three files using a mechanism your host supports:
+First attach or load only [protocol/BOOTSTRAP.md](../protocol/BOOTSTRAP.md) and
+your compact project brief/state through a supported mechanism. Keep these
+detailed references accessible by path for the relevant decision or worker:
 
 - [protocol/FIRST_SESSION_AND_ORCHESTRATION.md](../protocol/FIRST_SESSION_AND_ORCHESTRATION.md)
 - [operations/OPERATOR_GUIDE.md](../operations/OPERATOR_GUIDE.md)
 - [protocol/RUN_CONFIGURATION.md](../protocol/RUN_CONFIGURATION.md)
 
-Ensure the questionnaire is actually accessible, not just a link in an
-attachment the host cannot follow. Ask the session to identify what it read.
-Supply deployment and revision references when needed. There is no universal
+Ensure the questionnaire is accessible, not just an unreadable attachment link.
+If the host cannot load a section on demand, supply the specific needed section
+when asked rather than all three large documents up front. Ask what was actually
+loaded. Host-added context remains a separate constraint; there is no universal
 instruction entrypoint or attachment command.
 
 **Optional copy recipe:** skip this if attachments work. Otherwise replace the
@@ -61,6 +67,7 @@ $pack = 'C:\work\foldspace-orchestrator'
 $target = 'C:\work\your-project'
 $destination = Join-Path $target 'docs\reference\foldspace'
 $references = @(
+    'protocol\BOOTSTRAP.md'
     'protocol\FIRST_SESSION_AND_ORCHESTRATION.md'
     'operations\OPERATOR_GUIDE.md'
     'protocol\DEPLOYMENT_BUILD_INSTRUCTIONS.md'
@@ -95,7 +102,7 @@ foreach ($name in $references) {
 ```
 
 The copied bootstrap file is at
-`docs\reference\foldspace\protocol\FIRST_SESSION_AND_ORCHESTRATION.md`
+`docs\reference\foldspace\protocol\BOOTSTRAP.md`
 in the sample target. The other files retain the same relative layout.
 Keep the license when redistributing. **Do not overwrite existing instructions
 or live state:** reconcile active rules and reuse authoritative records.
@@ -125,7 +132,8 @@ a new run. Expanded scope or limits still require approval.
 Replace the fields. This is an ordinary-language prompt, not a native command:
 
 ```text
-Use the supplied FoldSpace protocol, operator guide, and RUN_CONFIGURATION.md.
+Start with BOOTSTRAP.md; keep the detailed protocol/operator/configuration
+references available by path, without preloading the full pack.
 Project mode: [new project / new run in this project / same-run continuation]
 Outcome: [one bounded result]
 Acceptance: [observable criteria]
@@ -133,6 +141,10 @@ Scope and authority: [allowed files/actions, compatibility, excluded effects]
 Known ongoing work: [owners, changes, operations, or explicitly unknown]
 
 Preserve existing instructions, authoritative state, active owners and work.
+First acknowledge supplied intent/run mode, ask one next unresolved question,
+and end the response. Before approval, use supplied evidence or one known-short
+targeted lookup for that question, then return with its result or exact gap.
+Do not chain scans, catalogs, setup generation, polling, or a whole-worker wait.
 For a new run, conduct the mandatory configuration interview one question at
 a time and obtain my final approval before discovery workers, other workers,
 or direct external LLM calls. Until approval, only safe local preparation in
@@ -154,6 +166,12 @@ Require candidate-specific evidence; do not expand scope or release authority.
 
 Expect these decisions, with compound fields asked separately where supported.
 No model IDs, reasoning levels, or spending caps are preselected by this guide.
+After each unanswered question or evidence hold, expect a short phase/last-action/
+waiting-owner/next-action checkpoint and a completed response. If an answer is
+unavailable, do not repeatedly submit "continue" or authorize invented defaults.
+If a host question tool keeps the request suspended, record that limitation
+and use its actual answer/cancel control; an ordinary queued message may not
+release it. A visible question alone does not prove the turn has ended.
 
 | The coordinator asks for... | You explicitly approve... |
 |---|---|
@@ -245,6 +263,7 @@ See [worker launch and return fields](../operations/OPERATOR_GUIDE.md#5-launch-w
 Use the host's verified mechanism to open a continuation session. It must find
 its role, instructions, current run/assignment, owners, approval/ledger,
 checkpoint, and next action. A worker also needs its explicit packet.
+Use compact current records, not another full bootstrap-reference load.
 
 Restore accessible work and inspect surviving operations before effects.
 Retain owners, resource exclusions, attempts, charges and reservations across
@@ -275,6 +294,7 @@ See [upgrade guidance](../reference/REVIEW_AND_CHANGES.md#4-apply-the-revision-w
 | The cap cannot be measured/enforced | Disclose the limitation and obtain an approved measurable bound or explicit uncapped opt-in; do not invent a conversion |
 | External calls are denied | Keep them blocked; already-approved native work can continue within its own scope |
 | Another owner or uncertain operation exists | Preserve its exclusions and reservations, reconcile or safely transfer ownership, and continue only nonconflicting eligible work |
+| Bootstrap messages keep queuing, possibly from automation | Do not send a recovery prompt into that same queue. Inspect the active request and any automation producer through [independent host controls](../operations/OPERATOR_GUIDE.md#automation-admission-and-out-of-band-recovery); do not clear intent or stop live jobs blindly. |
 
 For day-to-day steering, use the [operator guide](../operations/OPERATOR_GUIDE.md).
 The canonical references own the detailed policy; this guide is the first-use path.

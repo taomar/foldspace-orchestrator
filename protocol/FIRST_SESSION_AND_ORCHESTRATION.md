@@ -1,8 +1,8 @@
 # GitHub Copilot: first-session and continuing-session orchestration
 
-**Revision:** 2.1.1 — 6 September 2026  
+**Revision:** 2.1.2 — 6 September 2026  
 **Audience:** the session establishing this project's orchestration and the workers it assigns.  
-**Use:** attach this document to the first session in the actual project. Build and verify the project-specific workflow below, then continue the authorized work. Future sessions use the compact generated runtime core and their task packets; they do not reload this entire bootstrap document. [OPERATOR_GUIDE.md](../operations/OPERATOR_GUIDE.md) supports the user. [DEPLOYMENT_BUILD_INSTRUCTIONS.md](DEPLOYMENT_BUILD_INSTRUCTIONS.md) directs a separate deployment engineering session.
+**Use:** begin the coordinator with [BOOTSTRAP.md](BOOTSTRAP.md). Keep this detailed policy accessible and load only the section needed for the current decision; do not attach the entire reference pack to the opening turn. Approved setup workers use the relevant details to build and verify the project workflow. Future sessions use the compact generated runtime core and their task packets. [OPERATOR_GUIDE.md](../operations/OPERATOR_GUIDE.md) supports the user. [DEPLOYMENT_BUILD_INSTRUCTIONS.md](DEPLOYMENT_BUILD_INSTRUCTIONS.md) directs deployment engineering.
 
 This revision specifies desired behavior and activation checks. It does not claim that these mechanisms are installed, that a Copilot defect has been diagnosed, or that instructions alone can prevent runtime stalls.
 
@@ -46,7 +46,23 @@ For long work require a verified nonblocking launch/status mechanism or an indep
 
 ## 3. Bootstrap in stages without occupying the coordinator
 
-Start with short targeted state reads sufficient to establish the current objective, repository location, applicable instruction entrypoint, and available dispatch mechanism. Record existing worktree changes before workers edit. Preserve unrelated user changes; do not reset, overwrite, or silently absorb them.
+Start with the compact [bootstrap entry](BOOTSTRAP.md), supplied context, and existing compact state rather than bulk reference loading. The first response acknowledges the outcome, identifies the supplied run mode or uncertainty, and asks one next unresolved question before further investigation. If valid same-run approval/state are already supplied, state the next bounded coordination action instead. Record existing worktree changes before workers edit, using an authorized execution path once the run gate permits it; preserve unrelated changes.
+
+### Opening-turn and return-control contract
+
+Before run approval, advance one interview decision per response. Use supplied answers first; if the next question needs evidence, perform at most one targeted read of a named compact record or already known-short local metadata result, then return with that evidence or a precise gap. Do not chain repository scans, provider/model catalog searches, pricing research, instruction generation or capability drills under "safe local preparation." Unknown or potentially long calls are not bounded merely because there is only one of them. Request the specific operator-supplied evidence or report the limitation instead.
+
+After asking a question or reaching an evidence/authority/capability hold, end the response. Preserve the partial interview through the existing authorized record or recoverable conversation. Do not invent another live state store, repeatedly ask without new input, or keep a turn alive by polling or restating plans. If an interaction tool waits for the operator, issue only the needed question; do not queue additional investigation behind it. A complete approved record can satisfy already resolved fields without ritual re-questioning.
+
+A waiting question tool may itself suspend the active request. A visible question is not proof that the turn ended. Prefer a supported question-and-return mechanism; if the host requires a suspending interaction, record that limitation and its actual answer/cancel control. Do not promise that an ordinary message queued behind the request can answer or release it, and do not override higher-priority host interaction requirements.
+
+On meaningful transitions, expose a concise checkpoint: **phase, last completed action, waiting on and owner, next action or actual resume trigger**. Distinguish `awaiting_input`, `awaiting_evidence`, `ready_to_dispatch`, `waiting_external`, and `blocked`. A hold is not active execution; a requested capability is not verified. Process steering actually delivered to the session before further effects, but do not claim visibility into private unsent queues.
+
+After approval, apply the ordinary dispatch cycle: handle ready independent work within its own gates and measured coordination-call budget, then return control when only external/input waits remain. Do not synchronously wait for a worker's whole job, sleep, poll, or add a wait-for-all barrier to keep the coordinator "busy." Preserve real handles and return paths. An end-of-response checkpoint is not task acceptance or project completion. Resumption requires an actual host event, operator action, or verified independent observer; instructions do not schedule themselves.
+
+This preapproval interaction bound is not a worker-count cap, a new spending allowance, or a universal latency promise. The host may still delay context processing, model responses, input delivery or tools. If higher-priority host instructions prevent returning control, record that limitation and use a supported assisted mode; do not claim this document overrides them.
+
+If automated wake-ups or auto-continuation are involved, identify the actual producer/target and admission behavior through independent host controls. Do not repeatedly enqueue the same unresolved continuation or use a queued message as a stop/recovery control. Pausing future triggers requires its own authority and does not stop existing jobs or erase queued intent. Where no-overlap/admission controls are unavailable, use an honest assisted mode. See [automation and out-of-band recovery](../operations/OPERATOR_GUIDE.md#automation-admission-and-out-of-band-recovery); this protocol does not install those controls.
 
 ### Mandatory configuration interview and approval
 
@@ -88,7 +104,7 @@ Establish an initial map: **requirement → uncertainty/dependency → bounded t
 
 ## 4. Verify the runtime before promising orchestration
 
-Create or update the existing `CAPABILITIES.md` using real observations. Before approval, use only safe local bounded reads needed for the interview; delegated or direct external LLM probes require the section 3 gate first. Discovery may reveal a limitation but cannot expand approved settings. For each capability record the mechanism, evidence, limitations, exact assisted action if needed, and status: **verified automatic**, **assisted**, **unavailable**, or **not checked**.
+Create or update the existing `CAPABILITIES.md` using real observations. Before approval, use only the section 3 single-question/targeted-read path; delegated or direct external LLM probes require the run gate first. Check the selected model and next required control, not every possible provider or future feature. Unavailable evidence becomes an explicit hold with a next action, not an open-ended search. Discovery may reveal a limitation but cannot expand approved settings. For each capability record the mechanism, evidence, limitations, exact assisted action if needed, and status: **verified automatic**, **assisted**, **unavailable**, or **not checked**.
 
 | Capability | Verify specifically |
 | --- | --- |
@@ -157,6 +173,8 @@ Adapt the following core with real project paths and verified mechanisms. Keep i
 >
 > **Coordinator boundary.** The responsible orchestrator coordinates. It performs only bounded state/status reads, coordination updates, packet preparation, evidence assessment, and user communication. Delegate research, scans, coding, builds, tests, extraction, deployments, recovery execution, and background jobs to actual workers. Long work requires verified nonblocking dispatch/status or independently opened sessions; a blocking worker call still occupies the coordinator. Keep control calls within the measured project budget. If the capability is unavailable, prepare exact worker launch packets; do not execute long work locally.
 >
+> **Return control.** Begin bootstrap with a compact checkpoint and one unresolved question, not bulk reading. Before approval, use supplied evidence or one known-short targeted lookup for that question, then end the response on input/evidence holds. After approval, process eligible independent work and return when only waits remain. Do not poll, sleep, await full worker jobs, or repeat missing-input questions without a new trigger. Preserve phase, last action, waiting owner and next action in existing records. Ending a response is not declaring the project complete or promising self-wake.
+>
 > **Preserve the user's objective.** Record new steering under a stable ID with its source and revision. Link it to affected requirements, acceptance criteria, contracts, and tasks. Incorporate it without losing earlier obligations. Supersede only what the user or evidence actually changes; continue unaffected work.
 >
 > **Dispatch useful ready work.** Start independent ready tasks whenever the approved run gate, verified effective settings, reserved budget, capacity and ownership allow. Refill released capacity without a whole-batch barrier. Respect prerequisite types, current contracts, shared resources, downstream capacity, and the objective's aggregate budget. Explain idle capacity with evidence, an unblocker, and a next observation; do not wait indefinitely without an accountable observer.
@@ -187,7 +205,7 @@ At each completion, blockage, capacity change, checkpoint event, or user update:
 4. **Dispatch/refill:** check the approved run and actual model/reasoning/consent support, reserve within remaining parent/run limits atomically or through the serialized owner, then launch through the verified mechanism and persist assignment identity and launch status. Fill useful approved capacity; hold affected work if any gate fails.
 5. **Resolve locally:** assign bounded investigations or corrections for blockers; throttle only affected scopes.
 6. **Accept and integrate:** delegate substantive review, integration mutations, and combined checks. Record acceptance against the candidate and current requirements.
-7. **Communicate and checkpoint:** state material progress, uncertainty, blockers, and next actions; keep the index current.
+7. **Communicate and checkpoint:** state material progress, uncertainty, blockers, and next actions; keep the index current. When no immediate bounded coordination action remains, end the response with the actual next trigger instead of polling or awaiting whole jobs. Do not withhold the checkpoint until every worker finishes.
 
 Where individual completions are exposed, consume each as it arrives. Do not use a wait-for-all barrier merely for reporting convenience. Where only batch completion is available, record the limitation and use independently launched sessions for long work. Store worker results in a durable channel accessible independently of the coordinator's chat. Define launch-acknowledgment and result-pickup windows from observed runtime behavior, with an accountable actor and bounded remedy when missed. A blocked coordinator cannot consume completion events or poll itself; an independent observer or explicit assisted recovery is required. Never claim a scheduler will run this cycle after all controlling sessions stop without a separate verified runner.
 
@@ -464,10 +482,13 @@ Do not claim these guards are implemented because this table exists. If no safe 
 
 ## 17. Activate with meaningful drills, then continue the project
 
-Do not finish bootstrap with proposed documents alone. Complete the run interview and approval first, then delegate configuration, representative execution, and verification within approved settings, consent, and reservations. A harmless drill still cannot bypass the worker/external-call gate. Exercise harmless fixtures or isolated project work; never create a real production incident.
+Do not claim activated automation from proposed documents alone. The first response and interview turns are not a full activation exercise: return the question/checkpoint before repository discovery or drills. After run approval, delegate configuration, representative execution and verification within approved settings, consent and reservations. Exercise the controls required for the next intended use; leave unrelated future capabilities explicitly not checked rather than treating this entire table as a first-response or global work barrier. A harmless drill still cannot bypass the worker/external-call gate. Never create a real production incident.
 
 | Drill | Observable pass condition |
 | --- | --- |
+| Opening interaction | Before any workers, the coordinator acknowledges supplied intent/run mode, asks one unresolved question or states the next bounded action, and ends its response without bulk scans, catalog research or setup generation. Record actual timing; no universal response-time guarantee is implied. |
+| Missing bootstrap evidence | One allowed targeted lookup is insufficient; the session reports the specific gap/owner/action and returns rather than chaining research or silently selecting defaults. |
+| Wait does not monopolize the turn | After approved nonblocking dispatch, unrelated ready work is handled and an external-wait checkpoint ends the response. A queued user message can be handled when the actual host delivers it; no polling/full-job wait or self-wake claim substitutes for delivery evidence. |
 | Bootstrap approval | No discovery/research worker or direct external LLM request starts before explicit configuration approval; safe local interview preparation remains possible. New runs reconfirm, while same-run handoffs preserve authority. |
 | Model/reasoning and consent | Unapproved model/fallback, unsupported or unprovable setting, out-of-range reasoning, and denied/unknown external scope block affected autonomous work. Accepted fixed `N/A` and exact evidenced assisted configuration are distinguished. No private-data capability probe occurs. |
 | Run-budget reservation | Concurrent requests cannot oversubscribe the run/parent cap using the actual atomic mechanism or serialized owner. Unknown charges remain held, incompatible units are not converted, retries/replacements retain usage, and a limit failure holds new affected work without automatically killing stateful jobs. |

@@ -1,8 +1,42 @@
 # Orchestration review and revision guide
 
-**Revision:** 2.1.1 — 6 September 2026  
+**Revision:** 2.1.2 — 6 September 2026  
 **Historical 2.0 review input:** all three Markdown documents in the uploaded archive.  
 **Scope:** preserve the 2.0 orchestration, parallelism and recovery policies while adding mandatory approved run configuration, model/reasoning and external-consent gates, aggregate budget accounting, and repository documentation relocation.
+
+## Revision 2.1.2 bootstrap responsiveness
+
+An early queued/silent bootstrap was reported with little worker activity.
+The affected host, session/request trace, and automation producer were not
+available to establish its runtime cause. Low worker activity does not exclude
+context processing, a long model turn, one stuck tool, or an automation loop.
+
+The documentation did expose a startup gap: it recommended loading three
+large references before the first interaction and required "short, bounded"
+coordination without explicit opening-response or return-control boundaries.
+
+- [BOOTSTRAP.md](../protocol/BOOTSTRAP.md) is now the small first entry; detailed
+  references remain authoritative and are loaded for the current decision.
+- The coordinator acknowledges supplied context, asks one unresolved question,
+  and returns. Preapproval evidence work is one known-short targeted lookup
+  for that question, not catalogs, bulk scans or setup generation.
+- Missing input/evidence becomes a visible hold with an owner and next action.
+  After approved dispatch, unrelated eligible work continues; full-job waits,
+  polling and a wait-for-all reporting barrier do not occupy the coordinator.
+- Early no-worker interaction and wait-return drills complement the existing
+  post-dispatch responsiveness checks. These are required observations, not
+  claims that this publication reproduced or repaired a live queue.
+- A stalled session cannot be recovered by feeding its blocked message path.
+  Operator guidance now separates independent observation/control from queued
+  prompts and identifies possible automation producers, overlap and admission.
+  Pausing future triggers requires authority and does not cancel live jobs or
+  delete existing intent. No automation is installed or altered by this pack.
+
+The mandatory model/reasoning/consent/budget interview, exact-setting evidence,
+final approval, scoped ownership, inherited reservations, candidate acceptance,
+and recovery-before-replay rules remain in force. Returning a response is not
+declaring project completion; a short entry cannot guarantee host latency,
+message delivery, self-wake, cancellation, or producer-side admission.
 
 ## Revision 2.1.1 principles correction
 
@@ -130,6 +164,7 @@ Evaluate improvement through elapsed time to accepted, integrated outcomes, time
 
 | File | Use |
 | --- | --- |
+| [BOOTSTRAP.md](../protocol/BOOTSTRAP.md) | Small coordinator opening entry with first-response, bounded interview and return-control rules. |
 | [FIRST_SESSION_AND_ORCHESTRATION.md](../protocol/FIRST_SESSION_AND_ORCHESTRATION.md) | Build or update the project-specific orchestration layer and its verified controls. |
 | [OPERATOR_GUIDE.md](../operations/OPERATOR_GUIDE.md) | Start, interview/approve, steer, inspect, migrate and recover the working setup. |
 | [DEPLOYMENT_BUILD_INSTRUCTIONS.md](../protocol/DEPLOYMENT_BUILD_INSTRUCTIONS.md) | Delegate and implement the actual build, release and recovery path with parallel preparation under the same approved run. |
