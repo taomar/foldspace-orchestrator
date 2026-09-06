@@ -1,6 +1,6 @@
 # Your guide to running projects with GitHub Copilot
 
-**Revision 2.1.5 · 6 September 2026**
+**Revision 2.1.6 · 6 September 2026**
 
 This pack uses **GHCP** to mean **GitHub Copilot**. It supports projects in which research, implementation, and architecture evolve together. Apply it to the actual repository and installed Copilot environment; it does not assume your stack, deployment destination, or session controls.
 
@@ -205,6 +205,34 @@ These are ordinary prompts, not built-in slash commands. Any generated shortcut 
 
 Avoid giving the same writable task to multiple conversations. If you open a worker manually, have the coordinator register the assignment and prepare its complete packet first, after run approval and atomic or serialized budget reservation. Manual launch is not an exemption: configure the exact approved model/reasoning and provide evidence before effects; if the host cannot prove those controls, block dispatch claiming them. A prepared packet is not a started task.
 
+### Admission and readiness
+
+Follow the canonical [admission rule](../protocol/FIRST_SESSION_AND_ORCHESTRATION.md#admit-new-assignments-not-chat-backlog),
+not the UI label. Default to one active assignment and at most one outstanding
+unacknowledged assignment dispatch per worker, with zero pending task assignments
+in chat. These are not two task slots. Keep backlog in the single authoritative
+ledger. No additional task goes to a busy, dispatching, recovering, uncertain or
+resource-unavailable lane. A completed turn/IDLE label does not prove jobs ended,
+resources were released, or next-message delivery will work. Additional workers
+require independent ready work, isolation, verified capacity and approved budget.
+
+Answers, steering, cancellations/changed constraints, status/results and recovery
+controls are not extra assignments. Use demonstrated control/priority routes or
+exact assisted steps for busy sessions; do not suppress genuine answers or use a
+queued stop as proof of control. A stopped chat request may leave jobs running.
+Host tools can still queue internally; this policy does not promise they cannot.
+
+`READY_CHECK`/`READY` are optional application markers, not built-in commands.
+"READY, wait for IDLE, send" leaves a new delivery gap; neither marker proves
+workspace exclusivity, model/limits, execution or the next wake. Where supported,
+create the worker with its one complete approved packet after reserving
+task/receiver/resources/budget and persisting task/version/dispatch identities.
+The receiver validates current authority and records exact acceptance before
+effects, then starts the assignment; creation/send success is not that evidence.
+After reconnect/reload, reconcile current owners/jobs/results rather than loop
+through readiness probes. Use the [finite cases](EXAMPLES.md#safe-assignment-and-uncertain-delivery-cases)
+for the expected distinctions, not as claims of live-host behavior.
+
 Use this worker-session prompt with that packet:
 
 > You are the execution worker for [task ID and assignment version], reporting to [coordinator or task registry]. Read the attached packet and applicable project instructions. Before effects verify run_policy_ref, actual effective_config and evidence, external consent scope or denial, and budget_reservation against the authoritative parent/run ledger. Use only approved exact models, per-model reasoning and fallbacks; do not silently select defaults, expand consent or reset limits. Verify your workspace, ownership, inputs, dependencies, write scope, authority, budget, acceptance criteria, and return channel. Inspect existing work and operations before acting. Execute this bounded assignment and preserve recoverable evidence. For long operations, record the actual returned job handle, execution location, log or artifact locations, observation method, progress signals, and recovery actions. Report dispatch acknowledgement separately from execution; report running only when evidence establishes that execution actually began. Distinguish heartbeat from useful progress. Return evidence and unresolved effects, then follow the submission boundary; do not independently expand scope or integrate shared changes.
@@ -213,7 +241,7 @@ The coordinator should supply these fields, using the project's existing schema 
 
 | Packet content | Why you need it |
 | --- | --- |
-| Stable task ID, assignment version, execution owner, coordinator identity | Prevents duplicate and stale ownership. |
+| Stable task ID, assignment version, unique dispatch attempt ID, reserved receiver/actual execution owner, coordinator epoch | Correlates pre-send reservation, acceptance and execution without inventing duplicate assignment IDs; ACK alone is not fencing. |
 | Objective, acceptance evidence, relevant decisions and contracts | Gives the worker an independently understandable result. |
 | Dependencies, workspace, branch or worktree, permitted writes and reserved resources | Defines readiness and isolation. |
 | Granted authority and its source; remaining task budget and attempts | Preserves limits across replacements. |
@@ -233,7 +261,7 @@ Observe these distinctions:
 | --- | --- |
 | Packet prepared | An assignment is ready to be launched. |
 | Transport submission acknowledged | The send/launch tool accepted the request; it may still be queued. This does not prove receiver receipt or execution. |
-| Receiver receipt observed | A linked incoming event or receiver acknowledgement proves receipt of the identified intent; it does not prove application. |
+| Receiver receipt observed | A linked incoming event or receiver acknowledgement proves receipt of the identified intent; it does not prove application or transfer resource ownership. A lost ACK does not disprove execution. |
 | Worker or job observed running | Runtime evidence identifies actual execution. |
 | Heartbeat received | The observed component is responsive; useful progress is not yet established. |
 | Progress observed | A milestone, useful finding, output, or state change advances the assignment. |
@@ -245,9 +273,34 @@ Observe these distinctions:
 
 An exit code alone does not establish every acceptance criterion. A worker saying “done” does not establish review, integration, or deployment. Equally, an ended conversation does not establish that its background job ended.
 
+Keep logical task readiness, delivery observations and operation/results as
+separate views in the existing tracker. A valid late start or completed result
+can be reconciled without waiting forever for a missing ACK. Do not integrate
+the same logical assignment/candidate/effect twice under new notification IDs,
+and never let an obsolete ACK/start reclaim current ownership.
+
 ## 6. Diagnose idle sessions and piled-up queues
 
 An idle session is a symptom. Task dependencies, runtime scheduling, a tool job, provider limits, session failure, or lost context can produce similar visible behavior. Capture evidence before attributing the cause.
+
+Missing ACK, timeout, "Queued message was not sent", "Session not found", or
+unexplained idle means a suspect/quarantined delivery lane, or unavailable
+transport only to the extent known. Stop **new assignments** there; retain
+operation outcome uncertainty, ownership and reservations. Do not mark the task
+failed/stale, automatically revoke it, cancel its job, or redispatch even once.
+Inspect receiver events, actual tools/jobs/effects, current assignment, newer
+controls, usage and durable results. Observe running work and retrieve completed
+results instead of duplicating them.
+
+Retry/replacement must satisfy the canonical
+[uncertain-dispatch contract](../protocol/FIRST_SESSION_AND_ORCHESTRATION.md#uncertain-dispatch-is-not-failed-execution):
+prove prior nonexecution and exclude obsolete late start, or safely stop/surrender/
+fence the actual conflicting writer and reconcile effects/charges. A ledger-only
+revocation is not a fence. Without that evidence, name the exact unresolved
+boundary and permit only safe independent isolated/read-only work. Retain the
+logical task, version/attempt history, consumed/held budget and finite remaining
+allowance. The procedure below gives the independent pickup or accepted operator
+route for both workers and their parent, not an automatic supervisor.
 
 ### Prevent stranded work and recover missed delivery
 

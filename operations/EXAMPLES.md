@@ -29,6 +29,7 @@ not a new-project bootstrap. Read its queued-session warning before pasting.
 - [Ask for status that distinguishes progress from activity](#ask-for-status-that-distinguishes-progress-from-activity)
 - [Triage a queued bootstrap outside its queue](#triage-a-queued-bootstrap-outside-its-queue)
 - [Prepare a bounded worker handoff](#prepare-a-bounded-worker-handoff)
+- [Safe assignment and uncertain delivery cases](#safe-assignment-and-uncertain-delivery-cases)
 - [Return a worker result](#return-a-worker-result)
 - [Recover context without reclaiming ownership blindly](#recover-context-without-reclaiming-ownership-blindly)
 - [Capture intent before a disruption](#capture-intent-before-a-disruption)
@@ -318,6 +319,14 @@ Use only [allowed scope]. Do not perform [excluded effects].
 If a required fact is unknown, resolve it or mark the assignment blocked;
 do not invent ownership, authority, environment state, or native tool names.
 
+Reserve task/receiver/resources/budget and persist task_id, assignment_version,
+dispatch_id and current coordinator authority before send. Admit no extra task
+to a busy, dispatching, recovering, uncertain or resource-unavailable worker;
+keep backlog in the ledger, not chat. Default one active assignment and at most
+one unacknowledged assignment dispatch per worker, not a second pending task.
+Answers/steering/cancellations use supported control routes, not this backlog.
+READY/IDLE does not prove next delivery. If supported, session creation can carry
+this complete approved packet without an extra readiness exchange.
 Use verified nonblocking launch if available. Otherwise provide the exact
 locally verified operator steps to open a separate worker session and carry
 the complete packet there. Distinguish prepared packet, delivery/launch
@@ -330,6 +339,10 @@ For the receiving worker, prepend this to the **completed packet**:
 You are the execution worker for the attached assignment, not a second
 coordinator. Confirm the assignment identities, ownership, workspace, scope,
 dependencies, authority, budget, acceptance, and return path before effects.
+Record acceptance tied to the exact current task/version/dispatch and authority
+in your durable result/operation records before new effects; then execute.
+ACK transport success is not ownership fencing. Preserve actual start/result
+evidence even if ACK is lost; never restart on a duplicate delivery.
 Inspect current work and surviving operations. Stop for incompatible ownership
 or unknown effects rather than assuming they ended with the previous session.
 Reuse the valid approved run policy; do not restart the coordinator interview
@@ -347,6 +360,35 @@ repeated wake messages or become the coordinator.
 References: [assignment contract](../protocol/FIRST_SESSION_AND_ORCHESTRATION.md#8-give-every-assignment-a-complete-versioned-contract),
 [worker launch](OPERATOR_GUIDE.md#5-launch-workers-with-an-explicit-task-and-job-handoff),
 and [manual fallback](../docs/GETTING_STARTED.md#manual-worker-fallback).
+
+## Safe assignment and uncertain delivery cases
+
+These are finite **document-level scenarios**, not reproduced host failures or
+executed runtime tests. Use existing task/assignment/dispatch/result identities
+and the canonical [admission](../protocol/FIRST_SESSION_AND_ORCHESTRATION.md#admit-new-assignments-not-chat-backlog)
+and [uncertainty](../protocol/FIRST_SESSION_AND_ORCHESTRATION.md#uncertain-dispatch-is-not-failed-execution)
+rules, with the [independent pickup route](#prevent-and-recover-missed-idle-delivery).
+Choose receipt windows from actual host/workload evidence within approved limits,
+not constants from this table.
+
+| Case and finite evidence | Required disposition | Unsafe shortcut |
+|---|---|---|
+| Worker owns task A and is busy; task B becomes ready; A also needs a genuine user answer or cancellation | Leave B in the authoritative ledger or use another eligible reserved worker. Deliver A's answer/control through demonstrated priority/control or exact assisted steps. Reconcile cancellation before affected effects. | Queue B, suppress the answer as a nudge, or assume stopping the chat stopped A's job |
+| Worker replies READY, then its turn ends with UI IDLE | Record liveness for that interaction only. Check current ownership, jobs/resources, settings and actual delivery route before a new assignment; no readiness probe loop. | Infer next-message receipt/wake, workspace isolation, applied model or free resources |
+| Host supports creation with one complete approved assignment | Persist task/version/dispatch and reserve receiver/resources/budget before creation; bind actual session ID. Worker validates current authority/workspace/settings, records exact acceptance before effects, then records start. | Count successful creation as execution or require READY followed by a second idle-message roundtrip |
+| ACK window expires, but the worker's durable operation record and actual job handle show a current running task | Quarantine new assignments to the lane; keep reservation/owner, adopt or observe the same job through a supported route and reconcile receipt separately. | Mark task STALE, revoke in ledger, free budget and redispatch once |
+| Send returns an error; receiver, transport and operation evidence establish no execution and no possible late start from the old attempt | Restore a valid route, reconcile newer controls/usage, then permit one justified attempt only within remaining approved history/limits; preserve task and assign a new dispatch ID/version as appropriate. | Treat the error string or absent incoming event alone as nonexecution proof; retry an unchanged failure indefinitely |
+| Delivery remains unknown and the old actor cannot be stopped, safely surrender or be fenced at a shared target | Hold that conflicting scope and its resources/unknown charges; name the missing control/effect evidence. Permit only independently eligible isolated/read-only work. | Treat a new ledger epoch or a fresh chat as a fence; duplicate shared writes |
+| Old assignment version ACK/start arrives after a safe transfer | Preserve the observation and reconcile effects, but reject obsolete ownership; enforce the actual write boundary. Current owner keeps the assignment. | Let a late receipt revive the old assignment |
+| Same candidate/result arrives twice, including under a new transport/result-event ID | Check logical task/assignment/candidate/effect identity and current acceptance; consume only the missing disposition. Integrate each logical effect at most once within demonstrated controls. | Deduplicate only message IDs or integrate twice |
+| A current completed candidate/result is reachable but its original ACK never arrived | Reconcile actual effects and identities, retrieve the existing result and proceed to review/acceptance; retain the receipt gap as unknown. | Wait forever for ACK or rerun the completed task |
+| Parent/coordinator goes idle and misses a published result notification | Armed independent observer or accepted operator retrieves the durable result, uses the alternate supported pickup route and reconciles current coordination authority. | Assume sender success or a dormant sibling is observation; send repeated continue/resume/pings |
+| Recovery allowance is exhausted, or usage/reservations remain unknown under a cap | Retain consumed/held amounts; stop new affected attempts and expose exact ledger evidence/approval or assisted action needed. Preserve live jobs; independent eligible work may continue. | Release reservations on timeout, invent a fresh replacement budget, kill stateful jobs or freeze unrelated work |
+
+Results may arrive out of order. `dispatched` is not `running`, submitted results
+are not acceptance/integration, and transport quarantine is not task failure.
+If a required route cannot be demonstrated, report that specific limit and use
+an accepted assisted handoff; this table installs no control.
 
 ## Return a worker result
 

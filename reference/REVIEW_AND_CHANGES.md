@@ -1,9 +1,58 @@
 # Orchestration review and revision guide
 
-**Revision:** 2.1.5 — 6 September 2026
+**Revision:** 2.1.6 — 6 September 2026
 
 **Historical 2.0 review input:** all three Markdown documents in the uploaded archive.  
-**Scope:** preserve orchestration, parallelism, recovery, approval and accounting while correcting bootstrap transitions and adding optional prestaged interview inputs.
+**Scope:** preserve orchestration, parallelism, bootstrap progression, approval and accounting while clarifying safe assignment admission and uncertain-delivery recovery.
+
+## Revision 2.1.6 safe admission and uncertain dispatch
+
+This is a policy correction and containment of unreliable session delivery,
+**not a fix for the host's internal idle-wake defect**. A successful send, READY
+reply, UI IDLE label or missing ACK does not establish whether an assignment
+can safely start, already ran, or may still produce effects.
+
+The existing policy already separated backlog, delivery and operations, but
+section 7 described persisting assignment identity after launch while section 8
+required a pre-launch dispatch ID. General handshake/replay language also left
+room to treat liveness as admission or restored chat as a task scheduler.
+The correction belongs to the existing sections 3, 8-10 and 13, propagated to
+the runtime core, optional enforcement contract and deployment/operator guidance:
+
+| Policy correction | Boundary and consequence |
+|---|---|
+| Admit new assignments, not control traffic | Default one active assignment and at most one unacknowledged assignment dispatch per worker, zero pending task backlog in chat. Busy/dispatching/recovering/uncertain/resource-unavailable lanes receive no additional task. Answers, steering, cancellations and status/result/recovery controls use demonstrated priority/control or exact assisted routes. Host-internal queueing may still occur. |
+| Optional readiness, not a wake guarantee | READY_CHECK/READY are application markers only. READY then IDLE then send leaves a time-of-check/time-of-use gap. A supported creation request may carry a complete approved bounded packet; reconcile receipt/start rather than require a second readiness roundtrip. Reconnect/reload still requires ownership/job reconciliation. |
+| Reserve before send, observe states separately | Reuse task_id, assignment_version, dispatch_id, coordinator_epoch and candidate/result identities; no synonymous assignment ID or new scheduler. Reserve task/receiver/resources/budget and persist the packet before transport. Receiver validates and records exact acceptance before effects. Logical readiness, delivery and execution/results remain separate; valid out-of-order results need not wait for a lost ACK. |
+| Quarantine ambiguity, do not revoke execution | Timeout, transport error or unexplained idle stops new assignments to the suspect lane, not existing jobs or ownership. Preserve payloads, checkpoints, handles, receipts, usage and reservations. Inspect receiver/jobs/effects/newer controls/results; observe running work or consume completed results. Even one redispatch is unsafe without reconciliation. |
+| Fence actual conflicting effects before replacement | Prove nonexecution with no possible obsolete late start, or establish safe stop/surrender/fencing at the actual write boundary and reconcile effects/charges. Ledger-only revocation and ACK receipt are not fencing. Late obsolete ACK/start cannot regain ownership; duplicate logical results cannot integrate twice. Unknown exposure and attempt history survive replacement. |
+| One authority and independent pickup | Reuse a durable authoritative ledger under one current coordinator/actual serialized writer; workers own operation/results. Apply 2.1.5 pickup/observer or accepted operator coverage to parent and workers. No automatic supervisor, global serialization or unbounded spawning is introduced. |
+
+The [finite cases](../operations/EXAMPLES.md#safe-assignment-and-uncertain-delivery-cases)
+define the intended outcomes for busy/control traffic, readiness gaps, complete
+startup packets, running work with lost ACK, safely bounded undelivered retry,
+unfenced writers, obsolete receipts, duplicate/current results, parent pickup
+failure and exhausted or uncertain budgets. They are documentation scenarios,
+not claimed host fault injection, universal exactly-once delivery or runtime
+enforcement.
+
+**Migration and compatibility:** keep the 14-file layout and URL-first/no-clone
+entry. Preserve one outstanding unanswered question, immediate progression on
+delivered answers/events, optional staged inputs, exact models/role/fallbacks,
+model-specific reasoning or verified accepted N/A, scoped external consent
+default-denied, final new-run approval, same-run authority and inherited limits.
+Public reference GETs are not external inference. Keep existing task vocabulary
+with an explicit evidence mapping; do not reset owners or accounting.
+
+The single [Copilot-only in-place upgrade prompt](../docs/GETTING_STARTED.md#upgrade-without-resetting-live-work)
+names its immutable source commit. Publication first commits canonical 2.1.6,
+then pins that prompt to the actual published commit in a follow-up; all upgrade
+companions use that same source, not moving main. The approved setup worker
+compares and merges the policy into active entrypoint/runtime/prompt copies,
+retaining prior references and customizations. Changing cached references alone
+does not deactivate conflicting old rules. Restoring old instructions cannot
+undo live effects, task state or charges. No executable updater, dependencies,
+runtime enforcement, CI or agent framework is added.
 
 ## Revision 2.1.5 idle-delivery prevention and recovery
 
@@ -301,9 +350,9 @@ An inactive coordinator cannot run its own monitoring loop. Unattended recovery 
 
 ## 4. Apply the revision without resetting the project
 
-1. Use the migration prompt in [OPERATOR_GUIDE.md](../operations/OPERATOR_GUIDE.md) in the existing project. Supply its current objective and these revised documents. First perform safe local inventory and the [configuration interview](../protocol/RUN_CONFIGURATION.md); a new run must reconcile/reconfirm previous settings explicitly, while a same-run continuation preserves valid authority and obtains missing approvals before new affected dispatch.
+1. Use the single [pinned in-place upgrade prompt](../docs/GETTING_STARTED.md#upgrade-without-resetting-live-work) in the existing project; follow its independent read-only recovery warning before using a new session when the old path only queues. Start with known compact state and public references, not a clone/attachment prerequisite or broad preapproval inventory. This is not an automatic new run: retain valid same-run approval and obtain only genuinely missing/changed decisions. An explicitly requested new run reconciles/reconfirms settings under the [configuration interview](../protocol/RUN_CONFIGURATION.md).
 2. Only after approval and atomic or serialized reservation, have execution workers inspect and update the existing generated instructions and role configuration. Preserve task identities, current assignments, useful work, decisions, authority, failed-attempt history, job handles, actual usage and outstanding/unknown charges.
-3. Remove conflicting generated rules: discovery before approval, silent model/reasoning/consent/budget defaults, budget resets, the default two-worker cap, main-session execution fallback, global wait-for-all behavior, and any assumption that queued chat equals dispatched work. Merge the new behavior into existing POLICY/CAPABILITIES/PROJECT_STATE and ledger boundaries; do not append a second competing protocol or RUN_CONFIG store.
+3. Compare and merge the changes into active host-supported entrypoints, generated runtime/session protocol and live prompt/agent copies, not just cached references. Remove conflicting rules: discovery before approval, silent settings/consent/budget defaults, resets, default two-worker cap, coordinator execution fallback, wait-for-all barriers, chat scheduling, mandatory READY/IDLE handshakes, persistence after send, and timeout-driven stale/revoke/redispatch. Preserve valid customizations and old versions/provenance; hold only unresolved conflicting writes. Reuse POLICY/CAPABILITIES/PROJECT_STATE and ledger boundaries; do not append a competing protocol or RUN_CONFIG store.
 4. Reconcile live workers before switching coordination ownership. Adopt unaffected assignments explicitly; change only assignments invalidated by scope, ownership, contracts or evidence.
 5. Exercise the relevant activation scenarios in the main and deployment instructions using harmless representative work within approved settings, consent and budget. Include exact model/reasoning or accepted fixed `N/A`, external-denial, reservation/oversubscription, same-run recovery and manual-setting evidence cases. Harmless discovery/drills do not waive the approval gate.
 6. Record whether each control is documented, configured, exercised, or verified in the intended runtime. Continue within existing authority and known limits, observing actual runtime permissions. Hold new affected work on approval/support/cap/uncertainty violations and escalate only under explicit authority, without automatically killing stateful operations.

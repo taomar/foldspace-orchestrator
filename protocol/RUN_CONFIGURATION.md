@@ -1,6 +1,6 @@
 # Configure the run before dispatch
 
-**Revision: 2.1.5 - 6 September 2026**
+**Revision: 2.1.6 - 6 September 2026**
 
 This is the bootstrap questionnaire and configuration reference for FoldSpace
 Orchestrator, not an executable configuration loader. The canonical
@@ -238,6 +238,14 @@ Before concurrent dispatch, reserve against all applicable parent limits using
 a demonstrated atomic ledger mechanism, or serialize reservations through one
 accountable coordinator/operator if no such mechanism exists. Files copied
 across branches are not atomic reservations.
+
+These limits do not authorize queueing tasks behind a busy worker or retrying
+an uncertain launch. Apply the canonical [new-assignment admission](FIRST_SESSION_AND_ORCHESTRATION.md#admit-new-assignments-not-chat-backlog)
+and [uncertain-dispatch rules](FIRST_SESSION_AND_ORCHESTRATION.md#uncertain-dispatch-is-not-failed-execution):
+reserve task/resources as well as budget before send; retain reservations when
+ACK is lost. A readiness reply does not prove applied settings or execution.
+Reconcile jobs/results/effects and prevent obsolete execution before replacement;
+even one approved retry is only an allowance, not evidence that retry is safe.
 
 Keep consumed usage, outstanding reservations, reconciled refunds/unused
 allowance, and uncertain in-flight charges distinct. A replacement or replay

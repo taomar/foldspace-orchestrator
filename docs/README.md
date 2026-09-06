@@ -16,7 +16,13 @@ capabilities or an explicit assisted/manual handoff.
 [Prompt examples](../operations/EXAMPLES.md) |
 [Run configuration](../protocol/RUN_CONFIGURATION.md)
 
-Current protocol: **2.1.5**. See the [release history](../reference/REVIEW_AND_CHANGES.md).
+Current protocol: **2.1.6**. See the [release history](../reference/REVIEW_AND_CHANGES.md).
+
+This revision tightens [assignment admission and uncertain delivery](../protocol/FIRST_SESSION_AND_ORCHESTRATION.md#admit-new-assignments-not-chat-backlog):
+keep task backlog out of chat, reserve before send, and reconcile lost ACKs/jobs
+before safe replacement. Answers and controls remain deliverable through
+supported routes. READY/IDLE is not wake proof; this contains delivery failures,
+not a repair of Copilot's internal queue.
 
 ## On this page
 
@@ -70,7 +76,7 @@ not a fixed worker count.
 
 **Already using FoldSpace?** Open your existing project and use the
 [in-place upgrade prompt](GETTING_STARTED.md#upgrade-without-resetting-live-work).
-It pins revision 2.1.5 and preserves live work, customizations, valid approvals
+It names its pinned source revision and preserves live work, customizations, valid approvals
 and accounting; upgrading alone does not start a new run. If messages only
 queue, follow the guide's responsive-session recovery warning before pasting.
 
@@ -138,6 +144,9 @@ On missed delivery: stop redundant sends, preserve accessible queued input,
 resume through independent host controls or safely transfer ownership, reconcile
 completed work and live effects, then restore only valid unapplied intent.
 Do not reset budgets or rerun a task just because its result message was missed.
+Quarantine new assignments to the uncertain lane, not answers/controls or the
+task's ownership. A lost ACK does not release reservations; replacement requires
+proven nonexecution or actual safe stop/surrender/fencing and reconciled effects.
 See the [prevention and recovery procedure](../operations/OPERATOR_GUIDE.md#prevent-stranded-work-and-recover-missed-delivery).
 These safeguards make work recoverable; they do not repair the host or install
 a supervisor merely by reading the protocol.
