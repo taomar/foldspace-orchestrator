@@ -351,16 +351,19 @@ restart, kill jobs or clear queues. See the
 [independent recovery procedure](../operations/OPERATOR_GUIDE.md#prevent-stranded-work-and-recover-missed-delivery).
 
 Paste the **whole prompt** below into that responsive session. It targets
-**revision 2.1.6 at commit `7fedb7129e9692b115daf2c4593456ed6abb1bbe`**,
+**revision 2.1.7 at commit `c92112e211ac0660859ceb30984f7ef18466ea35`**,
 not an evergreen "latest" release. The pinned bootstrap's source map contains
 `/main/` URLs; every companion retrieval must use the same commit instead.
 
 ```text
-Upgrade this project's existing FoldSpace setup in place to revision 2.1.6.
+Upgrade this project's existing FoldSpace setup in place to revision 2.1.7.
+Keep this chat in a coordination/upgrade-entry role, not an implementation
+worker; do not assume ownership of the current root. Before tools/skills admit
+only coordination reads/actions and route execution to an approved setup worker.
 Read only this pinned compact public Markdown entry first:
-https://raw.githubusercontent.com/taomar/foldspace-orchestrator/7fedb7129e9692b115daf2c4593456ed6abb1bbe/protocol/BOOTSTRAP.md
+https://raw.githubusercontent.com/taomar/foldspace-orchestrator/c92112e211ac0660859ceb30984f7ef18466ea35/protocol/BOOTSTRAP.md
 Use its source map on demand, replacing /main/ with
-/7fedb7129e9692b115daf2c4593456ed6abb1bbe/ for EVERY companion download,
+/c92112e211ac0660859ceb30984f7ef18466ea35/ for EVERY companion download,
 including linked references and LICENSE. Keep all source reads at that commit;
 do not mix moving main content or preload the entire pack. No clone, Git
 commands, ZIP, manual copy, attachments or new project are required.
@@ -368,8 +371,11 @@ Use this Copilot-only instruction migration; do not add an executable updater,
 scripts, runtime enforcement, watchdogs, dependencies, CI or agent frameworks.
 
 Treat this as instruction migration within the current run, not automatic
-new-run approval. Begin with bounded public reads and safe known-state
-preparation in this current chat. Do not send private project/user data to
+new-run approval. Use held evidence or bounded compact authoritative
+coordination/state/capability reads and needed approved bootstrap/configuration
+references only; no source investigation, domain-docs research or chained
+lookups. Missing model/record evidence means an exact question/access gap,
+not an unapproved discovery worker. Do not send private project/user data to
 public services. Identify the installed source revision and reference paths,
 the actual host-supported project instruction entrypoint, generated runtime
 core/session protocol, and authoritative policy, state, task records and ledger.
@@ -404,12 +410,65 @@ references separately, keeping their layout, LICENSE, URLs, revision, commit
 and hashes. Reuse verified matching
 copies and never silently overwrite conflicting references or instructions.
 Deliberately merge/adapt the actual active project-native entrypoint, compact
-runtime core/session protocol and conflicting live prompt/agent copies so old
-rules do not override the upgrade. Preserve project conventions/customizations;
+runtime core/session protocol, root and child coordinator role packets, executor
+packets and conflicting live prompt/agent copies so old rules do not override
+the upgrade. Adapt native role/tool profiles only where supported and verified;
+do not invent tool IDs, configuration files/formats, hooks or compatibility.
+Preserve project conventions/customizations;
 hold affected conflicting writes for resolution. Updating references alone
 is not activation.
 
-Apply the 2.1.6 rules at the existing policy boundaries. Supersede conflicting
+Apply 2.1.7 at existing section 2 role admission and section 7 event routing,
+propagated to the active core and entrypoints, not a duplicate NEVER paragraph:
+Root and child coordinators retain role across every message, synchronous
+answer, steering, tool/result/completion event, continuation/reconnect/compaction
+and approved run. "Do/fix/change it" changes intent, not role. Role changes need
+an explicit supported ownership/coordination handoff under valid authority.
+An approved executor stays executor and actually executes its assignment,
+without importing coordinator interview or preparation stopping restrictions.
+Before tools/skills or substantive investigation, coordinators answer briefly
+from held evidence/known concepts or one compact coordination-state read;
+otherwise record intent and route EXISTING OWNER FIRST using the compact
+task/owner index, not the codebase. Deliver genuine current-task answers/
+corrections with stable requirement/steering ID, version and authority through
+demonstrated controls, including to busy workers/sub-orchestrators. Do not
+disguise an unrelated new task as steering or duplicate uncertain ownership.
+If no suitable owner exists, admit a versioned bounded executor only when
+ready, independently owned, resource-reserved and within approved remaining
+budget. Future independent tasks stay in durable backlog until admission.
+For a multi-lane capability, bound a sub-orchestrator by explicit parent
+tasks/scope/resources/allocation. It delegates real executors and inherits or
+tightens models/reasoning, consent, authority, caps, reservations and retries.
+No competing project-wide coordinator/ledger or mandatory worker count.
+Root retains user goal/status/acceptance; children report concise evidence/
+handles and escalate true decisions without blocking root on whole-job waits.
+
+Coordinator tools admit only compact authoritative coordination/state/capability
+or needed approved bootstrap/configuration references, compact state updates,
+packets, concise candidate-specific evidence and communication. Source reads/
+scans, domain-docs research, design evaluation, benchmarks/security review,
+code/config/infrastructure/instruction edits, build/test/install/deploy/merge/
+debug, execution skills and background jobs belong to workers, even one quick
+call or fix. Tiny reads cannot accumulate into an investigation. Detailed
+inspection/review is delegated; coordinator consumes the short report.
+Use verified native coordinator tool allowlists/profiles and scoped state writes
+where available. General execution shells, code writes and domain-research/
+build/deploy tools belong to workers. If generic tools still allow arbitrary
+execution, label the boundary instructional, not enforced. Tool filtering
+cannot guarantee short model reasoning or prevent a host-call stall. Record
+conflicting higher-priority host defaults and supported configuration/assisted
+steps; Markdown does not override host instructions.
+
+On detected role drift, stop starting further coordinator execution. Preserve
+exact running-operation handles, current/uncertain effects, write ownership
+and reservations. Arrange accountable observation/recovery through an authorized
+worker only where actual transfer and safety reconciliation are supported;
+do not abandon, blindly cancel, duplicate, self-restart or invent a supervisor.
+Continue eligible coordination through proven controls. If nonblocking dispatch
+or transfer is unavailable, provide the exact approved operator-carried
+independent-worker packet/control gap, never long coordinator fallback.
+
+Preserve 2.1.6 admission and uncertain-delivery safety. Supersede conflicting
 old active rules, not merely append another policy or download new references:
 Keep backlog in the durable authoritative task ledger under one current
 coordinator or actual serialized writer; workers own operation/result records.
@@ -450,8 +509,8 @@ twice under new notification IDs. No universal exactly-once claim.
 
 Preserve the 2.1.4/2.1.5 progression and idle-pickup behavior:
 After a received answer, including a question-tool result, reconcile it and
-take the next permitted bounded read, focused question, approval request or
-approved action; no status-only acknowledgement or extra "continue" is needed.
+take the next admitted coordination read, question, approval request or dispatch,
+never coordinator execution; no status-only exit or extra "continue" is needed.
 Keep at most one unanswered question open and respect actual host waits.
 Derive pending tasks and acceptance from existing compact records, not a new
 backlog. Reuse optional staged inputs; unapproved answers still need approval.
@@ -469,14 +528,19 @@ Markdown does not install a watchdog or repair a host queue. Record incomplete
 or unprovable controls and exact supported alternatives; no silent defaults,
 permission bypass or global freeze of unrelated eligible work.
 
-Report the source commit/revision, changed local paths and merged active rules.
-Show that a fresh or continuing intended session discovers the updated
-instructions without automatically acquiring ownership. Where feasible,
-demonstrate the next bounded interview/worker transition under existing
-approval and limits; label unsupported or unexercised controls honestly.
+Report source commit/revision, changed local paths and merged active rules.
+Under existing approval, non-destructively verify loaded role, active entrypoint/
+core and actual tool profile in a fresh target root, child coordinator and
+spawned executor without automatically acquiring project ownership. Check that
+known status is answered, current-task clarification routes to its existing
+owner, source-dependent questions route to workers, and approved executors
+execute. Inspect supported tool/write restrictions without destructive effects.
+Disclose untested lifecycle paths, instructional boundaries, higher-priority
+conflicts and exact assisted alternatives; no unverifiable enforcement claim.
+Demonstrate the next admitted interview/dispatch transition where supported.
 Keep old references and record rollback limits: restoring instruction files
 does not undo external effects/data changes or reset task/budget state.
-Then continue eligible pending project work under its existing authority.
+Then route eligible pending work to its responsible owner under existing authority.
 Do not stop at downloading documents or imply deployment/publication consent.
 ```
 
