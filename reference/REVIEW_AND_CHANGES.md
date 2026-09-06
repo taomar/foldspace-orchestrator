@@ -1,9 +1,64 @@
 # Orchestration review and revision guide
 
-**Revision:** 2.1.4 — 6 September 2026
+**Revision:** 2.1.5 — 6 September 2026
 
 **Historical 2.0 review input:** all three Markdown documents in the uploaded archive.  
 **Scope:** preserve orchestration, parallelism, recovery, approval and accounting while correcting bootstrap transitions and adding optional prestaged interview inputs.
+
+## Revision 2.1.5 idle-delivery prevention and recovery
+
+Investigation of a reported idle coordinator found a normal completed response
+with no unfinished tools, followed by acknowledged "immediate" sends that never
+appeared as receiver input. Delivery while active had worked; later routine
+session shutdown occurred after delivery had already stopped. This establishes
+an idle queue-to-session handoff failure boundary, not its internal app cause.
+It is distinct from 2.1.4's answered-question stopping-rule correction.
+
+The existing protocol already required durable intent and reconciliation, but
+its yield/return contract did not require end-to-end **idle** receipt/pickup
+evidence or an actually armed independent observer. The correction strengthens
+the existing section 10 [safety contract](../protocol/FIRST_SESSION_AND_ORCHESTRATION.md#idle-delivery-safety-contract),
+not a second scheduler, state store or budget:
+
+- Persist original intent and identified results outside the recipient queue
+  before notification. Distinguish transport submission, receiver receipt,
+  application/pickup and execution/acceptance.
+- Prove active-to-idle delivery and required closure survival before claiming
+  unattended pickup. Register independent observation and recheck pending
+  state/cursor before yield so the handoff itself does not leave an arrival gap.
+- Require an armed independent observer/runner, finite receipt/pickup windows,
+  alternate alert/control route, scoped recovery authority and inherited
+  allowance; otherwise explicitly accept an operator-carried handoff.
+- On missed receipt, stop redundant sends, preserve accessible queued input,
+  use an independent state-appropriate resume/reattach route or safe ownership
+  transfer, reconcile actual effects/results/charges, and restore only valid
+  unapplied intent. Late delivery must not duplicate acceptance or effects.
+- Detect observer loss only through demonstrated coverage; otherwise disclose
+  the gap. Stop at finite limits with preserved work and the actual manual
+  unblocker, not repeated "continue", polling agents or recursive supervisors.
+
+Bootstrap, generated runtime core, capability/dispatch/activation contracts,
+operator and deployment guidance, adoption prompts and optional input fields
+now refer to that boundary. The existing assignment shape gains a
+`delivery_recovery_ref` to the owning policy/route; equivalent existing fields
+remain valid. Adapt active project instructions/packets prospectively under
+approval without silently changing pinned references, owners, authority or
+ledger totals. No live record migration is performed by this publication.
+
+The [finite cases](../operations/EXAMPLES.md#prevent-and-recover-missed-idle-delivery)
+cover missed idle delivery, arrival during yield, closed receivers, unknown UI
+queue durability, lost/late receipts, observer failure, genuine unanswered
+approval, capped recovery and manual fallback. These are document-level
+contracts, not executed host fault-injection or evidence that automatic
+recovery is installed. The host's internal queue defect remains unconfirmed
+and is not repaired here. Uncaptured private UI input cannot be reconstructed.
+
+Model/reasoning evidence, external-call denial/consent, final approval, budgets,
+ownership/fencing, resource exclusions, stateful jobs and uncertainty remain
+protected. A requested recovery feature is not permission to start unapproved
+diagnostic workers, spend beyond reservations, clear queues, restart unrelated
+processes or rerun publication. The URL-first source map and folder layout stay
+unchanged; this remains a documentation protocol, not an executable runtime.
 
 ## Revision 2.1.4 bootstrap progression and optional inputs
 

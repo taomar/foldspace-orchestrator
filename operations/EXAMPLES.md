@@ -19,6 +19,7 @@ Before any new run, use the mandatory
 - [Start a bounded project task](#start-a-bounded-project-task)
 - [Approve or decline run controls](#approve-or-decline-run-controls)
 - [Bootstrap transition examples](#bootstrap-transition-examples)
+- [Prevent and recover missed idle delivery](#prevent-and-recover-missed-idle-delivery)
 - [Steer work without losing prior intent](#steer-work-without-losing-prior-intent)
 - [Ask for status that distinguishes progress from activity](#ask-for-status-that-distinguishes-progress-from-activity)
 - [Triage a queued bootstrap outside its queue](#triage-a-queued-bootstrap-outside-its-queue)
@@ -72,6 +73,9 @@ or prepare a complete operator-carried packet without claiming it has started.
 If not already localized, assign a setup worker to pin one source commit,
 copy the needed linked references and license without overwriting instructions,
 adapt authoritative project records, verify discovery, and continue the outcome.
+Before relying on later coordinator messages, prove idle receipt/pickup and
+arm independent observation or establish an accepted operator-carried handoff.
+Publish durable intent/results before notifying; "sent" alone is not delivery.
 ```
 
 Reference: [starting or upgrading a project](OPERATOR_GUIDE.md#1-start-a-new-project-or-upgrade-an-existing-one).
@@ -161,6 +165,63 @@ The screenshot reports a completed response after an answer, not a reproduced
 host hang. These examples correct protocol behavior; they neither reproduce nor
 repair the photographed host. A separate message-delivery/wake failure requires
 independent evidence, not this same diagnosis.
+
+## Prevent and recover missed idle delivery
+
+Send this setup request only to a responsive coordinator. It configures the
+[existing safety contract](../protocol/FIRST_SESSION_AND_ORCHESTRATION.md#idle-delivery-safety-contract),
+not an automatic grant to launch diagnostic workers or restart sessions:
+
+```text
+For this approved run, establish a recoverable delivery path before depending
+on an idle coordinator. Use existing authoritative intent/result records,
+preserving original payloads, IDs, candidates, owners and ledger references.
+Verify actual receiver receipt and useful pickup after a response ends, not
+only active-session delivery or a "sent immediately" acknowledgement.
+Establish closed-session resumption only if that lifecycle is needed and safe.
+
+Name the armed independent observer/runner or explicitly accepted operator,
+finite receipt/pickup windows, cursor, alternate alert/control route, allowed
+resume/replacement actions and inherited recovery reservation/attempt limits.
+Register observation then recheck compact pending state before yielding.
+If native automation cannot be demonstrated, provide exact observed manual
+steps and obtain acceptance of that assisted mode; do not invent a supervisor.
+No polling coordinator, repeated "continue", unapproved probe or new budget.
+```
+
+Use this recovery packet through the established **independent** route, never
+as another message to the stalled recipient:
+
+```text
+Recover missed delivery for [session/intent/result IDs] within
+[existing approved policy, recovery authority and remaining reservation].
+Preserve accessible queued text/attachments and the authoritative records
+before any disruptive action. Do not invent inaccessible messages.
+Compare sender submission receipts with receiver events and application/
+result-pickup state. Inspect actual jobs, effects, owners and held charges.
+Use the verified state-appropriate open/resume/reattach control outside the
+broken queue. If it fails, perform only the approved fenced ownership handoff;
+do not create a competing coordinator or restart healthy jobs.
+Reconcile newer steering and completed work before restoring valid unapplied
+intent with original IDs. Consume existing results; deduplicate late delivery.
+Confirm receipt and correct next action/disposition. Stop at the finite
+recovery limit and alert the named operator by the alternate supported route.
+```
+
+These are finite documentation cases, not claims of live host fault injection:
+
+| Case | Prevention or recovery outcome |
+| --- | --- |
+| Send while active succeeds; first post-idle send reports success but has no receiver event | Idle-resume activation fails; do not certify unattended delivery. Armed independent observation detects the missing receipt, opens one incident and uses the accepted resume/manual route. |
+| Result arrives between the coordinator's last read and idle | Observation is registered before a final pending-state/cursor recheck; that read or the actual subscription covers the arrival. No uncovered yield or polling loop. |
+| Worker finishes after coordinator idles or its CLI closes | The identified result remains accessible outside the queue. The independently supported observer/operator resumes pickup; no replacement worker repeats completed execution. Closure survival is not assumed from idle success. |
+| UI queue is visible but persistence is unknown | Preserve accessible exact payloads and attachments before reload/clear/restart. Record uncaptured scope; no fabricated backup or blind drain. |
+| Receiver applied intent but acknowledgement was lost | Reconcile task/effect evidence before retry; do not duplicate application, reservations or publication. |
+| Same result arrives late at old and replacement coordinators | Current coordination ownership and logical candidate/effect identity gate acceptance; fence obsolete authority and consume once within the demonstrated boundary. |
+| Observer fails or recovery allowance is exhausted | Alternate failure alert/manual owner takes over if demonstrated. Otherwise mark coverage unavailable, preserve existing jobs and hold new unattended dependent work; no recursive watcher agents or unlimited retries. |
+| Real unanswered approval question | Wait on the operator's actual answer control; never synthesize approval or treat silence as a restart trigger. |
+| No independent automatic resume/control exists | Use the explicitly accepted operator-carried packet and exact observed steps; do not claim self-recovery or block independently answerable interview questions. |
+| Queued cancellation conflicts with an older apply | Reconcile captured cancellation before replay; hold affected effects across lanes, preserve live jobs and do not bulk-flush the queue. |
 
 ## Steer work without losing prior intent
 
@@ -272,6 +333,10 @@ execute this assignment, not just acknowledge it. Return exact missing gates
 to the coordinator when blocked; do not broaden authority or reset allowance.
 Own your execution handles, checkpoints, and evidence. Return an identified
 candidate and result through the packet's agreed channel.
+Publish it in the agreed durable location before notification. Hand pickup
+observation to the assigned independent owner before returning; preserve actual
+receipt status without waiting for the coordinator's whole review. Don't send
+repeated wake messages or become the coordinator.
 ```
 
 References: [assignment contract](../protocol/FIRST_SESSION_AND_ORCHESTRATION.md#8-give-every-assignment-a-complete-versioned-contract),
@@ -292,6 +357,8 @@ Identify changed artifacts, exact checks and their candidate/environment,
 review limits, uncertainties, surviving operations and real handles,
 remaining inherited budget, and the next action.
 Link suitable evidence artifacts; do not include secrets or private logs.
+Publish the identified result where coordinator/recovery owner can read it
+without this chat, then notify. A send receipt is not receiver pickup.
 Freeze this submitted candidate. If it changes, submit a new candidate identity.
 Do not report integration, deployment, or acceptance that did not occur.
 ```

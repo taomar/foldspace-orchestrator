@@ -15,7 +15,7 @@ capabilities or an explicit assisted/manual handoff.
 [Prompt examples](../operations/EXAMPLES.md) |
 [Run configuration](../protocol/RUN_CONFIGURATION.md)
 
-Current protocol: **2.1.4**. See the [release history](../reference/REVIEW_AND_CHANGES.md).
+Current protocol: **2.1.5**. See the [release history](../reference/REVIEW_AND_CHANGES.md).
 
 ## On this page
 
@@ -106,6 +106,9 @@ Adapt existing project-native instructions/state, record source provenance,
 verify discovery, and continue my actual build objective. Use demonstrated
 tools or report the exact missing permission/capability; do not invent success.
 Accept candidate-specific evidence and preserve scope and release authority.
+Before depending on idle delivery, establish durable intent/results, actual
+receiver receipt/pickup and verified independent observation/recovery or an
+accepted operator handoff. "Sent" alone is not delivery; no repeated wake spam.
 ```
 
 This is ordinary language, not a native command. The
@@ -115,6 +118,22 @@ This is ordinary language, not a native command. The
 Optionally paste known answers using the
 [prestaging checklist and template](../protocol/RUN_CONFIGURATION.md#optional-prestaged-interview-inputs);
 unknowns are fine, and preparation is not final run approval.
+
+## Prevent stranded work and recover missed delivery
+
+FoldSpace requires durable intent and results **outside the chat queue**,
+separate receiver-receipt/pickup evidence, and a demonstrated path that resumes
+work after the coordinator goes idle. Before unattended handoff, an independent
+observer must be armed with finite detection/recovery limits and an alternate
+alert/control route. Otherwise use an explicitly accepted operator-carried path.
+
+On missed delivery: stop redundant sends, preserve accessible queued input,
+resume through independent host controls or safely transfer ownership, reconcile
+completed work and live effects, then restore only valid unapplied intent.
+Do not reset budgets or rerun a task just because its result message was missed.
+See the [prevention and recovery procedure](../operations/OPERATOR_GUIDE.md#prevent-stranded-work-and-recover-missed-delivery).
+These safeguards make work recoverable; they do not repair the host or install
+a supervisor merely by reading the protocol.
 
 ## Configure every new run
 

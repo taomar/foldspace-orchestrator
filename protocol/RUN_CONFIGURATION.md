@@ -1,6 +1,6 @@
 # Configure the run before dispatch
 
-**Revision: 2.1.4 - 6 September 2026**
+**Revision: 2.1.5 - 6 September 2026**
 
 This is the bootstrap questionnaire and configuration reference for FoldSpace
 Orchestrator, not an executable configuration loader. The canonical
@@ -75,7 +75,7 @@ catalogs, chained research, polling, invented defaults/N/A or self-wake.
 | 12 | "How should allowance be allocated between Copilot-managed sessions and direct external calls, with worker/task/provider subcaps where needed?" |
 | 13 | "What maximum concurrency is allowed?" |
 | 14 | "What retry/replacement limits apply within that same allowance?" |
-| 15 | "At a cap, unsupported setting, or uncertain charge, what stopping and escalation policy should apply?" |
+| 15 | "At a cap, unsupported setting, or uncertain charge, what stopping and escalation policy should apply?" For delivery-dependent work, separately resolve unattended versus operator-carried pickup, its accountable owner, finite receipt/pickup windows, recovery authority and allowance. |
 | 16 | "Do you approve this complete versioned policy, including any explicitly uncapped or assisted limitations, before affected dispatch begins?" |
 
 Split unresolved compound fields into individual questions. Summarize existing
@@ -105,13 +105,14 @@ It asks only missing, conflicting or unsupported items.
 | Outcome and acceptance | Required | Desired result/criteria **or** "continue recorded pending work" plus known tracker/state/checkpoint path or task IDs | Recorded candidate tasks, acceptance and current dependencies; focused selection only for material ambiguity |
 | Scope and authority | Required for intended effects; deadlines conditional | Allowed actions/files, compatibility constraints, exclusions, relevant deadline; known authority references | Existing grants and limits; setup/preparation is not deployment/publication permission |
 | Ongoing work | Existing projects/shared resources | Known owners, jobs, operations, resources/exclusions and record references, or unknown | Current ownership/effects, pending steering and conflicts; do not orphan old work or infer it stopped |
-| Host and surface | Optional hints; required control evidence before affected execution | Host/surface/version and known limitations or evidence references | Available interaction, model/reasoning selection and observation, dispatch/return, accounting and assisted controls |
+| Host and surface | Optional hints; required control evidence before affected execution | Host/surface/version and known limitations or evidence references | Available interaction, model/reasoning selection and observation, dispatch/return including idle-resume, accounting and assisted controls |
 | Models | Required for applicable roles | Providers/families/exact IDs, default model, role overrides, exact fallbacks and selection conditions | Actual support and application evidence; families or silent defaults are insufficient |
 | Reasoning per model | Required | Minimum/default/maximum, or proposed nonconfigurable N/A acceptance | Provider/model-specific supported order and in-range default; verify N/A and obtain explicit acceptance, never infer it from unknown support |
 | Direct external LLM calls | Required disabled/enabled decision; details conditional on opt-in | Disabled, or provider/endpoint/exact models/purpose/permitted data categories and **secure credential reference only** | Distinct from native Copilot; no key values, private-data probes or calls before scoped consent and final approval |
 | Budgets and allocations | Required; subcaps conditional | Explicit caps **and units**, native/external allocations, applicable task/worker/provider subcaps | Observable/boundable units, separate incomparable ledgers, price/usage evidence where needed; no invented numbers or conversions |
 | Concurrency, retries and stop | Required | Maximum concurrency, retry/replacement limits, stop/escalation rules and accountable authority | Feasibility within parent caps, uncertainty and reservation controls; no automatic budget increase |
 | Existing accounting | Existing runs/work where applicable | Known ledger reference, usage, reservations and uncertain charges, or unknown | Authoritative balances and surviving exposure before replay/reallocation; staging does not reset budgets |
+| Delivery and recovery | Required when work depends on later coordinator/worker delivery; automatic coverage conditional | Unattended or accepted operator-carried mode; known durable return/intent references, observer/operator, alternate alert route, receipt/pickup windows, recovery actions/attempts and allocation, or unknown | Actual receiver receipt/pickup after idle and required closure, armed independent observation, accessible preserved work and supported resume path; sender success alone is insufficient |
 | Final run approval | Required for a new run; not granted by staging | Preparation only; final approval pending | Validate and summarize the versioned policy, evidence/limits and scope, then request explicit approval; retain valid same-run approval |
 
 Missing caps are not unlimited. A deliberately uncapped scope is exceptional:
@@ -155,6 +156,9 @@ Maximum concurrency: <choice or unset>
 Retry/replacement limits: <choices or unset>
 Stop/escalation policy and authority: <choices or unset>
 Existing ledger/usage/reservations/uncertain charges: <known facts/refs or unknown>
+Delivery mode and observer/operator: <unattended / operator-carried choices or unset>
+Durable intent/result and alternate alert/resume references: <known refs or unknown>
+Receipt/pickup windows and recovery authority/attempts/allocation: <choices or unset>
 Remaining decisions/evidence gaps: <known gaps or unknown>
 ```
 
@@ -164,6 +168,15 @@ not automatic setup/dispatch. Reconcile changed facts against existing records;
 do not create duplicate authority or ledger totals from the pasted template.
 Same-run valid approval, owners, effects, resource exclusions and reservations
 survive. A new-run approval remains separate even if all choices were prestaged.
+
+Recovery settings belong in the existing policy/ledger, not a new allowance.
+The [idle-delivery safety contract](FIRST_SESSION_AND_ORCHESTRATION.md#idle-delivery-safety-contract)
+requires actual independent observation before claiming unattended pickup.
+Preapproval uses available bounded evidence or exact operator actions; approved
+setup can use an accepted manual return path while automatic delivery is tested.
+Do not launch unapproved probes or block all interview progress on a future drill.
+Never infer permission to restart a host, replace ownership or replay effects
+from a generic desire for recovery; record the allowed actions and limits.
 
 ## Model and reasoning validation
 

@@ -87,6 +87,11 @@ actual outcome with the project's existing tooling and acceptance criteria.
 Do not stop at downloading documents or expand deployment/publication authority.
 Keep the coordinator available; use an approved manual worker path if native
 dispatch is unavailable. Reconcile unknown effects before retrying.
+Before depending on later messages, publish durable intent/results outside
+the chat queue and prove receiver receipt/pickup after the coordinator idles.
+Arm independent observation with finite recovery authority/allowance and
+alternate alert/control, or establish an accepted operator-carried handoff.
+Do not count "sent" as receipt or recover by piling on "continue" messages.
 ```
 
 ### Answer the interview before dispatch
@@ -110,6 +115,7 @@ progression. No model IDs, reasoning levels or spending caps are preselected.
 | Reasoning, for each model | Minimum/maximum and a default within those bounds on that model's verified supported order; accepted N/A for fixed/nonconfigurable reasoning |
 | Direct external LLM calls | Disabled, or provider/endpoint, models, purpose, permitted data, secure credential references (never keys), and budget |
 | Budget and execution | Aggregate cap and real units, native/external allocations and relevant subcaps, concurrency, retries/replacements, stop/escalation policy |
+| Later delivery and recovery, where needed | Unattended or operator-carried mode, observer/operator, finite receipt/pickup windows, permitted recovery actions/attempts and allocation within existing limits |
 | Final confirmation | The resolved run policy/version, approval source/time, and disclosed capability limits |
 
 Reading public GitHub documentation is not an external LLM inference call.
@@ -204,6 +210,29 @@ If required controls cannot be applied/proved, hold affected autonomous work
 or use an explicitly approved demonstrable manual path. A document describing
 a feature does not install it. See the [runtime checks](../protocol/FIRST_SESSION_AND_ORCHESTRATION.md#4-verify-the-runtime-before-promising-orchestration).
 
+### Establish idle pickup before unattended work
+
+After run approval, the setup worker uses an approved manual return route if
+automatic delivery is still unverified. It demonstrates an identified result
+reaching the coordinator **after a response ends**, with receiver evidence and
+useful pickup, not just a successful send while the coordinator is active.
+Test closed-session reattachment only if needed and safe; no preapproval worker
+or destructive host restart is required to begin the interview.
+
+The coordinator must name an actually armed independent observer or explicitly
+accepted operator, durable intent/result location, finite receipt/pickup windows,
+alternate alert/resume controls and recovery allowance. Register observation,
+then recheck compact pending state before yielding. If automatic coverage is
+unavailable, disclose the gap and use the accepted operator-carried path rather
+than leaving unattended dependent work stranded. No polling loop or extra model
+agent is needed where an existing runner or manual route suffices.
+
+If delivery fails, preserve accessible queue text before any disruptive UI action,
+reconcile existing work/effects, and resume through independent controls or an
+authorized ownership handoff. Follow the
+[operator procedure](../operations/OPERATOR_GUIDE.md#prevent-stranded-work-and-recover-missed-delivery).
+Reading these instructions does not install the observer or fix the host queue.
+
 ## Understand the project records
 
 `POLICY` owns approvals/settings and the ledger or its owning reference;
@@ -288,7 +317,7 @@ See [upgrade guidance](../reference/REVIEW_AND_CHANGES.md#4-apply-the-revision-w
 | Existing references/instructions conflict | Compare and report the conflict, reuse only verified matches, and hold affected writes rather than overwrite |
 | Reasoning or budget controls are unsupported | Disclose the limit; obtain accepted N/A where genuinely fixed or an approved measurable/explicitly uncapped budget choice as applicable; no invented settings or conversions |
 | External inference is denied | Keep it blocked; this does not prohibit the user-approved public documentation GET or already-approved native work |
-| Bootstrap or automation messages keep queuing | Do not append recovery prompts. Use [independent host controls](../operations/OPERATOR_GUIDE.md#automation-admission-and-out-of-band-recovery), preserving intent and live operations |
+| Messages keep queuing after the coordinator goes idle | "Sent" is not receiver receipt. Use the established [independent pickup/recovery path](../operations/OPERATOR_GUIDE.md#prevent-stranded-work-and-recover-missed-delivery); preserve queued text before disruption, reconcile effects/results and do not append recovery prompts |
 
 The canonical references own the detailed policy. This guide gets you from
 one pasted URL-bearing prompt to a localized setup and actual project work.

@@ -1,6 +1,6 @@
 # Your guide to running projects with GitHub Copilot
 
-**Revision 2.1.4 · 6 September 2026**
+**Revision 2.1.5 · 6 September 2026**
 
 This pack uses **GHCP** to mean **GitHub Copilot**. It supports projects in which research, implementation, and architecture evolve together. Apply it to the actual repository and installed Copilot environment; it does not assume your stack, deployment destination, or session controls.
 
@@ -54,6 +54,9 @@ and adapt existing project-native instructions/state without overwrites.
 Reuse POLICY/CAPABILITIES/PROJECT_STATE and the authoritative ledger.
 Verify discovery and the needed handoff, then continue the actual build task.
 Keep useful independent work moving and return when only waits remain.
+Before relying on later messages, establish durable intent/results and the
+idle-delivery safety contract: actual receiver receipt/pickup, demonstrated
+idle-resume, and armed independent observation or an accepted operator handoff.
 Report unsupported tools/permissions instead of inventing fetched files or controls.
 ```
 
@@ -86,6 +89,9 @@ Do not orphan workers, reset usage/reservations, or free unknown charges.
 Correct conflicting active rules through review, verify the affected discovery/
 handoff path, and continue the actual implementation goal with unrelated
 eligible work unblocked. No deployment/publication authority is implied.
+Do not rely on "sent" as receiver delivery. Preserve results outside the queue
+and establish verified idle pickup/recovery or an accepted operator-carried
+handoff before work depends on it. No repeated wake messages or budget reset.
 ```
 
 ### The bootstrap questionnaire
@@ -207,7 +213,8 @@ The coordinator should supply these fields, using the project's existing schema 
 | `run_id`, `run_policy_ref`, operator/source/time approval, `effective_config` and actual model/reasoning evidence, external consent | Binds the worker to approved exact settings and data scope; same-run handoffs retain authority. |
 | `budget_reservation`, authoritative ledger/parent references, allocation units, usage/remaining and held unknown charges | Prevents oversubscription, invented conversions, and consumption resets across children/retries/replays. |
 | Actual prior work, checkpoints, failed attempts, running jobs, uncertain effects | Prevents restarting completed or still-running work. |
-| Result location, return path, checkpoint and observation triggers | Makes completion and interruption recoverable. |
+| Durable result/intent location, receiver receipt and pickup evidence, checkpoint | Makes completion recoverable even if its notification never reaches the coordinator. |
+| `delivery_recovery_ref`: idle-resume evidence, observer/operator, alternate alert/control route, receipt/pickup windows and recovery allowance | Establishes who actually notices and resolves failed delivery; an idle sibling or successful send is not coverage. |
 
 For every long job, preserve a job record containing the task and assignment, worker owner, operation and target, actual execution identifier, start acknowledgement, logs or artifacts, last observed status and timestamp, latest progress evidence, expected progress signals, and verified cancellation or reconciliation method. If the job produces external effects, include the effect identifiers or idempotency mechanism where supported. Record missing fields as unknown; do not substitute an invented handle.
 
@@ -218,11 +225,13 @@ Observe these distinctions:
 | Status claim | What it establishes |
 | --- | --- |
 | Packet prepared | An assignment is ready to be launched. |
-| Dispatch acknowledged | The runtime accepted the launch request; execution may still be queued. |
+| Transport submission acknowledged | The send/launch tool accepted the request; it may still be queued. This does not prove receiver receipt or execution. |
+| Receiver receipt observed | A linked incoming event or receiver acknowledgement proves receipt of the identified intent; it does not prove application. |
 | Worker or job observed running | Runtime evidence identifies actual execution. |
 | Heartbeat received | The observed component is responsive; useful progress is not yet established. |
 | Progress observed | A milestone, useful finding, output, or state change advances the assignment. |
-| Worker result submitted | The worker has delivered evidence for evaluation. |
+| Worker result published | Identified evidence is durably accessible outside the chat queue; notification delivery is separate. |
+| Result picked up | The coordinator records review/acceptance/blocked disposition or its evidenced next step for that result. |
 | Review passed | The required evaluation accepts the submitted result within its scope. |
 | Integration verified | The combined candidate passed the relevant checks. |
 | User outcome complete | All required work and delivery effects for the requested outcome are evidenced. |
@@ -232,6 +241,61 @@ An exit code alone does not establish every acceptance criterion. A worker sayin
 ## 6. Diagnose idle sessions and piled-up queues
 
 An idle session is a symptom. Task dependencies, runtime scheduling, a tool job, provider limits, session failure, or lost context can produce similar visible behavior. Capture evidence before attributing the cause.
+
+### Prevent stranded work and recover missed delivery
+
+The [canonical safety contract](../protocol/FIRST_SESSION_AND_ORCHESTRATION.md#idle-delivery-safety-contract)
+requires more than a "message sent" acknowledgement. Before depending on an
+idle coordinator, the approved setup must establish:
+
+| Protection | What must actually exist |
+| --- | --- |
+| Durable handoff | Original intent/attachments and identified worker results in the project's existing journal/tracker/result store, readable by the coordinator and recovery owner without its chat |
+| End-to-end evidence | Separate submission, receiver receipt and application/result-pickup evidence under the same IDs; a successful send or heartbeat is not enough |
+| Idle-resume path | A harmless approved delivery after a response ends produces actual receipt and useful pickup; closed-session reattachment is tested only if claimed |
+| Independent observation | An armed existing runner/observer or explicitly accepted operator with finite receipt/pickup windows, durable cursor, actual alternate alert/control route and scoped recovery allowance |
+| Safe yield | Register observation, then recheck compact pending state so an arrival around the idle transition is not missed; no periodic "continue" prompts or coordinator polling |
+
+Use existing mechanisms, not a permanently polling model agent. Automatic
+coverage is unavailable if the observer also depends on waking the blocked chat,
+does not survive the claimed lifecycle, or cannot alert outside it. If the host
+cannot demonstrate the automatic path, explicitly agree an operator-carried
+handoff and its exact UI/actions before relying on it. Do not leave new unattended
+work waiting indefinitely for a capability that does not exist. Genuine unanswered
+questions retain their actual operator/answer control; they are not recovery alarms.
+
+When a receipt or pickup window expires, the **independent owner**, not the
+blocked coordinator, performs this finite procedure within existing approval:
+
+1. Stop redundant notifications to the affected lane and preserve the original
+   queued text/attachments through supported capture or visible manual copying.
+   Save accessible task/result records, owners, handles and ledger references.
+   Do not clear the queue or reload/restart the app before confirming what is
+   recoverable; do not claim uncaptured text was saved.
+2. Compare receiver history with sender receipts and actual tools/jobs/effects.
+   A completed response plus no incoming event is missed delivery, not a busy
+   worker or missing run approval. Open one incident with its exact missing
+   receipt/pickup, owner, current state and remaining recovery attempts.
+3. Use the demonstrated independent open/resume/reattach action for that idle
+   or closed session. A stuck active tool requires its own scoped diagnosis.
+   If unavailable or unsuccessful, use an approved replacement packet only
+   after establishing one current coordinator and fencing conflicting authority.
+   Never rename ownership in records and assume the old writer stopped.
+4. Reconcile each saved intent against actual application, completed results,
+   newer steering/cancellations, live operations and charges. Restore only valid
+   unapplied intent; consume the existing result instead of rerunning its task.
+   Keep IDs, causal order, exclusions and uncertain reservations intact.
+5. Confirm receiver receipt and correct disposition/next eligible action, not
+   just an opened chat or another send receipt. Deduplicate late notifications
+   and actual effects. Stop automatic attempts at the approved limit or repeated
+   unchanged failure; preserve the packet and issue the exact manual action
+   through the alternate operator-visible route.
+
+The handoff must name observed host controls, not invented commands. If no safe
+control exists, report that limitation without deleting state, killing unrelated
+processes, raising budgets or repeatedly enqueuing wake-ups. This protocol can
+make work recoverable and detect missed delivery; it cannot fix the app's
+internal queue implementation or guarantee recovery from inaccessible state.
 
 ### Completed response versus an actual wait
 
