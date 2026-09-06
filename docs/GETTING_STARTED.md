@@ -8,6 +8,10 @@ a worker to localize them safely and continue your actual build objective.
 FoldSpace is a documentation protocol, not an installed runtime. Fetching and
 writing depend on the tools and permissions available in your Copilot host.
 
+**Already using FoldSpace?** Use the
+[in-place upgrade prompt](#upgrade-without-resetting-live-work) instead of
+starting over. It preserves existing work and valid same-run approval.
+
 [Overview](README.md) | [Benefits](BENEFITS.md) |
 [Operator guide](../operations/OPERATOR_GUIDE.md) | [Prompt examples](../operations/EXAMPLES.md)
 
@@ -17,6 +21,7 @@ writing depend on the tools and permissions available in your Copilot host.
 2. [Paste one bootstrap prompt and approve the run](#send-a-bootstrap-prompt).
 3. [Let Copilot localize what the project needs](#make-references-available-without-overwriting-instructions).
 4. [Complete a real bounded task](#a-bounded-worked-example) and [continue safely](#fresh-session-discovery-and-continuation).
+5. [Upgrade an existing setup without resetting live work](#upgrade-without-resetting-live-work).
 
 ## Prerequisites
 
@@ -302,11 +307,116 @@ only through a responsive, authorized route.
 
 ## Upgrade without resetting live work
 
-A newer remote source does not automatically replace active instructions.
-Pin and compare the proposed revision, preserve existing reference copies,
-customizations, live ownership/effects, approval and accounting, and apply
-reviewed changes prospectively. Do not reset state or kill jobs to install a cap.
-See [upgrade guidance](../reference/REVIEW_AND_CHANGES.md#4-apply-the-revision-without-resetting-the-project).
+Open your **existing target project** in a responsive Copilot session. This is
+an in-place instruction migration, not a new project or an automatic new run.
+No FoldSpace clone, Git commands, ZIP, manual copy, attachments or new project
+are needed in the supported URL-first path.
+
+**If the current session only queues messages, do not paste this prompt into
+that queue.** Preserve accessible pending text and attachments first. Use the
+host's actual controls to open an independent, responsive session in the same
+project. Start it **read-only** to reconcile existing owners and operations;
+establish a safe ownership handoff before conflicting writes. Opening another
+session does not fence the old actor or prove it stopped. Do not broadly
+restart, kill jobs or clear queues. See the
+[independent recovery procedure](../operations/OPERATOR_GUIDE.md#prevent-stranded-work-and-recover-missed-delivery).
+
+Paste the **whole prompt** below into that responsive session. It targets
+**revision 2.1.5 at commit `7f55dd046f7421706b4e99722b3f31123940aba9`**,
+not an evergreen "latest" release. The pinned bootstrap's source map contains
+`/main/` URLs; every companion retrieval must use the same commit instead.
+
+```text
+Upgrade this project's existing FoldSpace setup in place to revision 2.1.5.
+Read only this pinned compact public Markdown entry first:
+https://raw.githubusercontent.com/taomar/foldspace-orchestrator/7f55dd046f7421706b4e99722b3f31123940aba9/protocol/BOOTSTRAP.md
+Use its source map on demand, replacing /main/ with
+/7f55dd046f7421706b4e99722b3f31123940aba9/ for EVERY companion download,
+including linked references and LICENSE. Keep all source reads at that commit;
+do not mix moving main content or preload the entire pack. No clone, Git
+commands, ZIP, manual copy, attachments or new project are required.
+
+Treat this as instruction migration within the current run, not automatic
+new-run approval. Begin with bounded public reads and safe known-state
+preparation in this current chat. Do not send private project/user data to
+public services. Identify the installed source revision and reference paths,
+the actual host-supported project instruction entrypoint, generated runtime
+core/session protocol, and authoritative policy, state, task records and ledger.
+Use known compact records; ask for exact missing locations/access, not a broad
+preapproval discovery scan. Do not assume a universal instruction filename.
+
+Preserve requirements, task IDs, pending work, active owners/assignments,
+operations and live write/resource exclusions, queued intent, customizations
+and unrelated dirty edits. Preserve valid current approval, exact model/role/
+fallback and per-model reasoning choices, external-call consent, usage,
+reservations, unknown charges and remaining limits in their approved units.
+A new revision does not stop old jobs, free resources, authorize external
+calls, reset budgets or cancel anything. Do not assume coordination ownership;
+reconcile old actors/operations read-only and safely hand off ownership before
+conflicting writes. Do not create competing trackers or rewrite policy/state
+wholesale.
+
+Reuse valid same-run authority; do not repeat the interview for known approved
+settings. Obtain only genuinely missing approval, materially changed policy/
+scope or required new recovery-capability decisions. If I separately request
+a new run, explicitly reconfirm its settings while preserving live state.
+No worker, including setup/discovery/recovery, or direct external LLM call may
+start before the applicable run approval; respect host permissions and scope.
+
+Under valid approval and a reservation within remaining limits, assign a
+bounded setup worker through demonstrated controls or an approved assisted
+handoff. Compare installed sources and active instructions against the pinned
+target before applying changes. Preview exact paths, changes and conflicts
+within the approved write scope. Retain old reference bytes and prior active
+instruction versions as rollback material/provenance; save new required
+references separately, keeping their layout, LICENSE, URLs, revision, commit
+and hashes. Reuse verified matching
+copies and never silently overwrite conflicting references or instructions.
+Deliberately merge/adapt the actual active project-native entrypoint, compact
+runtime core/session protocol and conflicting live prompt/agent copies so old
+rules do not override the upgrade. Preserve project conventions/customizations;
+hold affected conflicting writes for resolution. Updating references alone
+is not activation.
+
+Carry forward the 2.1.4/2.1.5 behavior into those active instructions:
+After a received answer, including a question-tool result, reconcile it and
+take the next permitted bounded read, focused question, approval request or
+approved action; no status-only acknowledgement or extra "continue" is needed.
+Keep at most one unanswered question open and respect actual host waits.
+Derive pending tasks and acceptance from existing compact records, not a new
+backlog. Reuse optional staged inputs; unapproved answers still need approval.
+Persist intent and identified results outside the chat queue before notifying.
+Successful sending is not receiver receipt/pickup. Before depending on later
+delivery, require evidenced idle pickup and armed independent observation with
+finite recovery authority/allowance and an alternate alert/control route, or
+an explicitly accepted operator-carried handoff. Reconcile before replay;
+do not append upgrade/recovery prompts to a stuck queue.
+Markdown does not install a watchdog or repair a host queue. Record incomplete
+or unprovable controls and exact supported alternatives; no silent defaults,
+permission bypass or global freeze of unrelated eligible work.
+
+Report the source commit/revision, changed local paths and merged active rules.
+Show that a fresh or continuing intended session discovers the updated
+instructions without automatically acquiring ownership. Where feasible,
+demonstrate the next bounded interview/worker transition under existing
+approval and limits; label unsupported or unexercised controls honestly.
+Keep old references and record rollback limits: restoring instruction files
+does not undo external effects/data changes or reset task/budget state.
+Then continue eligible pending project work under its existing authority.
+Do not stop at downloading documents or imply deployment/publication consent.
+```
+
+For a future version, choose the intended release/commit, pin its full commit
+ID and compare before applying. A newer remote source must not automatically
+replace active local sources; retain the previous references and provenance.
+
+Expect a concise migration report with the source identity, changed paths,
+instruction-discovery evidence, next bounded transition, remaining capability
+gaps and rollback limits. A downloaded pack alone is not a completed upgrade.
+This guide supplies the prompt; it does not claim your Copilot host was
+exercised. The [localization contract](../protocol/FIRST_SESSION_AND_ORCHESTRATION.md#localize-github-references-without-cloning)
+and [migration policy](../reference/REVIEW_AND_CHANGES.md#4-apply-the-revision-without-resetting-the-project)
+own the detailed rules.
 
 ## If you get stuck
 

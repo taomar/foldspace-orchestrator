@@ -60,11 +60,18 @@ idle-resume, and armed independent observation or an accepted operator handoff.
 Report unsupported tools/permissions instead of inventing fetched files or controls.
 ```
 
-For an existing project, use:
+**Updating an existing FoldSpace setup?** Use the
+[pinned in-place upgrade prompt](../docs/GETTING_STARTED.md#upgrade-without-resetting-live-work),
+including its warning for sessions that only queue messages. That guide owns
+source comparison, scoped active-instruction migration and rollback limits.
+An upgrade alone is not a new run and retains valid same-run approval.
+
+For first adoption in an existing project, or starting/continuing project work, use:
 
 ```text
-Adopt or update FoldSpace in this existing target repository; no pack clone
-or attachments. Read this compact public entry first:
+Use FoldSpace in this existing target repository; no pack clone or attachments.
+For first adoption, read this compact public entry; otherwise reuse the
+current pinned local entry without automatically refreshing it:
 https://raw.githubusercontent.com/taomar/foldspace-orchestrator/main/protocol/BOOTSTRAP.md
 Mode: [new run / same-run continuation]
 Outcome and constraints: [actual project goal and limits]

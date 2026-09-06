@@ -11,6 +11,7 @@ scheduler, extension, or supervisor is installed. Use demonstrated host
 capabilities or an explicit assisted/manual handoff.
 
 [Get started](GETTING_STARTED.md) |
+[Upgrade an existing setup](GETTING_STARTED.md#upgrade-without-resetting-live-work) |
 [Benefits](BENEFITS.md) |
 [Prompt examples](../operations/EXAMPLES.md) |
 [Run configuration](../protocol/RUN_CONFIGURATION.md)
@@ -66,6 +67,12 @@ approved limits, demonstrated capacity, resource ownership, and review capacity,
 not a fixed worker count.
 
 ## Quick start
+
+**Already using FoldSpace?** Open your existing project and use the
+[in-place upgrade prompt](GETTING_STARTED.md#upgrade-without-resetting-live-work).
+It pins revision 2.1.5 and preserves live work, customizations, valid approvals
+and accounting; upgrading alone does not start a new run. If messages only
+queue, follow the guide's responsive-session recovery warning before pasting.
 
 1. Open the **target repository** where you want to build, in your Copilot host.
 2. Paste the prompt below with your outcome. **No clone, ZIP, attachment or
@@ -181,6 +188,7 @@ foldspace-orchestrator/
 | Your next question | Read |
 |---|---|
 | How do I try it? | [Getting started](GETTING_STARTED.md) and [compact bootstrap entry](../protocol/BOOTSTRAP.md) |
+| How do I update my existing setup? | [Pinned in-place upgrade prompt](GETTING_STARTED.md#upgrade-without-resetting-live-work) |
 | What must I approve? | [Run configuration](../protocol/RUN_CONFIGURATION.md) |
 | How do I operate it? | [Operator guide](../operations/OPERATOR_GUIDE.md) and [prompt examples](../operations/EXAMPLES.md) |
 | What are the detailed rules? | [Canonical protocol](../protocol/FIRST_SESSION_AND_ORCHESTRATION.md) |

@@ -14,9 +14,14 @@ short prompts. Start the coordinator with the compact
 Before any new run, use the mandatory
 [run-configuration interview](../protocol/RUN_CONFIGURATION.md).
 
+To upgrade an existing FoldSpace setup, use the single
+[pinned in-place upgrade prompt](../docs/GETTING_STARTED.md#upgrade-without-resetting-live-work),
+not a new-project bootstrap. Read its queued-session warning before pasting.
+
 ## Contents
 
 - [Start a bounded project task](#start-a-bounded-project-task)
+- [Upgrade an existing setup](../docs/GETTING_STARTED.md#upgrade-without-resetting-live-work)
 - [Approve or decline run controls](#approve-or-decline-run-controls)
 - [Bootstrap transition examples](#bootstrap-transition-examples)
 - [Prevent and recover missed idle delivery](#prevent-and-recover-missed-idle-delivery)
