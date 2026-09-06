@@ -1,0 +1,6 @@
+# Local credentials, execution artifacts, and source archives are not publication assets.
+/.env
+/.env.*
+/AGENT_PROGRESS.md
+*.log
+*.zip
